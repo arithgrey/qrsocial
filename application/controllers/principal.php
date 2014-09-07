@@ -21,6 +21,3 @@ class Principal extends CI_Controller {
 	}
 }
 
-
-/* End of file welcome.php */
-/* Location: ./system/application/controllers/welcome.php */
