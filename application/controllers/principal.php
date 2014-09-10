@@ -7,8 +7,8 @@ class Principal extends CI_Controller {
 		parent::__construct();
 	}
 
-	function index()
-	{		
+	function index(){		
+
 		$this->__bienvenida();
 	}
 	function __bienvenida(){
