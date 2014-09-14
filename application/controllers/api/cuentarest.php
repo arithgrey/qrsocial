@@ -13,8 +13,26 @@ class Cuentarest extends REST_Controller
         $data = $this->cuentamodel->listartiposcuenta();
 
         $this->response($data);
-
 	}
+    function registro_POST(){
+
+        $nombrecuenta = $this->input->post("nombrecuenta");
+        $descripcion  = $this->input->post("descripcion");
+        $tipocuenta  = $this->input->post("tipocuenta");
+
+        $this->load->model("cuentamodel");
+        $responsedb = $this->cuentamodel->registrocuenta($nombrecuenta, $descripcion, $tipocuenta); 
+
+        $reporte="";
+        
+        if ($responsedb == true) {
+            $reporte.="<a><strong>Cuenta creada con éxito</strong></a>";
+        }else{
+            $reporte.="<a><strong>Falla en registro de cuenta</strong></a>";
+        }
+        $this->response($reporte);
+
+    }
 
 
 }
