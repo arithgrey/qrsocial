@@ -1,9 +1,9 @@
 <?= doctype('html5')?>
-
 <head>
-<title><?=$titulo?></title>
-	
+<title><?=$titulo?></title>	
 	<!--TAGS-->	
+	<!--Para más información: arithgrey@gmail.com desarrollador backend y fronend del sistema qrnegocios-->
+
 	<?php
 		$meta = array(
 	        array('name' => 'robots', 'content' => 'no-cache'),
@@ -48,5 +48,7 @@
 	</header>
 	<div id='wrapper' class='wrapper'>
 		<div class='content' id='content'>
+			<input type="hidden" name="now" class="now" id="now" value="<?=base_url()?>">
+
 
 
