@@ -2,6 +2,10 @@
 <div>
 	<div class="row">
 		<div class="large-6 columns">
+			<!--Lista de cuentas por usuario-->
+			<h4>Fremium</h4>
+			
+			   <div class="lista-cuentas" id="lista-cuentas"></div>							   
 		</div>
 		<div class="large-6 columns">								
 			<div class="form-registro" id="form-registro">
@@ -17,7 +21,7 @@
 		        	<label>Descripción de la cuenta</label>
 		        </div>
 		        <div class="small-8 columns">
-		        	 <textarea rows="6" name="descripcion-cuenta" id="descripcion-cuenta" class="descripcion-cuenta">
+		        	 <textarea rows="6" name="descripcion-cuenta" id="descripcion-cuenta" class="descripcion-cuenta" >
 			
 					</textarea> 
 		        </div>    				    

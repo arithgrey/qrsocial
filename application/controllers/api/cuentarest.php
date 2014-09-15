@@ -33,6 +33,27 @@ class Cuentarest extends REST_Controller
         $this->response($reporte);
 
     }
+    
+    function listarcuentas_POST(){
+
+        $this->load->model("cuentamodel");
+        $listarcuentas = $this->cuentamodel->listallcuentas();
+        $this->response($listarcuentas);
+
+    }
+    function updatecuenta_POST(){
+
+        $nombre = $this->input->post("nombre");
+        $descripcion = $this->input->post ("descripcion");
+        $estado = $this->input->post("estado");
+        $edit = $this->input->post("edit");
+
+        $this->response($nombrecuenta . $descripcion . $estado . $edit);
+
+
+
+    }
+
 
 
 }

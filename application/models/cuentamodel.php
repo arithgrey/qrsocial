@@ -20,11 +20,21 @@
     }
     function registrocuenta($nombre, $descripcion, $tipocuenta){
 
+
+        $status = 0; 
+        if ($tipocuenta == 1) {
+            
+            $status = 0; 
+        }else{
+            $status = 1; 
+        }
+
+
         $data = array(
          'nombre' => $nombre ,
          'descripcion' => $descripcion ,
          'idTipo_cuenta' => $tipocuenta, 
-         'status' => '1'
+         'status' => $status
 
         );
 
@@ -32,6 +42,30 @@
         
         return $insertquery;
     }
+
+    /*Listar cuentas */
+    function listallcuentas(){
+      
+      $query = $this->db->get_where('cuenta', array( 'idTipo_cuenta' => '2' ));      
+      return $query->result_array();      
+
+    }
+    /*Get elements by id */
+    function getElementsbyId($id){
+
+      $this->db->select('nombre, descripcion, fecharegistro, idTipo_cuenta'); 
+      $query = $this->db->get_where('cuenta', array('idcuenta' => $id));
+      return $query->result_array();
+    }
+
+    function updatecuentafremiunmbyid($id){
+
+        $query_validator="select idTipo_cuenta from cuenta where idcuenta=".$id;     
+        $result = $this->db->query($query_validator);
+
+        
+    }
+
 
 
 }

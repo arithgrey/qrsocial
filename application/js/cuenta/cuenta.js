@@ -1,6 +1,12 @@
 $(document).on("ready", function(){
 	urlnow = $('.now').val();
 
+
+
+	/*Listado de cuentas actuales*/
+	loadcuentas();	
+
+
 	/*Registro de cuentas*/
 	$('.registrar-cuenta').click(function(){
 		
@@ -27,7 +33,7 @@ $(document).on("ready", function(){
 					$(".reporte").html(data);			
 					$(".nombre-cuenta").val("");
 					$(".descripcion-cuenta").val("");
-		
+					loadcuentas();
 
 				}).fail(function() {
 					alert( "error" );
@@ -36,12 +42,7 @@ $(document).on("ready", function(){
 		}else{
 					
 			 $(".reporte").html("<a><strong>La cuenta no puede registrar si no asigna un nombre</strong></a>");			
-		}
-
-
-
-		
-		
+		}		
 
 
 	});
@@ -50,7 +51,6 @@ $(document).on("ready", function(){
 	/**Cargamos lista de los tipos de cuentas en el sistema**/
 	$('.planes-disponibles').ready(function(){		
 
-		
 		urlformada = urlnow +"index.php/api/cuentarest/listcuenta/format/json";
 
 		var jqxhr = $.ajax({
@@ -94,3 +94,44 @@ $(document).on("ready", function(){
 	/*Termina la carga del script*/
 });
 
+function loadcuentas(){
+
+	urlformada = urlnow +"index.php/api/cuentarest/listarcuentas/format/json";
+
+			var jqxhr = $.ajax({
+
+				type: "POST",
+				url: urlformada,										
+				dataType: "json"	
+
+			}).done(function(data){
+
+				elementos ="<table><thead><tr><th>Identificador</th><th>Cuenta</th><th>Descripción</th><th>Estado</th></tr></thead><tbody>";
+				for (var a = 0; a < data.length; a++) {
+
+					cuenta =data[a].idcuenta;
+					nombre = data[a].nombre;
+					descripcion = data[a].descripcion;
+					status = data[a].status;
+					statusdescripcion ="";
+					if (status == 1) {
+
+						statusdescripcion ="Activa";
+					}else if(status == 2){
+						statusdescripcion ="Deshabilitada";
+					}else{
+						statusdescripcion ="";
+					}
+					urledit = urlnow+"index.php/cuentas/editcuenta?text="+cuenta;
+					elementos+="<tr><td><a href='"+ urledit +"' >"+cuenta+" Editar</a></td><td>"+ nombre+"</td> <td>"+descripcion+"</td><td>"+statusdescripcion+"</td> </tr>";
+
+				}
+				elementos+="</tbody></table>";
+				$('.lista-cuentas').html(elementos);
+				
+
+			}).fail(function() {
+				alert( "error" );
+			});
+
+}
