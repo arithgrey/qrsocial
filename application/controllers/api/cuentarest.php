@@ -43,14 +43,51 @@ class Cuentarest extends REST_Controller
     }
     function updatecuenta_POST(){
 
+        $reporte;
+
         $nombre = $this->input->post("nombre");
-        $descripcion = $this->input->post ("descripcion");
+        $descripcion = $this->input->post("descripcion");
         $estado = $this->input->post("estado");
         $edit = $this->input->post("edit");
 
-        $this->response($nombrecuenta . $descripcion . $estado . $edit);
+        if (strlen($nombre)>1) {
+            /**/
+            if ($estado == 1){
 
+                
+                $this->load->model("cuentamodel");
+                $responsedb = $this->cuentamodel->updatecuentafremiunmbyid($edit, $nombre, $descripcion, $estado);
+                if ($responsedb == true) {
+                    $reporte ="<h4>Éxito al modificar datos de la cuenta</h4>";
+                }else{
+                    $reporte ="<h4>Falla al modificar datos de la cuenta</h4>";
+                }
 
+            }elseif ($estado == 2) {
+                
+                $this->load->model("cuentamodel");
+                $responsedb = $this->cuentamodel->updatecuentafremiunmbyid($edit, $nombre, $descripcion, $estado);
+                if ($responsedb == true) {
+                    $reporte ="<h4>Éxito ahora su cuenta está deshabilitada</h4>";
+                }else{
+                    $reporte ="<h4>Falla al deshabilitar su cuenta</h4>";
+                }
+
+            }
+            
+        }else{
+            
+            if ($estado == 3){
+                
+                $reporte ="Confirmar para eliminar campaña";
+
+            }else{
+                $reporte ="El campo nombre aún no ha sido redactado"; 
+            }
+
+        }
+
+        $this->response($reporte);
 
     }
 

@@ -58,11 +58,22 @@
       return $query->result_array();
     }
 
-    function updatecuentafremiunmbyid($id){
+    function updatecuentafremiunmbyid($id, $nombre, $descripcion, $estado){
 
         $query_validator="select idTipo_cuenta from cuenta where idcuenta=".$id;     
         $result = $this->db->query($query_validator);
+        $idTipo_cuenta = $result->result_array()[0]["idTipo_cuenta"];
 
+        if ($idTipo_cuenta == 2) {
+          $query_update="UPDATE cuenta SET 
+          nombre='".$nombre."' , descripcion='".$descripcion."', status='".$estado."'
+          WHERE idcuenta=".$id;     
+          
+          $result = $this->db->query($query_update);
+          return $result;
+        }
+
+      
         
     }
 

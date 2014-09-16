@@ -7,9 +7,9 @@ $(document).on("ready", function(){
 		nombre = $('.nombre-edit').val();
 		descripcion = $('.descripcion').val();
 		estado = $('.estado-cuenta').val();
-		edit = $('.edit').val();
+		edit = $('.cuentaedit').val();
 
-		urlupdate  = urlnow + "index.php/api/cuentarest/updatecuenta/format/json";;
+		urlupdate  = urlnow + "index.php/api/cuentarest/updatecuenta/format/json";
 
 		params = { "nombre" : nombre , "descripcion": descripcion , "estado" : estado , "edit" : edit}
 
@@ -22,7 +22,9 @@ $(document).on("ready", function(){
 					dataType: "json"	
 
 				}).done(function(data){
-					alert(data);
+					
+					$('.reporte').html(data);
+					$('.cancelar').html("Cuentas");
 
 				}).fail(function() {
 					alert( "error" );

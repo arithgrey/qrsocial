@@ -33,12 +33,19 @@
 		</select>
 	</div>		    
 	<div class="small-12 columns">
-		<button  id ="actualizar" class="actualizar small-4 columns" >Actualizar</button>
-	</div>	      				 
+		<button  id ="actualizar" class="actualizar small-4 columns" >Actualizar</button>		
+	</div>	      				 	
+	<div class="small-12 columns">
+		<button class="cancelar" id="cancelar" onclick="redirect('<?=base_url()?>/index.php/cuentas/lista')">Cancelar</button>
+	</div>
+	<div class="reporte small-12 columns" id="reporte" ></div>
+	
+
 
 	</div>
 	
 </div>	
+
 
 
 
