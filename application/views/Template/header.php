@@ -2,6 +2,7 @@
 <head>
 <title><?=$titulo?></title>	
 	<!--TAGS-->	
+	<!--Desarrollador Jonathan Govinda Medrano Salazar-->
 	<!--Para más información: arithgrey@gmail.com desarrollador backend y fronend del sistema qrnegocios-->
 
 	<?php
@@ -31,6 +32,12 @@
 	<script type="text/javascript" src="<?=base_url()?>application/js/foundation.min.js"></script>
 	
 	<script type="text/javascript" src="<?=base_url()?>application/js/general.js"></script>	
+	<script src="<?=base_url()?>application/js/vendor/jquery.js"></script>
+	<script src="<?=base_url()?>application/js/foundation/foundation.js"></script>
+	<script src="<?=base_url()?>application/js/foundation/foundation.equalizer.js"></script>
+	<script>
+    $(document).foundation();
+  </script>
 
 </head>
 <body>
