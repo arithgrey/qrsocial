@@ -40,6 +40,7 @@ class Accesssystem extends REST_Controller
                    'logged_in' => TRUE
                );
 
+            $this->load->library('session');
             $this->session->set_userdata($newdata);
 
             $reporte="ok";
