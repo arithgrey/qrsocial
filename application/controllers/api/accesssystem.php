@@ -10,13 +10,48 @@ class Accesssystem extends REST_Controller
 
     	$mail =$this->input->post("mail");		
     	$pw = $this->input->post("pw");
-
     	/*Validation*/
-
     	$this->load->model("modelaccess");
-    	$data= $this->modelaccess->validationuser($mail , $pw);
-    	$this->response($data);
+    	$dataresponse = $this->modelaccess->validationuser($mail , $pw);
+
+        $reporte="";
+
+        if ($dataresponse[0] == "0") {
+                
+            $reporte ="No";  
+        }else{
+
+
+            $idusuario = $dataresponse[0]["idusuario"];
+            $username = $dataresponse[0]["username"];
+            $correoelectronico = $dataresponse[0]["correoelectronico"];
+            $fecharegistro  = $dataresponse[0]["fecharegistro"];
+            $status = $dataresponse[0]["status"];
+            $idperfil = $dataresponse[0]["idperfil"];
+
+
+            $newdata = array(
+                   'username'  => $username,
+                   'email'     => $correoelectronico,
+                   'idusuario' => $idusuario, 
+                   'fecharegistro' => $fecharegistro,
+                   'status' =>$status,
+                   'perfil' => $idperfil,
+                   'logged_in' => TRUE
+               );
+
+            $this->session->set_userdata($newdata);
+
+            $reporte="ok";
+        }
+
+    	$this->response($reporte);
+
     }
+
+
+
+   
 
 
 

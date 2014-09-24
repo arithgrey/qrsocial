@@ -21,6 +21,8 @@ class Usuario extends CI_Controller {
 		$this->load->view("Template/header", $data);
 		$this->load->view("usuario/accessuser", $data);
 		$this->load->view("Template/footer" , $data);		
+		
+		
 	}
 
 

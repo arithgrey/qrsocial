@@ -12,7 +12,11 @@
 
       $this->db->select('idrecurso, nombre ,  descripcion, status');       
       $query = $this->db->get_where('recurso', array('status' => "1" ));
-      return $query->result_array();    
+      
+      return $query->result_array(); 
+      
+      
+      
 
     }
     

@@ -16,10 +16,19 @@
 
 		$query = $this->db->get('usuario');
 		
-		return $query->result_array();
+		
+        $exist = $query->num_rows();
+        if ($exist == 1) {
+            return $query->result_array();
+        }else{
+            return "0";
+        }
+
+        
     }
 
 
 }
+
 
 
