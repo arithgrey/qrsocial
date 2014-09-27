@@ -106,6 +106,9 @@ function loadcuentas(){
 
 			}).done(function(data){
 
+
+			
+		  		
 				elementos ="<table><thead><tr><th>Identificador</th><th>Cuenta</th><th>Descripción</th><th>Estado</th></tr></thead><tbody>";
 				for (var a = 0; a < data.length; a++) {
 

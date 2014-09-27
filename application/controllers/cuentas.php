@@ -5,21 +5,57 @@ class Cuentas extends CI_Controller {
 	function __construct()
 	{
 		parent::__construct();
-
-	}
-
-	function index(){}
-
+				
+	}	
 	function lista(){
 
-		$data['titulo']="Cuentas";
+		$logged_in=$this->is_logged_in();
 
-		$this->load->view("Template/header", $data);
-		$this->load->view("cuenta/principal", $data);
-		$this->load->view("Template/footer", $data);
+		if ($logged_in == 1) {
+						
+			$data['titulo']="Cuentas";
+			$username = $this->session->userdata('username');	
+			$data["username"]=$username;
+			$data["homesess"]=base_url('/index.php/principal/homeuser');
+			
+			$this->load->view("Template/headersession", $data);
+			$this->load->view("cuenta/principal");
+			$this->load->view("Template/footer", $data);
+
+		}else{
+			
+			redirect(base_url());			
+
+		}
 	}
-	function editcuenta(){
+
+	private function is_logged_in() {
+	
+		$is_logged_in = $this->session->userdata('logged_in');
 		
+		if(!isset($is_logged_in) || $is_logged_in != true) {
+			
+			return false;
+		}
+		return true;
+	}	
+
+	function logout(){
+	
+		$this->session->sess_destroy();
+		redirect(base_url());
+	}
+
+
+
+	function editcuenta(){
+	
+		$logged_in=$this->is_logged_in();
+
+		if ($logged_in == 1) {
+
+
+
 		$data['titulo']="Edición";
 		$cuentaedit = $this->input->get("text");
 
@@ -44,22 +80,28 @@ class Cuentas extends CI_Controller {
 				$data["descripcion"] =$cuenta["descripcion"];
 				$data["fecharegistro"] =$cuenta["fecharegistro"];
 
-				$this->load->view("Template/header", $data);
+				/**/
+				$username = $this->session->userdata('username');	
+				$data["username"]=$username;
+				$data["homesess"]=base_url('/index.php/principal/homeuser');				
+				$this->load->view("Template/headersession", $data);
+				
 				$this->load->view("cuenta/editarcuenta", $data);
 				$this->load->view("Template/footer", $data);		
 
 			}else{
-
 				
-			}
-			
-
-			
-		
+			}			
 		}
-
 		
+		}else{
+			
+			redirect(base_url());			
+
+		}
+	/*Termina la función*/	
 	}
+
 
 }
 

@@ -18,36 +18,44 @@
 
       return $data;
     }
-    function registrocuenta($nombre, $descripcion, $tipocuenta){
+    function registrocuenta($nombre, $descripcion, $tipocuenta, $idusuario){
 
 
         $status = 0; 
-        if ($tipocuenta == 1) {
-            
+        if ($tipocuenta == 1) {          
             $status = 0; 
         }else{
             $status = 1; 
         }
-
-
-        $data = array(
-         'nombre' => $nombre ,
-         'descripcion' => $descripcion ,
-         'idTipo_cuenta' => $tipocuenta, 
-         'status' => $status
-
-        );
+          
+          $data = array(
+           'nombre' => $nombre ,
+           'descripcion' => $descripcion ,
+           'idTipo_cuenta' => $tipocuenta, 
+           'status' => $status,
+           'idusuario' =>$idusuario
+          );
 
         $insertquery  = $this->db->insert('cuenta', $data);  
+
+        if ($insertquery == true ) {
+          
+        }else{
+
+        }
         
+
         return $insertquery;
     }
 
     /*Listar cuentas */
-    function listallcuentas(){
-      
-      $query = $this->db->get_where('cuenta', array( 'idTipo_cuenta' => '2' ));      
-      return $query->result_array();      
+    function listallcuentas($idusuario){
+       
+
+      $query_list="SELECT * FROM cuenta WHERE   idusuario ='".$idusuario."' AND idTipo_cuenta =2";     
+      $result = $this->db->query($query_list);
+
+      return $result->result_array();      
 
     }
     /*Get elements by id */

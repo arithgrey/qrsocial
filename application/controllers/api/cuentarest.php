@@ -7,40 +7,55 @@ class Cuentarest extends REST_Controller
 
     function index(){}
 
+
+
     function listcuenta_POST(){
 
-        $this->load->model("cuentamodel");
+        $this->load->model("cuentamodel");        
         $data = $this->cuentamodel->listartiposcuenta();
 
         $this->response($data);
 	}
     function registro_POST(){
 
-        $nombrecuenta = $this->input->post("nombrecuenta");
-        $descripcion  = $this->input->post("descripcion");
-        $tipocuenta  = $this->input->post("tipocuenta");
+        $logged_in=$this->is_logged_in();
 
-        $this->load->model("cuentamodel");
-        $responsedb = $this->cuentamodel->registrocuenta($nombrecuenta, $descripcion, $tipocuenta); 
+        if ($logged_in == 1) {
 
-        $reporte="";
-        
-        if ($responsedb == true) {
-            $reporte.="<a><strong>Cuenta creada con éxito</strong></a>";
+            $idusuario = $this->session->userdata('idusuario');
+
+            $nombrecuenta = $this->input->post("nombrecuenta");
+            $descripcion  = $this->input->post("descripcion");
+            $tipocuenta  = $this->input->post("tipocuenta");
+
+            $this->load->model("cuentamodel");
+            $responsedb = $this->cuentamodel->registrocuenta($nombrecuenta, $descripcion, $tipocuenta, $idusuario); 
+
+            $reporte="";
+            
+            if ($responsedb == true) {
+                $reporte.="<a><strong>Cuenta creada con éxito</strong></a>";
+            }else{
+                $reporte.="<a><strong>Falla en registro de cuenta</strong></a>";
+            }
+            $this->response($reporte);
         }else{
-            $reporte.="<a><strong>Falla en registro de cuenta</strong></a>";
+            
+            redirect(base_url());           
+
         }
-        $this->response($reporte);
 
     }
     
     function listarcuentas_POST(){
 
         $this->load->model("cuentamodel");
-        $listarcuentas = $this->cuentamodel->listallcuentas();
+        $idusuario = $this->session->userdata('idusuario');                
+        $listarcuentas = $this->cuentamodel->listallcuentas($idusuario);
         $this->response($listarcuentas);
 
     }
+
     function updatecuenta_POST(){
 
         $reporte;
@@ -89,6 +104,23 @@ class Cuentarest extends REST_Controller
 
         $this->response($reporte);
 
+    }
+
+    private function is_logged_in() {
+    
+        $is_logged_in = $this->session->userdata('logged_in');
+        
+        if(!isset($is_logged_in) || $is_logged_in != true) {
+            
+            return false;
+        }
+        return true;
+    }   
+
+    function logout(){
+    
+        $this->session->sess_destroy();
+        redirect(base_url());
     }
 
 

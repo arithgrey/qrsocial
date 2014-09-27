@@ -30,17 +30,12 @@ $(document).on("ready",function(){
 
 						}).done(function(data){				
 
-							alert(data);
+						
+							$('.repoacces').html(data);
 						
 						}).fail(function(){
 							alert( "error" );
 						});
-			
-
-
-
-
-
 
 
 			}else{

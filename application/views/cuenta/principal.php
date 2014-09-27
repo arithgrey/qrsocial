@@ -3,7 +3,9 @@
 	<div class="row">
 		<div class="large-6 columns">
 			<!--Lista de cuentas por usuario-->
-			<h4>Fremium</h4>
+			<dl class='sub-nav'> 
+				<dd data-magellan-arrival='build'>Cuentas Freemium</dd> 
+			</dl>
 			
 			   <div class="lista-cuentas" id="lista-cuentas"></div>							   
 		</div>
@@ -43,3 +45,4 @@
  
 	
     
+	
