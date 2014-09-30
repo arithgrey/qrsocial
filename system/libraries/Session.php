@@ -1,29 +1,5 @@
 <?php  if ( ! defined('BASEPATH')) exit('No direct script access allowed');
-/**
- * CodeIgniter
- *
- * An open source application development framework for PHP 5.1.6 or newer
- *
- * @package		CodeIgniter
- * @author		ExpressionEngine Dev Team
- * @copyright	Copyright (c) 2008 - 2011, EllisLab, Inc.
- * @license		http://codeigniter.com/user_guide/license.html
- * @link		http://codeigniter.com
- * @since		Version 1.0
- * @filesource
- */
 
-// ------------------------------------------------------------------------
-
-/**
- * Session Class
- *
- * @package		CodeIgniter
- * @subpackage	Libraries
- * @category	Sessions
- * @author		ExpressionEngine Dev Team
- * @link		http://codeigniter.com/user_guide/libraries/sessions.html
- */
 class CI_Session {
 
 	var $sess_encrypt_cookie		= FALSE;
@@ -47,21 +23,13 @@ class CI_Session {
 	var $CI;
 	var $now;
 
-	/**
-	 * Session Constructor
-	 *
-	 * The constructor runs the session routines automatically
-	 * whenever the class is instantiated.
-	 */
 	public function __construct($params = array())
 	{
 		log_message('debug', "Session Class Initialized");
 
-		// Set the super object to a local variable for use throughout the class
+		
 		$this->CI =& get_instance();
-
-		// Set all the session preferences, which can either be set
-		// manually via the $params array above or via the config file
+		
 		foreach (array('sess_encrypt_cookie', 'sess_use_database', 'sess_table_name', 'sess_expiration', 'sess_expire_on_close', 'sess_match_ip', 'sess_match_useragent', 'sess_cookie_name', 'cookie_path', 'cookie_domain', 'cookie_secure', 'sess_time_to_update', 'time_reference', 'cookie_prefix', 'encryption_key') as $key)
 		{
 			$this->$key = (isset($params[$key])) ? $params[$key] : $this->CI->config->item($key);
@@ -72,10 +40,9 @@ class CI_Session {
 			show_error('In order to use the Session class you are required to set an encryption key in your config file.');
 		}
 
-		// Load the string helper so we can use the strip_slashes() function
+
 		$this->CI->load->helper('string');
 
-		// Do we need encryption? If so, load the encryption class
 		if ($this->sess_encrypt_cookie == TRUE)
 		{
 			$this->CI->load->library('encrypt');

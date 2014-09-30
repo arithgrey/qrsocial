@@ -1,3 +1,4 @@
+<script type="text/javascript" src="<?=base_url('/application/js/cuenta/usercuenta.js')?>"></script>
 <div class='row'>
 	<div class='large-6 columns'>	
 		<nav class="top-bar" data-topbar role="navigation"> 
@@ -10,13 +11,20 @@
 					<li class="active">
 						<a href="<?=base_url('/index.php/panelcontrol/control')?>">Panel de control</a>
 					</li> 
-					<li class="active has-dropdown"> 
-						<a href="<?=base_url('index.php/cuentas/lista')?>">Cuentas</a> 				
+					<li class="active"> 
+						<a href="<?=base_url('index.php/cuentas/lista')?>">Cuentas ✎</a> 				
 					</li> 
 				</ul>  
 						
 			 </section> 
 			</nav>
+		<div class='row'> 
+
+			<h3 class="subheader">Cuentas</h3>
+			<div class='lista-cuentas large-12 columns' id='lista-cuentas'></div>
+
+
+		</div>	
 	</div>
 
 		<div class='large-6 columns'>
@@ -33,3 +41,4 @@
 		    	<a href="">Seguir leyendo ....</a></p>
 		</div>
 </div>
+

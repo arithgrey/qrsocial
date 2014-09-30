@@ -29,6 +29,34 @@ class Cuentas extends CI_Controller {
 		}
 	}
 
+	public function accessacount(){
+
+		$logged_in=$this->is_logged_in();
+		
+		if ($logged_in == 1) {
+						
+		$cuenta = $this->input->get("cuenta");
+		$nameaccount = $this->input->get("name");
+
+		$data['titulo']="Campañas ".$nameaccount;
+		$username = $this->session->userdata('username');	
+		$data["username"]=$username;
+		$data["homesess"]=base_url('/index.php/principal/homeuser');
+
+		$this->load->view("Template/headersession", $data);
+		$this->load->view("campaña/menuinicio");
+		$this->load->view("Template/footer", $data);
+			
+		
+
+
+		}else{
+			
+			redirect(base_url());			
+		}
+	}
+
+
 	private function is_logged_in() {
 	
 		$is_logged_in = $this->session->userdata('logged_in');
