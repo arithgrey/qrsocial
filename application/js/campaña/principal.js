@@ -1,8 +1,75 @@
 $(document).on("ready", function(){
 
-	now = $('.now').val();
-	loadcamp();
+	$('.reveal-modal').trigger('click');
+	$('.reveal-modal').trigger('click');
 
+	// or directly on the modal
+	$('.reveal-modal').foundation('reveal', 'open');
+	$('.reveal-modal').foundation('reveal', 'close');
+
+
+	$('#myModal').foundation('reveal', 'open', 'http://some-url');
+
+
+// url with extra parameters
+$('#myModal').foundation('reveal', 'open', {
+    url: 'http://some-url',
+    data: {param1: 'value1', param2: 'value2'}
+});
+
+// url with custom callbacks
+$('#myModal').foundation('reveal', 'open', {
+    url: 'http://some-url',
+    success: function(data) {
+        alert('modal data loaded');
+    },
+    error: function() {
+        alert('failed loading modal');
+    }
+});
+
+
+	
+
+
+
+	now = $('.now').val();	
+
+	
+	/*Listar nombres de las campañas actuales*/
+	listadocampname =now+"index.php/api/camprest/presentanombreidcamp/format/json";
+	$.post(listadocampname , {dataType : "json"}).done(function(data){
+		
+		for (var a = 0; a < data.length; a++) {
+			
+			idcamp =  data[a].idcampaña;
+			nombre = data[a].nombre;
+			
+			$('.campedit').append("<option valeu='"+idcamp+"'>"+nombre+"</option>");	
+
+		}
+
+	});
+
+
+
+	/***/
+	$('.guardarcambios').click(function(){
+
+		urledit = now+"index.php/api/camprest/editcamp/format/json";
+		alert($('#edita_campa').serialize());			
+		$.post(urledit , $('#edita_campa').serialize(), {dataType: "json"})
+		.done(function(data){
+
+			alert(data);
+		});
+
+
+
+	});
+
+
+	loadcamp();
 	$('.registrarcampaña').click(function(){
 
 		name = $('.nombrecampaña').val();		
@@ -43,10 +110,6 @@ $(document).on("ready", function(){
 			$('.reporegistro').html(validationname);
 
 		}
-
-
-
-
 
 		/*Termina la función click registro de alimentos*/
 	});

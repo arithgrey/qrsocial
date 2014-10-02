@@ -35,6 +35,8 @@
 	<script src="<?=base_url()?>application/js/vendor/jquery.js"></script>
 	<script src="<?=base_url()?>application/js/foundation/foundation.js"></script>
 	<script src="<?=base_url()?>application/js/foundation/foundation.equalizer.js"></script>
+	<script src="<?=base_url()?>application/js/vendor/modernizr.js"></script>
+
 	<script>
     $(document).foundation();
   </script>

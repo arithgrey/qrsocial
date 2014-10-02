@@ -3,6 +3,49 @@ require APPPATH.'/libraries/REST_Controller.php';
 class Camprest extends REST_Controller
 {
 
+
+    function editcamp_POST(){
+
+
+        $logged_in = $this->is_logged_in();
+
+        if ($logged_in == 1) {
+
+        $nameedicion = $this->input->post('nameedicion');
+        $descripcionedit= $this->input->post('descripcionedit');        
+        $this->response($nameedicion);
+
+        }else{        
+              /*Terminamos sessión*/  
+              $this->logout();    
+
+        }
+
+    }
+
+
+     function presentanombreidcamp_POST(){
+
+        $logged_in = $this->is_logged_in();
+
+        if ($logged_in == 1) {
+
+
+            $this->load->model('cammodel');    
+            $idusuario= $this->session->userdata('idusuario');
+            $dataresponse = $this->cammodel->loadcampabanameid($idusuario);
+            $this->response($dataresponse);
+
+        }else{        
+              /*Terminamos sessión*/  
+              $this->logout();    
+              $this->response("");
+
+        }
+
+     }   
+
+
     function validaregistro_POST(){
 
         $logged_in = $this->is_logged_in();
@@ -16,10 +59,12 @@ class Camprest extends REST_Controller
 
             $this->load->model('cammodel');    
             $dbresponse="";
-            $dbresponse = $this->cammodel->registrocamp($name, $social , $descripcion);
+            $idusuario= $this->session->userdata('idusuario');
+            $dbresponse = $this->cammodel->registrocamp($name, $social , $descripcion, $idusuario);
 
             if ($dbresponse == 1) {
                 
+
                 $this->response("Elemento ingresado correctamente");    
             }else{
                 $this->response("Falla en el registro");    
@@ -44,7 +89,8 @@ class Camprest extends REST_Controller
         if ($logged_in == 1) {
 
             $this->load->model("cammodel");
-            $databaseresponse = $this->cammodel->loadcamp();
+            $idusuario= $this->session->userdata('idusuario');
+            $databaseresponse = $this->cammodel->loadcamp($idusuario);
             $this->response($databaseresponse);
 
 

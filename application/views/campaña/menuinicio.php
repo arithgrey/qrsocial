@@ -1,4 +1,6 @@
 <script type="text/javascript" src="<?=base_url('/application/js/campaña/principal.js')?>"></script>
+<script type="text/javascript" src="<?=base_url('/application/js/foundation/foundation.reveal.js')?>"></script>
+<script type="text/javascript" src="<?=base_url('/application/js/foundation/foundation.js')?>"></script>
 
 <div class='row'>
 	<div class="large-8 columns">
@@ -84,3 +86,31 @@ At w3schools.com you will learn how to make a website. We offer free tutorials i
 <p>
 
 </p>
+
+
+<div class='row'>
+
+	<form class='edita_campa' id='edita_campa'>
+		<label>
+			Campaña
+			<select name='campedit' class='campedit' id='campedit'></select>
+		</label>
+		
+
+		<label>
+			Nombre: 
+			<input type='text' name='nameedicion' id='nameedicion' class='nameedicion'>
+		</label>
+		<label>
+			Descripción
+			<textarea name='descripcionedit' id='descripcionedit' class='descripcionedit'>Nueva descripción</textarea>
+		</label>
+		
+		<p id='guardarcambios' class="guardarcambios button [tiny small large]">Default Button</p>
+
+	</form>		
+</div>
+
+
+
+
