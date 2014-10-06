@@ -1,55 +1,9 @@
 $(document).on("ready", function(){
 
-	$('.reveal-modal').trigger('click');
-	$('.reveal-modal').trigger('click');
-
-	// or directly on the modal
-	$('.reveal-modal').foundation('reveal', 'open');
-	$('.reveal-modal').foundation('reveal', 'close');
-
-
-	$('#myModal').foundation('reveal', 'open', 'http://some-url');
-
-
-// url with extra parameters
-$('#myModal').foundation('reveal', 'open', {
-    url: 'http://some-url',
-    data: {param1: 'value1', param2: 'value2'}
-});
-
-// url with custom callbacks
-$('#myModal').foundation('reveal', 'open', {
-    url: 'http://some-url',
-    success: function(data) {
-        alert('modal data loaded');
-    },
-    error: function() {
-        alert('failed loading modal');
-    }
-});
-
-
-	
-
-
-
 	now = $('.now').val();	
 
-	
-	/*Listar nombres de las campañas actuales*/
-	listadocampname =now+"index.php/api/camprest/presentanombreidcamp/format/json";
-	$.post(listadocampname , {dataType : "json"}).done(function(data){
-		
-		for (var a = 0; a < data.length; a++) {
-			
-			idcamp =  data[a].idcampaña;
-			nombre = data[a].nombre;
-			
-			$('.campedit').append("<option valeu='"+idcamp+"'>"+nombre+"</option>");	
-
-		}
-
-	});
+	loadcamp();
+	listaropciones();
 
 
 
@@ -57,11 +11,16 @@ $('#myModal').foundation('reveal', 'open', {
 	$('.guardarcambios').click(function(){
 
 		urledit = now+"index.php/api/camprest/editcamp/format/json";
-		alert($('#edita_campa').serialize());			
-		$.post(urledit , $('#edita_campa').serialize(), {dataType: "json"})
+						
+		$.post(urledit , $('#edita_campa').serialize(),{dataType:"json"})
 		.done(function(data){
+			
+			$('.reporteedit').append("<p>"+data+"</p>");
+			$('#dlg_new_menu').foundation('reveal', 'close');
+			loadcamp();
+			listaropciones();
+			
 
-			alert(data);
 		});
 
 
@@ -69,7 +28,7 @@ $('#myModal').foundation('reveal', 'open', {
 	});
 
 
-	loadcamp();
+	
 	$('.registrarcampaña').click(function(){
 
 		name = $('.nombrecampaña').val();		
@@ -80,29 +39,28 @@ $('#myModal').foundation('reveal', 'open', {
 
 		validationname =validalength( name, 5 , "Nombre asignado a la campaña demaciado corto.!!" );
 		/*Validamos nombre de la campaña*/
-
 		if (validationname == 1) {			
 			$('.reporegistro').html("");
 
 			/*Registro ajax */
-				params = {"name": name, "social" : social , "descripcion" : descripcion}
+				
 				posturl = now + "index.php/api/camprest/validaregistro/format/json";
 
-
-						var jqxhr = $.ajax({
-
-							type: "POST",
-							url: posturl,						
-							data: params,
-							dataType: "json"	
-
-						}).done(function(data){				
-
-							$('.estadoregistro').html(data);
+					
+					$.post(posturl , $('#registra_campa').serialize(),{dataType:"json"})
+					.done(function(data){
 						
-						}).fail(function(){
-							alert( "error" );
-						});
+						$('.reporegistro').html(data);
+						loadcamp();
+						listaropciones();
+
+					});
+
+
+						
+				
+
+
 
 
 		}else{
@@ -135,6 +93,7 @@ function loadcamp(){
 						}).done(function(data){				
 
 							listado="";
+
 							for (var a = 0; a < data.length; a++) {
 									
 								idcampaña = data[a].idcampaña; 		
@@ -143,13 +102,15 @@ function loadcamp(){
 								fecharegistro = data[a].fecharegistro;
 								redsocial  = data[a].redsocial;
 
-								listado +="<tr><td>"+idcampaña+"</td><td>"+nombre+"</td><td>"+descripcion+"</td><td>"+fecharegistro+"</td><td>"+redsocial+""+
-								"<td><span class='label'><h5>Eliminar</h5></span></td><td><span class='label'><h5>Editar ✍ ✎ ✏ ✐ ✑</h5></span></td></tr>";
+								direct = now+"/index.php/camp/opciones?camp="+idcampaña+"&name="+nombre;
+
+								listado +="<tr><td>"+idcampaña+"</td><td><a href='"+direct+"'>"+nombre+"<a></td><td>"+descripcion+"</td><td>"+fecharegistro+"</td><td>"+redsocial+""+"<td><label onclick='editcam();'> Editar ✎  </label></td></tr>";
+								
+							}
+							$('.listacampañas').html(listado);	
 							
 
-							}
-
-							$('.listacampañas').html(listado);
+							
 
 						
 						}).fail(function(){
@@ -159,6 +120,29 @@ function loadcamp(){
 
 }
 
+function listaropciones(){
+
+
+	/*Listar nombres de las campañas actuales*/
+	listadocampname =now+"index.php/api/camprest/presentanombreidcamp/format/json";
+	$.post(listadocampname , {dataType : "json"}).done(function(data){
+			
+		elemento ="";		
+		for (var a = 0; a < data.length; a++) {
+			
+			idcamp =  data[a].idcampaña;
+			nombre = data[a].nombre;
+			
+			
+			elemento+= "<option value='"+idcamp+"'>"+nombre+"</option>";
+
+		}
+		$('.campedit').html(elemento);			
+
+	});
+
+
+}
 function validalength( cadena, minimo , mensajefail ){
 
 

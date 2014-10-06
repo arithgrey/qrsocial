@@ -4,17 +4,54 @@ class Camprest extends REST_Controller
 {
 
 
-    function editcamp_POST(){
 
+
+
+    function getnamecampbyid_POST(){
 
         $logged_in = $this->is_logged_in();
 
         if ($logged_in == 1) {
 
+            $id= $this->input->post("idcamp");        
+            $this->load->model('cammodel');    
+            $idusuario= $this->session->userdata('idusuario');
+            $namecamo = $this->cammodel->getnamebyid($id, $idusuario);            
+            $this->response($namecamo);
+
+        }else{        
+              
+              $this->logout();    
+
+        }
+
+    }
+
+
+    /* Editar campaña */
+
+    function editcamp_POST(){
+
+        $logged_in = $this->is_logged_in();
+
+        if ($logged_in == 1) {
+
+
+        $idcamp =   $this->input->post('campedit'); 
         $nameedicion = $this->input->post('nameedicion');
         $descripcionedit= $this->input->post('descripcionedit');        
-        $this->response($nameedicion);
+    
+        $this->load->model("cammodel");        
+        $responsedb= $this->cammodel->editcamp($idcamp , $nameedicion, $descripcionedit);
 
+        $reporte="";
+        if ($responsedb == true) {
+                
+                $reporte ="Edición efectuada con éxito";
+            }else{
+                $reporte ="Edición fallida";
+            }    
+        $this->response($reporte);
         }else{        
               /*Terminamos sessión*/  
               $this->logout();    
@@ -52,27 +89,33 @@ class Camprest extends REST_Controller
 
         if ($logged_in == 1) {
 
-            $name = $this->input->post('name');        
-            $social = $this->input->post('social');
+            $name = $this->input->post('nombrecam');        
+            $social = $this->input->post('red');
             $descripcion = $this->input->post('descripcion');
             
-
-            $this->load->model('cammodel');    
-            $dbresponse="";
+            
             $idusuario= $this->session->userdata('idusuario');
-            $dbresponse = $this->cammodel->registrocamp($name, $social , $descripcion, $idusuario);
+            $dbresponse ="";
 
+            $this->load->model('cammodel');            
+            $dbresponse = $this->cammodel->registrocamp($name, $social , $descripcion , $idusuario);
+
+            $reporte ="";
             if ($dbresponse == 1) {
-                
 
-                $this->response("Elemento ingresado correctamente");    
+                $reporte= "Éxito en el registro";                    
+            }elseif ($dbresponse == 2){
+                $reporte= "Falla en el registro";                    
             }else{
-                $this->response("Falla en el registro");    
+                $reporte= $dbresponse;
             }
+            $this->response($reporte);    
+            
                 
 
             }else{        
               /*Terminamos sessión*/  
+              $this->response("");    
               $this->logout();    
             
 
@@ -81,6 +124,39 @@ class Camprest extends REST_Controller
     }
 
     
+
+
+    function eliminacamp_POST(){
+
+        $logged_in = $this->is_logged_in();
+        
+
+        if ($logged_in == 1) {
+
+            $this->load->model('cammodel');    
+            $idcamp = $this->input->post('idcamp');
+
+            $idusuario= $this->session->userdata('idusuario');
+            $responsedb = $this->cammodel->deletecamobyid($idcamp , $idusuario);
+
+            $dataresponse ="";
+
+            if ($responsedb != "1") {
+                $dataresponse ="Falla el eliminar la campaña intente nuevamente";    
+            }else{
+                $dataresponse ="Elemento eliminado correctamente.! ";                
+            }
+
+            $this->response($dataresponse);
+
+        }else{        
+              /*Terminamos sessión*/  
+              $this->logout();    
+              $this->response("");
+
+        }
+
+     }   
 
     function loadcampania_POST(){
         
@@ -101,7 +177,6 @@ class Camprest extends REST_Controller
 
 
     }
-
 
     private function is_logged_in() {
     
