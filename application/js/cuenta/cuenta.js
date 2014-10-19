@@ -105,8 +105,6 @@ function loadcuentas(){
 				dataType: "json"	
 
 			}).done(function(data){
-
-
 			
 		  		
 				elementos ="<table><thead><tr><th>Identificador</th><th>Cuenta</th><th>Descripción</th><th>Estado</th></tr></thead><tbody>";
@@ -125,8 +123,8 @@ function loadcuentas(){
 					}else{
 						statusdescripcion ="";
 					}
-					urledit = urlnow+"index.php/cuentas/editcuenta?text="+cuenta;
-					elementos+="<tr><td><a href='"+ urledit +"' >"+cuenta+" Editar</a></td><td>"+ nombre+"</td> <td>"+descripcion+"</td><td>"+statusdescripcion+"</td> </tr>";
+					
+					elementos+="<tr><td><div data-alert class='alert-box'><a id='editar_cuenta_a' onclick=callform('"+cuenta+"');>"+cuenta+" Editar</a></td><td>"+ nombre+"</td> <td>"+descripcion+"</td><td>"+statusdescripcion+"</td></div> </tr>";
 
 				}
 				elementos+="</tbody></table>";

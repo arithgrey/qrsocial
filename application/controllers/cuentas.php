@@ -42,6 +42,7 @@ class Cuentas extends CI_Controller {
 		$username = $this->session->userdata('username');	
 		$data["username"]=$username;
 		$data["homesess"]=base_url('/index.php/principal/homeuser');
+		$data["cuentaid"] = $cuenta;
 		
 
 		$this->load->view("Template/headersession", $data);

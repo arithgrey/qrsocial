@@ -9,10 +9,14 @@
     }
 
     
-    function loadcamp($idusuario){
-      
-      $query = $this->db->get_where('campaña', array('status' => '1', 'idusuario'=>$idusuario));
-      return $query->result_array();
+    function loadcampania($idusuario , $idcuentaactual){
+          
+        $this->db->where('idcuenta', $idcuentaactual);
+        $this->db->where('status', '1' );
+        $this->db->where('idusuario', $idusuario);
+        $query = $this->db->get('campaña');      
+        
+        return $query->result_array();
 
     }
 
@@ -74,7 +78,7 @@
       return $e;
     }
 
-    function registrocamp($nombre, $redsocial , $descripcion, $idusuario){
+    function registrocamp($nombre, $redsocial , $descripcion, $idusuario , $idregistrocamp){
 
       $datastatus="";
       if ($this->isnameexist($nombre , $idusuario) >0){
@@ -87,7 +91,9 @@
              'descripcion' => $descripcion ,         
              'status' => $status,
              'redsocial' => $redsocial,
-             'idusuario' =>$idusuario );
+             'idusuario' =>$idusuario, 
+             'idcuenta' => $idregistrocamp
+              );
 
              $result = $this->db->insert('campaña', $data);
               if ($result == true) {

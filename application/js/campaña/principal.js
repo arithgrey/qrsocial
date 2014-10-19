@@ -5,8 +5,6 @@ $(document).on("ready", function(){
 	loadcamp();
 	listaropciones();
 
-
-
 	/***/
 	$('.guardarcambios').click(function(){
 
@@ -20,10 +18,7 @@ $(document).on("ready", function(){
 			loadcamp();
 			listaropciones();
 			
-
 		});
-
-
 
 	});
 
@@ -34,6 +29,8 @@ $(document).on("ready", function(){
 		name = $('.nombrecampaña').val();		
 		social = $('.red').val();
 		descripcion = $('.descripcion').val();
+		
+
 
 		reporte = "";
 
@@ -46,6 +43,7 @@ $(document).on("ready", function(){
 				
 				posturl = now + "index.php/api/camprest/validaregistro/format/json";
 
+					
 					
 					$.post(posturl , $('#registra_campa').serialize(),{dataType:"json"})
 					.done(function(data){
@@ -78,16 +76,17 @@ $(document).on("ready", function(){
 
 
 function loadcamp(){
-
 	
 
 		posturl = now + "index.php/api/camprest/loadcampania/format/json";
-
+		idcamp  =  $(".idcamp").val();
+		params = { "idcuentaactual" : idcamp }
 
 				var jqxhr = $.ajax({
 
-							type: "POST",
-							url: posturl,													
+							type: "get",
+							url: posturl,
+							data: params,															
 							dataType: "json"	
 
 						}).done(function(data){				
@@ -104,7 +103,7 @@ function loadcamp(){
 
 								direct = now+"/index.php/camp/opciones?camp="+idcampaña+"&name="+nombre;
 
-								listado +="<tr><td>"+idcampaña+"</td><td><a href='"+direct+"'>"+nombre+"<a></td><td>"+descripcion+"</td><td>"+fecharegistro+"</td><td>"+redsocial+""+"<td><label onclick='editcam();'> Editar ✎  </label></td></tr>";
+								listado +="<tr><td>"+idcampaña+"</td><td><a href='"+direct+"'>"+nombre+"<a></td><td>"+descripcion+"</td><td>"+fecharegistro+"</td><td>"+redsocial+""+"<td><span class='label'><label onclick='editcam();'> Editar ✎  </label></span></td></tr>";
 								
 							}
 							$('.listacampañas').html(listado);	
@@ -121,7 +120,6 @@ function loadcamp(){
 }
 
 function listaropciones(){
-
 
 	/*Listar nombres de las campañas actuales*/
 	listadocampname =now+"index.php/api/camprest/presentanombreidcamp/format/json";

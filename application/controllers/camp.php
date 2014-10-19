@@ -21,8 +21,7 @@ class Camp extends CI_Controller {
 			$username = $this->session->userdata('username');	
 			$data["username"]=$username;
 			$data["homesess"]=base_url('/index.php/principal/homeuser');
-			
-			
+						
 			$this->load->view("Template/headersession", $data);
 			$this->load->view("campaña/mensajes");
 			$this->load->view("Template/footer", $data);

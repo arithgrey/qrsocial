@@ -1,6 +1,13 @@
 $(document).on("ready", function(){
 
-	urlnow = $('.now').val();
+	urlnow = $('.now').val();	
+	$('#cancelaredicion').click(function(){
+		$('#dlg_editar_cuenta').foundation('reveal', 'close');
+
+	});
+
+	
+
 
 	$('.actualizar').click(function(){
 
@@ -36,3 +43,27 @@ $(document).on("ready", function(){
 
 	/*Termina el js*/
 });
+
+function callform(e){
+
+	$('#edit-cuenta').val(e);
+
+	$('#dlg_editar_cuenta').foundation('reveal', 'open');				
+	$('#actualizar').click(function(){
+		
+		
+		urlupdate  = urlnow + "index.php/api/cuentarest/updatecuenta/format/json";					
+		$.post(urlupdate , $("#edit_form").serialize()).done(function(data){
+
+			loadcuentas();
+			$("#reporte-edicion").html(data);
+
+		}).fail(function(){
+			alert("error");
+		});
+
+
+
+	});	
+
+}

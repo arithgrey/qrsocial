@@ -5,7 +5,26 @@ class Camprest extends REST_Controller
 
 
 
+    function loadcampbycount_GET(){
 
+        $logged_in = $this->is_logged_in();
+
+        if ($logged_in == 1) {
+                
+            $this->load->model('cammodel');    
+
+                $idusuario= $this->session->userdata('idusuario');            
+                $this->response($idusuario);
+
+        }else{        
+              
+              $this->logout();    
+
+        }
+
+
+        
+    }
 
     function getnamecampbyid_POST(){
 
@@ -92,13 +111,15 @@ class Camprest extends REST_Controller
             $name = $this->input->post('nombrecam');        
             $social = $this->input->post('red');
             $descripcion = $this->input->post('descripcion');
+            $idregistrocamp = $this->input->post('idregistrocamp');
+
             
             
             $idusuario= $this->session->userdata('idusuario');
             $dbresponse ="";
 
             $this->load->model('cammodel');            
-            $dbresponse = $this->cammodel->registrocamp($name, $social , $descripcion , $idusuario);
+            $dbresponse = $this->cammodel->registrocamp($name, $social , $descripcion , $idusuario, $idregistrocamp);
 
             $reporte ="";
             if ($dbresponse == 1) {
@@ -158,17 +179,18 @@ class Camprest extends REST_Controller
 
      }   
 
-    function loadcampania_POST(){
+    function loadcampania_GET(){
         
         $logged_in = $this->is_logged_in();
+        $idcuentaactual = $this->input->get('idcuentaactual');
 
         if ($logged_in == 1) {
 
             $this->load->model("cammodel");
             $idusuario= $this->session->userdata('idusuario');
-            $databaseresponse = $this->cammodel->loadcamp($idusuario);
-            $this->response($databaseresponse);
 
+            $databaseresponse = $this->cammodel->loadcampania($idusuario , $idcuentaactual);
+            $this->response( $databaseresponse);
 
         }else{
               $this->logout();    

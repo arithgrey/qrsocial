@@ -1,5 +1,6 @@
 <script type="text/javascript" src="<?=base_url('application/js/sha1.js')?>"></script>
 <script type="text/javascript" src="<?=base_url('application/js/usuario/accessuser.js')?>"></script>
+<div data-alert class="alert-box">
 <div class="row">
 	<a href="<?=base_url()?>">Home</a>      
   <div class="small-12 large-6 columns">
@@ -51,4 +52,10 @@
 
 <div class='row'>
 </div>
+</div>
+
+
+
+
+
 

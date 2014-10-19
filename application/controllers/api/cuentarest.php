@@ -60,13 +60,14 @@ class Cuentarest extends REST_Controller
 
         $reporte;
 
-        $nombre = $this->input->post("nombre");
-        $descripcion = $this->input->post("descripcion");
-        $estado = $this->input->post("estado");
-        $edit = $this->input->post("edit");
+        $nombre = $this->input->post("nombre-edit");
+        $descripcion = $this->input->post("descripcion-edit");
+        $estado = $this->input->post("estado-cuenta");
+        $edit = $this->input->post("edit-cuenta");
 
+        
         if (strlen($nombre)>1) {
-            /**/
+          
             if ($estado == 1){
 
                 
@@ -101,7 +102,7 @@ class Cuentarest extends REST_Controller
             }
 
         }
-
+        
         $this->response($reporte);
 
     }

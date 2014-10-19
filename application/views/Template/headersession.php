@@ -34,7 +34,9 @@
 	<script src="<?=base_url('application/js/vendor/jquery.js')?>"></script>
 	<script src="<?=base_url('application/js/foundation/foundation.js')?>"></script>
 	<script src="<?=base_url('application/js/foundation/foundation.equalizer.js')?>"></script>
-
+	<script src="<?=base_url('application/js/vendor/jquery.js')?>"></script>
+	<script src="<?=base_url('application/js/foundation/foundation.js')?>"></script>
+	
 	<script>
     $(document).foundation();
   </script>
@@ -46,8 +48,30 @@
 		<a href="<?=base_url('index.php/principal/logout')?>" data-reveal-id="firstModal" class="radius button">Logout&hellip;</a>
 		<div class="row">			
 			<div class='row'> 
+				<div class='row'>
+	
+	<dl class="sub-nav"> 		
+		<dd class="" id='panelcontrol_menu'>
+			<a href="<?=base_url('index.php/panelcontrol/control')?>">Panel de control</a>
+		</dd> 
+		<dd id="home_menu">
+			<a href="<?=base_url()?>">Home</a>
+		</dd> 
+		<dd id='zonasqr_menu'>
+			<a href="">Zonas QR</a>
+		</dd> 
+		<dd id='campanias_menu'>
+			<a href="#">Campañas</a>
+		</dd> 
+	</dl>
+</div>
+
+</div>
 				<h1 class='home large-8 columns' id='home'><a href="<?=$homesess;?>">QR social</a></h1>
-							
+					
+
+
+
 				<div class='large-4 columns' >
 					<h2 ><?=$titulo?></h2>
 					<div class="progress [radius round]"> 

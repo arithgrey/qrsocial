@@ -26,7 +26,7 @@ function loadcuentas(){
 					descripcion = data[a].descripcion;
 					status = data[a].status;					
 					urlacceso= urlnow +"index.php/cuentas/accessacount?cuenta="+cuenta+"&name="+nombre;					
-					elementos+="<tr><td><a href='"+urlacceso +"'>" +a +".- "+ nombre+"</a></td></tr>";	
+					elementos+="<tr><td><div data-alert class='alert-box'><a href='"+urlacceso +"' id='name_campania'>" +a +".- "+ nombre+"</a></div></td></tr>";	
 				};
 				elementos+="</table>";
 
