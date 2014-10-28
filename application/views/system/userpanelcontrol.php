@@ -1,3 +1,4 @@
+<script src="<?=base_url('application/js/sha1.js')?>"></script>
 <script type="text/javascript" src="<?=base_url('/application/js/backend/panelcontrol.js')?>" ></script>
 <style type="text/css">
 #title{
@@ -34,24 +35,27 @@
 			<div class='row'>
 				<div class='large-7 columns'>
 					
+					<form name='form_compani' id="form_compani">
 					<div class="large-12 columns">
 							<span data-tooltip class="has-tip" title="Renombra tu cuenta"><h5 id="extras"class="show-for-large-only">Nombre</h5></span>
-							<input type='text' name='nombre' placeholder='<?=$username?>' value='<?=$username?>'/>
+							<input type='text' name='nombre' id="nombre_cuenta" placeholder='<?=$username?>' value='<?=$username?>'/>
 
 							<span data-tooltip class="has-tip" title="Compañia"><h5 id="extras"class="show-for-large-only">Compañia</h5></span>
-							<input type='text' name='company' placeholder='compañia'/>
+							<input type='text' name='company' id="company_cuenta" placeholder='compañia'/>
 							
 							<span data-tooltip class="has-tip" title="Asigna un nuevo email"><h5 id="extras"class="show-for-large-only">Correo electrónico</h5></span>
-							<input type='email' name='email' placeholder='arithgrey@gmail.com' value='<?=$mailacount?>'/>	
+							<input type='email' name='email' id="email_cuenta" placeholder='arithgrey@gmail.com' value=''/>	
 
 							<span data-tooltip class="has-tip" title="Asigna un nuevo email"><h5 id="extras"class="show-for-large-only">Número telefónico</h5></span>
-							<input type='text' name='numerotelefonico' placeholder='5534551924' />							
+							<input type='text' name='numerotelefonico' id="numerotelefonico_cuenta" placeholder='5534551924' />							
 							<span data-tooltip class="has-tip" title="Url de la empresa">
 								<h5 id="extras"class="show-for-large-only">Url</h5>
 							</span>
-							<input type='url' name='url' class='' placeholder='https://qrsocial/settings/profile'/>									
+							<input type='url' name='url' id="urlcompañia_cuenta" class='' placeholder='https://qrsocial/settings/profile'/>									
 					</div>								
-					<button>Actualizar</button>
+					</form>
+					<p id="repoupdate"></p>
+					<button id="btn_freshcount">Actualizar</button>
 				</div>
 				<div class='large-5 columns'>										
 				</div>			
@@ -63,21 +67,25 @@
 	<!--Contraseña-->
 	<div class='contra_config large-10 columns' id="contra_config">
 		<div class='panel'>
-			<h2 class="subheader" >Cambiar <small>contraseña</small></h2>
+			<h2 class="subheader" >Cambiar <small>tu contraseña </small></h2>
 			<div class='row'>
 				<div class='large-7 columns'>					
 					<div class="large-12 columns">														
-							<span data-tooltip class="has-tip" title="Antigua contraseña"><h5 class="show-for-large-only">Antigua contraseña</h5></span>
-							<input type='password' name='oldpassword'  />	
-							<span data-tooltip class="has-tip" title="Nueva contraseña"><h5 class="show-for-large-only">Nueva contraseña</h5></span>
-							<input type='password' name='newpassword' />	
-						
-							<span data-tooltip class="has-tip" title="confirmar contraseña">
-								<h5 class="show-for-large-only">Conformas nueva contraseña</h5>
-							</span>
-							<input type='password' name='passwordconfirm' class='passwordconfirm'/>												
+							<form name="form_pw" id="form_pw">
+
+								<span data-tooltip class="has-tip" title="Antigua contraseña"><h5 class="show-for-large-only">Antigua contraseña</h5></span>
+								<input type='password' name='oldpassword' id="oldpassword" />	
+								<span data-tooltip class="has-tip" title="Nueva contraseña"><h5 class="show-for-large-only">Nueva contraseña</h5></span>
+								<input type='password' name='newpassword' id="newpassword"/>	
+							
+								<span data-tooltip class="has-tip" title="confirmar contraseña">
+									<h5 class="show-for-large-only">Conformas nueva contraseña</h5>
+								</span>							
+							<input type='password' name='passwordconfirm' id='passwordconfirm'/>												
+							<p id="reporte_change"></p>
+							</form>
 					</div>								
-					<button>Actualizar</button>
+					<button id="btn_changepw">Actualizar</button>
 				</div>
 				<div class='large-5 columns'>					
 				</div>		

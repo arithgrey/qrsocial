@@ -28,6 +28,7 @@ class Cuentas extends CI_Controller {
 
 		}
 	}
+	
 
 	public function accessacount(){
 

@@ -13,7 +13,6 @@ $data = array(
 <link href='http://fonts.googleapis.com/css?family=Ubuntu:300,400,500,700' rel='stylesheet' type='text/css'>
 <link href="<?=base_url('application/css/calendar.min.css')?>" rel="stylesheet">  
 
-
 <style type="text/css">
   .conf-hora-fecha{
     background: #23A3EE;
@@ -39,84 +38,94 @@ $data = array(
   .calendario-termino p{
     display: none;
   }
-  #registro-mensajes{
-    display: none;
+  .msj_description{
+    color: white;
   }
+
 </style>
 
-<div class='row'>
 
-    <div class='row'>    
-    
-    <div class='large-6 columns'>
-      <!--Ver mensajes-->
-    <div class='large-2 columns'>      
-      <div class="switch">
-            <input id="mensajesactuales" type="checkbox">
-            <label for="mensajesactuales"></label>
-      </div>                
-    </div> 
 
-      <div class='large-10 columns'>
-        <h3>Mensajes<small> actuales</small></h3>  
-      </div>  
 
-      <!--Crear mensajes-->
 
-      <div class='large-2 columns'>
-        <div class="switch">
-            <input id="registrarmensaje" type="checkbox">
-            <label for="registrarmensaje"></label>
-          </div>          
-      </div>
-      <div class='large-10 columns'>
-        <h3>Registra <small>Nuevo mensaje en el sistema</small></h3>  
-      </div>
-      
-    </div>    
 
-    <div class='large-6 columns'>
-      <!--Aquí va el contenido de la derecha.-->
-    </div>
+<div id="registro-mensajes">
 
-  </div>
+  <div data-alert class="alert-box">
+
+<div class='row'>          
+          <div class='large-4 columns'>
+              <!--Ver mensajes-->
+              <div class='large-6 columns'>      
+                <div class="switch">
+                      <input id="mensajesactuales" type="checkbox">
+                      <label for="mensajesactuales"></label>
+                </div>                
+              </div> 
+                <div class='large-6 columns'>
+                  <h3 class="msj_description">Mensajes<small class="msj_description"> actuales</small></h3>  
+                </div>  
+           </div>      
+
+           <div class='large-8 columns'>
+                <!--Crear mensajes-->
+                <div class='large-4 columns'>                  
+                <h3 class="msj_description" >Registrar<small class="msj_description"> algún evento</small></h3>  
+                </div>
+
+                <div class='large-8 columns'>                  
+                  <select name="eventoaction" class='large-6 columns' onchange="showpanel(this)" >
+                    <option value="1" >Publicación en Facebook</option>
+                    <option value="2" >Publicación en Twitter</option>
+                    <option value="3" >Mensaje adicional para llamar a una acción  (call to action)</option>
+                    <option value="4">Mensaje de agradecimiento posterior a la publicación de tu mensaje</option>
+                    <option value="5">Mensaje en caso de que no se encuentre disponible el mensaje</option>
+                  </select>        
+            
+                </div>            
+
+          </div>    
   
 </div>
 
 
-<div id="registro-mensajes">
-  <div data-alert class="alert-box">
+
+
+
+
+
+
+
+
+
+
 
 <div class='row'>
   <div class='large-6 columns'>
-    <span data-tooltip class="has-tip" title="Registro de mensajes para a campaña "><h3 class="show-for-large-only"><a href="#">Datos generales</a></h3></span>
+    <span data-tooltip class="has-tip" title="Registro de mensajes para a campaña ">
+     
       <form>
-    <div class="row">
-      <div class="large-12 columns">
-          
-          <span data-tooltip class="has-tip" title=""><h3 id="extras"class="show-for-large-only">Nombre</h3></span>
-          <input type="text" placeholder="Linux para todos & social media"/>        
-      </div>
-    </div>
+    
     <div class='row'>
        <div class="large-12 columns">
         
           <span data-tooltip class="has-tip" title="El cuerpo del mensaje , en el puedes insertar #hashtag(s) , Url(s), texto ... "><h3 id="extras"class="show-for-large-only">Descripción</h3></span>
 
-         <textarea rows="4" cols="50" name='descripcion' class='descripcion' id='descripcion'>
+         <textarea rows="4" cols="50" name='descripcion' class='descripcion' id='descripcion'>                  
           ¿Qué estás pensando? 
-          
+
           Tu publicación con #hashtag
         </textarea> 
        </div>      
     </div>  
   </div>  
 
+
 <!---->
 
 <div class="large-6 columns">
       <div class='row'>
-        <span data-tooltip class="has-tip" title="Registro de mensajes para a campaña "><h3 class="show-for-large-only"><a href="#">Configuración</a></h3></span>
+        
       </div>
       <br>
 <div id="presentesiempre">
@@ -187,57 +196,7 @@ $data = array(
 
 </div> 
 
-   <!--Extras-->
-<div class='large-12 columns'>
-  <span data-tooltip class="has-tip" title=""><h3 id="extras"class="show-for-large-only">Extras</h3></span>
-  <div>
-  <span data-tooltip aria-haspopup="true" class="has-tip" title="">
-      <label>Mensaje adicional para llamar a una acción  (call to action)</label>  
-      <input type="text">
-      <label>Mensaje de agradecimiento posterior a la publicación de tu mensaje</label>
-      <input type="text">
-      <label>Mensaje en caso de que no se encuentre disponible el mensaje</label>
-      <input type="text">            
-  </span>      
-  </div>
+   
 </div>
 </div>
 </div>
-</div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

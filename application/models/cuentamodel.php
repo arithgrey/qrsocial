@@ -18,7 +18,7 @@
 
       return $data;
     }
-    function registrocuenta($nombre, $descripcion, $tipocuenta, $idusuario){
+    function registrocuenta($nombre, $descripcion, $tipocuenta ){
 
 
         $status = 0; 
@@ -32,20 +32,16 @@
            'nombre' => $nombre ,
            'descripcion' => $descripcion ,
            'idTipo_cuenta' => $tipocuenta, 
-           'status' => $status,
-           'idusuario' =>$idusuario
+           'status' => $status
+           
           );
 
-        $insertquery  = $this->db->insert('cuenta', $data);  
-
-        if ($insertquery == true ) {
-          
-        }else{
-
-        }
+        $insertquery =  $this->db->insert('cuenta', $data);  
+        $querylast = "SELECT MAX(idcuenta) AS id FROM cuenta";
+        $result = $this->db->query($querylast);
         
 
-        return $insertquery;
+        return $result->result_array(); 
     }
 
     /*Listar cuentas */

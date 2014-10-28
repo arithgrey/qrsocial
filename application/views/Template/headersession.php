@@ -58,10 +58,10 @@
 			<a href="<?=base_url()?>">Home</a>
 		</dd> 
 		<dd id='zonasqr_menu'>
-			<a href="">Zonas QR</a>
+			<a href="<?=base_url('index.php/zonasqr/principal')?>">Zonas QR</a>
 		</dd> 
 		<dd id='campanias_menu'>
-			<a href="#">Campañas</a>
+			<a href="<?=base_url('index.php/cuentas/accessacount')?>">Campañas</a>
 		</dd> 
 	</dl>
 </div>

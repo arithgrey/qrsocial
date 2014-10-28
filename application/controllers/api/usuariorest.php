@@ -21,7 +21,7 @@ class Usuariorest extends REST_Controller
                         $repo="<span class='[success alert secondary] [round radius] label'> ✖Correo ya registrado en el sistema, intente con uno distinto
                             </span>";
                     }else{
-                        $repo ="ok";
+                        $repo ="1";
                     }
 
             }else{
@@ -34,7 +34,6 @@ class Usuariorest extends REST_Controller
     function userexist_POST(){
 
             $username = $this->input->post("username");
-
             $repo="";
             if (strlen($username)>0 ) {
                 
@@ -42,13 +41,11 @@ class Usuariorest extends REST_Controller
                     $dataresponse = $this->usuariomodel->verificausuario($username);
 
                     if ($dataresponse  ==  1) {
-                        $repo="<span class='[success alert secondary] [round radius] label'> ✖Intente con un usuario distinto</span>";
+                        $repo="1";
                     }else{
-                        $repo ="ok";
+                        $repo ="0";
                     }
             }else{
-
-                $repo="<span class='[success alert secondary] [round radius] label'> ✖Asigne un nombre de usuario</span>";
             }
             $this->response($repo);     
 
@@ -56,19 +53,14 @@ class Usuariorest extends REST_Controller
 
     function validadata_POST(){
         
-
         $username = $this->input->post("username");
         $usermail = $this->input->post("usermail");
         $pw = $this->input->post("pw");
-        $this->load->model("usuariomodel");                
-
+        $this->load->model("usuariomodel");                        
         $reporte="";
         if (valid_email($usermail)){
-               if (strlen($username)>4 ) {
-                    
-                    
+               if (strlen($username)>4 ) {                                        
                     $dataresponse = $this->usuariomodel->verificausuario($username);
-
                      if ($dataresponse  ==  1){
 
                             $reporte="usuario registrado ya en el sistema";
@@ -76,24 +68,25 @@ class Usuariorest extends REST_Controller
 
                             $dataresponsed = $this->usuariomodel->verificausuariomail($usermail);
                             if ($dataresponsed  ==  1){
-
                                 $reporte="La cuenta de correo ya está registrada en el sistema";
 
                             }else{
-
-                                $dbresponse= $this->usuariomodel->registro($username , $usermail, $pw );
+                        
+                                $this->load->model("cuentamodel");
+                                $responsecuenta = $this->cuentamodel->registrocuenta($username , "" , 2 );
+                                $cuentanum = $responsecuenta[0]["id"];                                
+                                $dbresponse= $this->usuariomodel->registrofreemium($username , $usermail, $pw , $cuentanum );
+                                $this->response($dbresponse[0]);
+                          
                                 if ($dbresponse == 1 ) {
-                                    $reporte="1";    
+
+                                    /*Registrado*/
+
                                 }else{
                                     $reporte="Falla en el registro";
-                                }
-                                
-
+                                }                                
                             }
-
-
-                     }
-                                        
+                     }                                    
 
                 }else{
                     $reporte= 'El usuario ya está registrado en el sistema';        
@@ -102,13 +95,9 @@ class Usuariorest extends REST_Controller
         }else{
             $reporte= 'El mail ya está registrado en el sistema';
         }
-
-
-        $this->response($reporte);
-        
-
-
-    }    
+        $this->response($reporte); 
+    }   
+    
 /*Termina  el controlador rest */
 }
 

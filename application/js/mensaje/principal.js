@@ -2,7 +2,7 @@ $(document).on("ready", function(){
 
 	var estadopresente = 0;
 	var estadopresentefechahora=0;
-	var estadopresenteregistro =0;
+	var estadopresenteregistro =1;
 
 	$("#registrarmensaje").click(function(){
 		
@@ -94,4 +94,26 @@ $(document).on("ready", function(){
 function llenaelemento(idcomponente , datos){
 
 	$(idcomponente).append(datos);
+}
+function showpanel(e){
+
+		panel = e.value; 
+
+		switch(panel) {
+
+		    case 1:
+				$("#registro-mensajes").show();	        
+		        break;
+		    case 2:
+		        alert("Trabajando.....");
+		        break;
+		    default:
+		    	
+		    	alert("Trabajando.....");
+		    	break;
+	        
+		} 
+
+
+
 }

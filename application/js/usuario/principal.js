@@ -1,8 +1,5 @@
 $(document).on("ready", function(){
-
 	now = $('.now').val();
-	validationx = 0;
-	validationy= 0 ;
 
 	/*Validamos si el usuario existe*/
 	$('.username').change(function (){
@@ -10,44 +7,37 @@ $(document).on("ready", function(){
 			username = $('.username').val();
 			urlpost = now + "index.php/api/usuariorest/userexist/format/json";			
 			expr = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
-		 
-
 
 		    if ( !expr.test(username) ){
 
-				    params = {"username": username }
-				
-						var jqxhr = $.ajax({
+						$.post(urlpost, {"username": username } ).done(function(data){
+							
 
-							type: "POST",
-							url: urlpost,						
-							data: params,
-							dataType: "json"	
-
-						}).done(function(data){				
-
-							if(data == "ok") {						
-								$('.reponusername').html("<span class='success label'>✓</span>");
-								validationx = 1;						
+							
+							if (data == 0) {
+								/*Usuario correcto*/
+								response= "<div data-alert class='alert-box info radius'>Usuario correcto</div>";		
+								$("#reporte_registro").html(response);
+								
 
 							}else{
-								$('.reponusername').html(data);
-								validationx=0;
-								$(".reporteregistro").html("");
 
+								response = "<span class='[success alert secondary] [round radius] label'> ✖Intente con un usuario distinto</span>";
+								$("#reporte_registro").html(response);
+								
+								
 							}
+							
 						
 						}).fail(function(){
-							alert( "error" );
+							alert("error");
 						});
-			
-		    }else{
+									
+		    }else{			    	
 
-			    	repo ="<span class='[success alert secondary] [round radius] label' onclick='mensajeerroruser()'>✖</span>";
-			    	validationx=0;
-			    	$('.reponusername').html(repo);
+				    	
+				    	$('#reporte_registro').html(repo);
 		    }
-
 	});
 
 	/*Validamos que el correo esté disponible*/
@@ -55,171 +45,81 @@ $(document).on("ready", function(){
 
 			usermail  = $('.usermail').val();		
 			urlpost = now + "index.php/api/usuariorest/usermailexist/format/json";
-
 			expr = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
 		    
+
 		    if ( !expr.test(usermail) ){
 
 		    	repo ="<span class='[success alert secondary] [round radius] label'>✖ Mail no valido</span>";
-		    	$('.repousermail').html(repo);
+		    	$('#reporte_registro').html(repo);
+
 		    }else{
 		    		
-			    params = {"usermail": usermail }
+			    $.post( urlpost , {"usermail": usermail } )
+			    .done(function(data){
+
+			    		
+				    	if (data == "1"){
+
+						$('#reporte_registro').html("<div data-alert class='alert-box info radius'>Correo electrónico correcto</div>");
+						
+
+						}else{
+
+							$('#reporte_registro').html(data);								
+						
+						}
 				
-				var jqxhr = $.ajax({
 
-					type: "POST",
-					url: urlpost,						
-					data: params,
-					dataType: "json"	
-
-				}).done(function(data){
-
-					if (data == "ok"){
-						$('.repousermail').html("<span class='success label'>✓</span>");
-						validationy = 1;
-
-					}else{
-						$('.repousermail').html(data);	
-						$(".reporteregistro").html("");
-						validationy = 0;
-					}
-					
-					
-				
-				}).fail(function(){
-					alert( "error" );
-				});
-
-		    }
-		        
-
-
+			    }).fail(function(){
+			    	alert( "error" );
+			    });
+		}		
 	});
 
 
-	$(".registrousuario").click(function(){
+	$("#registrousuario").click(function(){
 
 		pwregistro  = $('.pwregistro').val();		
 		pwconfirm  = $('.pwconfirm').val();
-
 		username = $('.username').val();
 		usermail  = $('.usermail').val();				
+		
+		pw = ""+CryptoJS.SHA1(pwregistro);			
+		postdata = now +"index.php/api/usuariorest/validadata/format/json";
+
+		if (pwregistro == pwconfirm ) {
 
 
-		if (username.length <5){
+			$.post(postdata , { "username" : username , "usermail" : usermail , "pw" : pw })
+			.done(function(data){
 
-			$('.reponusername').html("<span class='[success alert secondary] [round radius] label'>✖</span>");
-			$(".reporteregistro").html("");
-			validationx = 0;						
+				if (data == 1) {
 
+						done= $(".now").val()+"index.php/usuario/usuarioaccess?registro=done";
+						window.location.replace(done);
+				}else{
+
+					$('#reporte_registro').html(data);								
+				}
+				
+
+			}).fail(function(){
+
+				alert("error");
+			});
+
+						
 		}else{
-
-
-			if (pwregistro.length<8) {
-
-				$(".reportepw").html("<span class='[success alert secondary] [round radius] label'>✖</span>");
-				$(".repopwregistro").html("<span class='[success alert secondary] [round radius] label'>✖</span>");			
-				$(".reporteregistro").html("");
-
-			}else{
-
-					if(pwregistro === pwconfirm){
-						
-						$(".reportepw").html("<span class='success label'>✓</span>");
-						$(".repopwregistro").html("<span class='success label'>✓</span>");			
-
-						/*usuario */
-						if (validationx == 1 ){
-								
-								$(".reponusername").html("<span class='success label'>✓</span>");
-
-								/*User mail*/
-								if(validationy == 1){
-									$('.repousermail').html("<span class='success label'>✓</span>");
-										
-										/*env*/
-											pw = ""+CryptoJS.SHA1(pwregistro);
-											params ={"username":username , "usermail" : usermail , "pw" : pw}	
-											postdata = now +"index.php/api/usuariorest/validadata/format/json";
-
-											var jqxhr = $.ajax({
-
-												type: "POST",
-												url: postdata,						
-												data: params,
-												dataType: "json"	
-
-											}).done(function(data){				
-
-												if (data==1) {
-													
-													cleanall();
-
-													$('.reporteregistro').html("<h3 id='ex' class='ex'>Registro efectuado con éxito</h3>");
-
-												}else{
-													$('.reporteregistro').html(data);	
-												}
-												
-											
-											}).fail(function(){
-												alert( "error" );
-											});							
-
-										/*env end*/	
-								}else{
-									$('.repousermail').html("<span class='[success alert secondary] [round radius] label'>✖</span>");
-									$(".reporteregistro").html("");
-								}
-
-
-						}else{
-							
-							repo ="<span class='[success alert secondary] [round radius] label'>✖</span>";
-							$(".reporteregistro").html("");
-							$('.reponusername').html(repo);
-						}
-
-						
-
-
-					}else{
-						$(".reportepw").html("<span class='[success alert secondary] [round radius] label'>✖ Contraseñas distintas.!!</span>");
-						$(".repopwregistro").html("<span class='[success alert secondary] [round radius] label'>✖</span>");
-						$(".reporteregistro").html("");
-
-					}
-
-					
-					/**/			
-			}
-
-
-			/**/
+			$('#reporte_registro').html("<span class='[success alert secondary] [round radius] label'>✖ Error en las contraseñas</span>");									
 		}
-
-
-
-
+		
+		
 		
 
 	});
 
 
-
 });
 
 
-function cleanall(){
-
-	$('.reponusername').html("");
-	$('.repousermail').html("");
-	$('.repopwregistro').html("");
-	$('.reportepw').html("");
-	$('.username').val("");
-	$('.usermail').val("");
-	$('.pwregistro').val("");
-	$('.pwconfirm').val("");
-
-}

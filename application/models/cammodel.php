@@ -67,6 +67,17 @@
 
     }
 
+    function getndescriptionbyid($id, $idusuario){
+        
+        $this->db->select('descripcion');
+        $this->db->where('idcampaña', $id );
+        $this->db->where('idusuario', $idusuario);  
+        $query = $this->db->get('campaña');
+        return $query->result_array();
+
+    }
+
+
 
     function isnameexist($name , $idusuario ){
 
@@ -78,29 +89,32 @@
       return $e;
     }
 
-    function registrocamp($nombre, $redsocial , $descripcion, $idusuario , $idregistrocamp){
+    function registrocamp($name , $descripcion, $evento , $idusuario , $cuenta){
 
       $datastatus="";
-      if ($this->isnameexist($nombre , $idusuario) >0){
+      if ($this->isnameexist($name , $idusuario) >0){
             $datastatus ="En el sistema ya existe una campaña con ese nombre, intente con otro";
       }else{
 
             $status = 1; 
             $data = array(
-             'nombre' => $nombre ,
+             'nombre' => $name ,
              'descripcion' => $descripcion ,         
              'status' => $status,
-             'redsocial' => $redsocial,
+             'evento' => $evento,
              'idusuario' =>$idusuario, 
-             'idcuenta' => $idregistrocamp
+             'idcuenta' => $cuenta
               );
 
              $result = $this->db->insert('campaña', $data);
               if ($result == true) {
+                
                 $datastatus ="1";  
 
               }else{
+
                 $datastatus ="0";
+
               }
        }     
         return $datastatus;

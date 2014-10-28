@@ -1,8 +1,7 @@
 <?php defined('BASEPATH') OR exit('No direct script access allowed');
 require APPPATH.'/libraries/REST_Controller.php';
 
-class Accesssystem extends REST_Controller
-{
+class Accesssystem extends REST_Controller{
 
     function index(){}
 
@@ -28,6 +27,7 @@ class Accesssystem extends REST_Controller
             $fecharegistro  = $dataresponse[0]["fecharegistro"];
             $status = $dataresponse[0]["status"];
             $idperfil = $dataresponse[0]["idperfil"];
+            $cuenta = $dataresponse[0]["idcuenta"];
 
 
             $newdata = array(
@@ -37,15 +37,16 @@ class Accesssystem extends REST_Controller
                    'fecharegistro' => $fecharegistro,
                    'status' =>$status,
                    'perfil' => $idperfil,
+                   'cuenta' => $cuenta,
                    'logged_in' => TRUE
-               );            
+               );   
+
             $this->session->set_userdata($newdata);                              
             $next= base_url('index.php/principal/homeuser');
             $reporte = "<script type='text/javascript'>
                           window.location = '$next';
                         </script>";
         }
-
     	$this->response($reporte);
 
     }

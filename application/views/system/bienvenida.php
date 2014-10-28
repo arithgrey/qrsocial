@@ -1,21 +1,39 @@
 <script type="text/javascript" src="<?=base_url('/application/js/home/principalhome.js')?>"></script>
+
 <style type="text/css">
-#name_campania{
+.title_activity{
 	color: white;
-	font-size: 1.2em;	
 }
 </style>
+
 <div class='row'>
+	<h2 class="subheader">Actividad </h2>
 
-		<div class='large-8 columns'>	
-			<div class='row'> 						
+		<div class='large-8 columns'>				
+
+			
+			<div data-alert class="alert-box success radius">
+			  	<h3 class='title_activity'>Zonas QR Social</h3>
+			  	<p>La última actividad respecto a tu zonas qr social</p>
+			</div>
+			<div data-alert class="alert-box"> 
+				<h3 class='title_activity'>Campañas</h3>
+				<p>La última actividad de tus campañas </p>
+			</div>
+			<div data-alert class="alert-box info radius">  				
+  				<h3 class='title_activity'>Cuenta</h3>
+  				<p>Lo que ha pasado con tu cuenta</p>
+			</div>
+			<div class="panel"> 
+				<h3 class='title_activity'>Actiones</h3>
+				<p>Actividad en tus mensajes </p>
+				
+			</div>
 
 
-			</div>	
+
 		</div>
-
-
-
+		<!--Mail sección -->
 		<div class='large-4 columns'>
 			<div data-alert class="alert-box">
 			<div data-magellan-expedition="fixed">
@@ -32,6 +50,7 @@
 		</div>
 		</div>
 </div>
+
 
 
 

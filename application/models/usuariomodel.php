@@ -23,19 +23,29 @@
       $existencia= $query->num_rows(); 
       return $existencia;
     }
-    function registro($username , $correoelectronico, $pw ){
+
+    function registrofreemium($username , $usermail, $pw , $cuentanum ){
 
           $data = array(
          'username' => $username ,
-         'correoelectronico' => $correoelectronico ,
+         'correoelectronico' => $usermail ,
          'contraseña' => $pw,
          'status' => "1",
-         'idperfil' =>1
+         'idperfil' =>1,
+         'idcuenta' =>$cuentanum
+
          
           );
+          $result = $this->db->insert('usuario', $data); 
+          
+          if ($result == 1) {
+          
+            return  "1";
+            
+          }else{
 
-        return $this->db->insert('usuario', $data); 
-
+            return "0";
+          }
 
     }
 
