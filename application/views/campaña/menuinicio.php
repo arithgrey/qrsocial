@@ -26,11 +26,16 @@
 		font-size: 1.2em;
 	}
 	#registrarcamp{
-		background: none repeat scroll 0% 0% rgba(165, 236, 226, 1);
+		
+		background: white;
 		border-radius: 2px;
 		color: black;
 
+	}#panel_section{
+
+	  background: #8ED7F2;
 	}
+
 </style>
 
 
@@ -119,13 +124,10 @@
 <div class="reveal-modal" id="dlg_new_menu" data-reveal>
 	<div class='row'>
 		<center>					
-			<h3>Editanto campaña<small><p id="campanianame"></p></small></h3>
+			<h3>Editanto la <small><p id="campanianame"></p></small></h3>
 		</center>														
 				<form class='edita_campa' id='edita_campa'>																			
-						<div class="large-6 columns">
-							
-							
-
+						<div class="large-6 columns">							
 								<span class="label" id='lb_description'>Redacta un nuevo nombre:</span>
 								<input type="text" name="nameedicion" id="nameedicion"/>							
 								<span class="label" id='lb_description'>Redacta una nueva descripción: </span>
@@ -133,24 +135,35 @@
 									
 								</textarea>
 								<input type='hidden' name="campedit" id='campedit'>
-						</div>	
+						</form>				
+						<p class="guardarcambios button [tiny small large large-12 columns]">Guardar cambios</p>										
+						</div>							
 
-						<!--Eliminar , editar, demás detalles-->
-						<div class="large-6 columns">
-							<div class="large-6 columns">
-								<p class="eliminarcamp button [tiny small large] large-12 columns">Eliminar campaña</p>
-								<p class="cancelar button [tiny small large] large-12 columns">Cancelar edición</p>
-								<p class="guardarcambios button [tiny small large large-12 columns]">Guardar cambios</p>	
-							</div>	
+						<!--Eliminar , editar, demás detalles-->						
 
-							<div class="large-6 columns">
-							</div>
+							    <div class='large-6 columns'>
+						         <div id='panel_section'>
+						           <nav class="center-off-canvas-menu"> 
+						            <ul class="off-canvas-list">
+						             <li><label>QR SOCIAL</label></li>
+						             <li><a href="<?=base_url('index.php/panelcontrol/control')?>">Panel de control</a></li> 
+						              <li><a href="<?=base_url()?>">Home</a></li>
+						              <li><a href="<?=base_url('index.php/zonasqr/principal')?>">Zonas QR</a></li>
+						              <li><a href="<?=base_url('index.php/cuentas/accessacount')?>">Campañas</a></li>        
+						              <li><a class='cancelar' id="cancelar_edit">Cancelar</a></li>
+						              <li><a class='eliminarcamp' id="del_zonam">Eliminar campaña</a></li>
+						              </ul>
+						            </nav>       
+						          </div>
+
+						      </div>        
+
 						</div>	
 
 
 						
 	</div>						
-				</form>		
+				
 				
 			</div>
 		<a class="close-reveal-modal">&#215;</a>	
@@ -172,3 +185,4 @@
 
 
 	
+
