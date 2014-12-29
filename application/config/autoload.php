@@ -79,8 +79,8 @@ $autoload['helper'] = array('url', 'html', 'email', 'session', 'date');
 | config files.  Otherwise, leave it blank.
 |
 */
+$autoload['config'] = array('facebook');
 
-$autoload['config'] = array();
 
 
 /*

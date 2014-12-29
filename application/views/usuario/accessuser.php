@@ -1,7 +1,13 @@
 <script type="text/javascript" src="<?=base_url('application/js/sha1.js')?>"></script>
 <script type="text/javascript" src="<?=base_url('application/js/usuario/accessuser.js')?>"></script>
 
+  <style type="text/css">
 
+  #repoacces{
+    background: #01A9DB;
+
+  }
+  </style> 
 <div class="repo_registro" id="repo_registro"> 
   <?=$registro;?>
 </div>
@@ -46,12 +52,12 @@
                 <label>Password</label>
 
                   <input type="password" class='passwordaccess' id ='passwordaccess' name='passwordaccess' placeholder=""/>
-                  <div class='repopass' id='repopass'></div>
+                  <div  id='repopass'></div>
                   <span class="label">Olvidé contraseña</span>
               </div>
             </div>
             <button class='accessuser' id='accessuser'>Acceder</button>
-          <div class='repoacces' id='repoacces'></div>
+          <div  class='repoacces' id='repoacces'></div>
         </div>
       </div>
     </div>

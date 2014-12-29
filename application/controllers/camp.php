@@ -9,6 +9,7 @@ class Camp extends CI_Controller {
 	}	
 	function opciones(){
 
+		date_default_timezone_set('Africa/Lagos');
 		$logged_in=$this->is_logged_in();
 
 		if ($logged_in == 1) {
@@ -16,7 +17,35 @@ class Camp extends CI_Controller {
 			$camp =$this->input->get('camp');						
 			$name =$this->input->get('name');						
 
-			$data['titulo']="Campaña/".$name;
+			$data['titulo']=$name."/Mensajes";
+			$nombrecuentaact  = $this->session->userdata('nombrecuentaact');
+			$data["nombrecuentaact"] = $nombrecuentaact;
+			$username = $this->session->userdata('username');	
+			$data["username"]=$username;
+
+
+			$descripciondia = array();
+			/*Número del mes en el que nos encontramos*/
+			$añoactual = date("Y");
+			$numerodemes =  date("n");
+			$numerodiasmes = days_in_month( $numerodemes , $añoactual);
+
+			$a=1; 
+			while ($a <= $numerodiasmes) {
+				
+				
+				$descripciondia[$a] = $a ;			
+				$a++;
+			}	
+			
+			//$e= $this->name();
+			$this->load->library('calendar');
+			$calendario = $this->calendar->generate($añoactual, $numerodemes , $descripciondia);
+
+			$data["calendario"] = $calendario;
+			$data["añoactual"] = $añoactual;
+			$data["numerodemes"] = $numerodemes;
+			$data["campid"] =  $camp;
 
 			$username = $this->session->userdata('username');	
 			$data["username"]=$username;
@@ -32,6 +61,7 @@ class Camp extends CI_Controller {
 
 		}
 	}
+
 
 
 	private function is_logged_in() {

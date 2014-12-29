@@ -1,6 +1,7 @@
 $(document).on("ready",function(){
 	
 	now = $('.now').val();
+	$("#regacountn").click(showformnewuser);
 
 	$(".accessuser").click(function(){
 
@@ -40,7 +41,7 @@ $(document).on("ready",function(){
 
 			}else{
 
-				$('.repopass').html('<h6>Error en la contraseña</h6>');		
+				$('#repopass').html('<h6>Error en la contraseña</h6>');		
 			}
 
 			
@@ -57,3 +58,10 @@ $(document).on("ready",function(){
 
 
 });
+
+
+function showformnewuser(){
+
+	$("#dlgnewreg").foundation('reveal', 'open');  
+
+}

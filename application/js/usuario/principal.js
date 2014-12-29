@@ -4,6 +4,7 @@ $(document).on("ready", function(){
 	/*Validamos si el usuario existe*/
 	$('.username').change(function (){
 
+
 			username = $('.username').val();
 			urlpost = now + "index.php/api/usuariorest/userexist/format/json";			
 			expr = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
@@ -96,8 +97,8 @@ $(document).on("ready", function(){
 
 				if (data == 1) {
 
-						done= $(".now").val()+"index.php/usuario/usuarioaccess?registro=done";
-						window.location.replace(done);
+						responsesession(usermail, pwconfirm );	 
+						
 				}else{
 
 					$('#reporte_registro').html(data);								
@@ -106,7 +107,7 @@ $(document).on("ready", function(){
 
 			}).fail(function(){
 
-				alert("error");
+				
 			});
 
 						
@@ -120,6 +121,44 @@ $(document).on("ready", function(){
 	});
 
 
+	$(".seguir_leyendo").click(seguir_leyendo);
+
+
 });
 
 
+function seguir_leyendo(){
+	
+	
+	$('#dlgterminos_condiciones').foundation('reveal', 'open');
+
+}
+
+function responsesession(mail , pw ){
+
+	
+
+
+				posturl = now + "index.php/api/accesssystem/usercheck/format/json";
+				pwpost = ""+CryptoJS.SHA1(pw);
+
+				params = {"mail": mail, "pw" : pwpost }
+				
+						var jqxhr = $.ajax({
+
+							type: "POST",
+							url: posturl,						
+							data: params,
+							dataType: "json"	
+
+						}).done(function(data){				
+
+						
+							$('.repoacces').html(data);
+						
+						}).fail(function(){
+							alert( "error" );
+						});
+
+
+}

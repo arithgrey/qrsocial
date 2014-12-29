@@ -15,6 +15,8 @@ class Panelcontrolrest extends REST_Controller
                 $passwordconfirmpost   =  $this->input->post("passwordconfirmpost");
 
                 $cuenta = $this->session->userdata('cuenta');            
+                
+
                 $idusuario = $this->session->userdata('idusuario');            
                 
                 $this->load->model("modelpanel");
@@ -41,6 +43,25 @@ class Panelcontrolrest extends REST_Controller
     }
 
 
+    function usersaccount_GET(){
+
+
+        $logged_in = $this->is_logged_in();
+
+        if ($logged_in == 1) {
+            
+                $cuenta = $this->session->userdata('cuenta');            
+                $this->load->model("modelpanel");    
+                $dbresponse= $this->modelpanel->getuserbyaccount($cuenta);
+                $this->response($dbresponse);                    
+
+        }else{        
+              
+              $this->logout();    
+
+        }
+
+    }
     function listdataaccoun_POST(){
 
         $logged_in = $this->is_logged_in();
@@ -62,6 +83,7 @@ class Panelcontrolrest extends REST_Controller
     }
 
 
+
     function updatedataaccount_POST(){
 
         $logged_in = $this->is_logged_in();
@@ -81,8 +103,12 @@ class Panelcontrolrest extends REST_Controller
                 $dbresponse= $this->modelpanel->updatedata($nombre , $company , $email , $numerotelefonico , $url , $cuenta );
                 
 
+                                
                 if ($dbresponse == true) {
                     $this->response("1");    
+
+                                        
+
                 }else{
                     $this->response("0");    
                 }

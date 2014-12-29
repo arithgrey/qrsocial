@@ -42,21 +42,52 @@
 	<script>
     $(document).foundation();
   </script>
+<style type="text/css">
+  	.title_general{
+  		font-size: 1.3em;
+
+  	}
+  	#titlemain{
+  		background: rgba(13, 72, 99, 1);
+  		color:  white;
+  		font-size: 1.5em;
+  	}
+  	#mensaje_camp{
+  		display: none;
+  	}
+  	#redessociales{
+	background: none repeat scroll 0% 0% #2DAEBF;	
+	text-align: center;
+	padding: 10px;
+
+}
+#title_redes{
+	color: white;
+	font-size: 2em;
+}
+#title_redes_sub{
+	font-size: 1.3em;	
+}
+#title_descr{
+	font-size: 1.3em;	
+	color: white;
+}
+footer{
+	background: black;
+	padding: 10px;
+	color: white;
+}
+
+
+  	</style>
+
 
 </head>
 <body>
 	<header>
-		<div class="row">
-			<h1 class='home' id='home'><a href="<?=base_url()?>">QR social</a></h1>
-		  
-		  <div class="large-8 columns">
-		  	<h2 ><?=$titulo?></h2>							
-		  </div>		
-		  
-		</div> 
 
-		
 		<nav>
+			<h1><?=$titulo?></h1>
 		</nav>
 	</header>
 	<div id='wrapper' class='wrapper'>

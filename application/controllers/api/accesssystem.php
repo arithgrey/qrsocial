@@ -29,6 +29,11 @@ class Accesssystem extends REST_Controller{
             $idperfil = $dataresponse[0]["idperfil"];
             $cuenta = $dataresponse[0]["idcuenta"];
 
+            /*Name account*/
+            $this->load->model("cuentamodel");
+            $accountdata = $this->cuentamodel->getElementsbyId($cuenta);
+            $nombrecuentaact =  $accountdata[0]["nombre"];
+
 
             $newdata = array(
                    'username'  => $username,
@@ -38,6 +43,7 @@ class Accesssystem extends REST_Controller{
                    'status' =>$status,
                    'perfil' => $idperfil,
                    'cuenta' => $cuenta,
+                   'nombrecuentaact' => $nombrecuentaact,
                    'logged_in' => TRUE
                );   
 

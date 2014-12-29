@@ -33,6 +33,10 @@ class Principal extends CI_Controller {
 			$data["titulo"]="Bienvenido ";	
 			$data["username"]=$username;
 			$data["last_activity"] =  $last_activity;
+			$nombrecuentaact  = $this->session->userdata('nombrecuentaact');
+			$nombrecuentaact  = $this->session->userdata('nombrecuentaact');
+			$data["nombrecuentaact"] = $nombrecuentaact;
+		
 			$data["homesess"]=base_url('/index.php/principal/homeuser');
 
 			$this->load->view("Template/headersession", $data);

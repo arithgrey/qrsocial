@@ -15,7 +15,12 @@ class Cuentas extends CI_Controller {
 						
 			$data['titulo']="Cuentas";
 			$username = $this->session->userdata('username');	
+
 			$data["username"]=$username;
+			$nombrecuentaact  = $this->session->userdata('nombrecuentaact');
+			$data["nombrecuentaact"] = $nombrecuentaact;
+		
+			
 			$data["homesess"]=base_url('/index.php/principal/homeuser');
 			
 			$this->load->view("Template/headersession", $data);
@@ -41,9 +46,13 @@ class Cuentas extends CI_Controller {
 
 		$data['titulo']="Campañas ".$nameaccount;
 		$username = $this->session->userdata('username');	
+		
 		$data["username"]=$username;
 		$data["homesess"]=base_url('/index.php/principal/homeuser');
 		$data["cuentaid"] = $cuenta;
+		$nombrecuentaact  = $this->session->userdata('nombrecuentaact');
+		$data["nombrecuentaact"] = $nombrecuentaact;
+		
 		
 
 		$this->load->view("Template/headersession", $data);
@@ -113,6 +122,9 @@ class Cuentas extends CI_Controller {
 
 				/**/
 				$username = $this->session->userdata('username');	
+				$nombrecuentaact  = $this->session->userdata('nombrecuentaact');
+				$data["nombrecuentaact"] = $nombrecuentaact;
+		
 				$data["username"]=$username;
 				$data["homesess"]=base_url('/index.php/principal/homeuser');				
 				$this->load->view("Template/headersession", $data);

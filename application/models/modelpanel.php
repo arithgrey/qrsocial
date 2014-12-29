@@ -26,6 +26,18 @@
     }
     */
 
+    function getuserbyaccount($cuenta){
+
+      $query = "select u.idusuario , u.username , u.correoelectronico, 
+      u.fecharegistro, u.fecharegistro , u.status AS estado , p.nombre , 
+      p.descripcion FROM usuario AS u , perfil AS p where u.idcuenta='".$cuenta."'";
+      
+      $dbqueryresponse =$this->db->query($query);
+      return $dbqueryresponse->result_array();
+
+
+    }
+
     function updatedata($nombre , $company , $email , $numerotelefonico , $url , $cuenta){
       
       $data = array(   		
@@ -37,7 +49,7 @@
    		);
 
 
-	$this->db->where('idcuenta', $cuenta); 
+	  $this->db->where('idcuenta', $cuenta); 
     $mysqlresponse = $this->db->update('cuenta', $data); 
     return $mysqlresponse;
 

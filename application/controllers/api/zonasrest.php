@@ -8,14 +8,16 @@ class Zonasrest extends REST_Controller
         $logged_in = $this->is_logged_in();
 
         if ($logged_in == 1){
+
             
-
-
               $this->load->model("zonasmodel");
               $idzona = $this->input->get("idzona");
               $cuenta = $this->session->userdata('cuenta');            
-              $responsedb =$this->zonasmodel->getelementbycuentazona( $cuenta , $idzona);
+              $responsedb =$this->zonasmodel->getelementbycuentazona( $cuenta , $idzona);              
+
               
+
+
               $this->response($responsedb);
 
 
@@ -32,18 +34,27 @@ class Zonasrest extends REST_Controller
 
     }
 
-    function loadzonas_GET(){
+
+
+
+    function getzonasbytipo_GET(){      
         $logged_in = $this->is_logged_in();
 
         if ($logged_in == 1){
-            
-
 
               $this->load->model("zonasmodel");
-              $cuenta = $this->session->userdata('cuenta');            
+
+              $cuenta = $this->session->userdata('cuenta');          
+              $tipozona = $this->input->get("tipozona"); 
+
               
-              $responsedb = $this->zonasmodel->getzonabycuenta($cuenta);
-              
+              if ($tipozona == "all"){
+
+                  $responsedb = $this->zonasmodel->getzonacuentaall($cuenta); 
+              }else{
+                  $responsedb = $this->zonasmodel->getzonabycuentaandtipo($cuenta , $tipozona);                
+              }
+
               $this->response($responsedb);
 
 
@@ -53,8 +64,29 @@ class Zonasrest extends REST_Controller
 
         }
 
+    }
 
 
+
+
+
+    function loadzonas_GET(){
+        $logged_in = $this->is_logged_in();
+
+        if ($logged_in == 1){
+
+              $this->load->model("zonasmodel");
+              $cuenta = $this->session->userdata('cuenta');                        
+              $responsedb = $this->zonasmodel->getzonabycuenta($cuenta);              
+              
+              $this->response($responsedb);
+
+
+        }else{        
+              
+              $this->logout();    
+
+        }
 
     }
 
@@ -71,9 +103,10 @@ class Zonasrest extends REST_Controller
                 $edit_zonaname = $this->input->post("edit_zonaname");
                 $edit_descripcion =  $this->input->post("edit_descripcion");
                 $edit_tipozona  = $this->input->post("edit_tipozona");
-                $cuenta = $this->session->userdata('cuenta');            
+                $cuenta = $this->session->userdata('cuenta');   
+                $mensajedefaultedit  = $this->input->post("mensajedefaultedit");         
 
-                $dbresponse = $this->zonasmodel->updatezonaqr( $edit_zona, $edit_zonaname , $edit_descripcion , $edit_tipozona , $cuenta);
+                $dbresponse = $this->zonasmodel->updatezonaqr( $edit_zona, $edit_zonaname , $edit_descripcion , $edit_tipozona , $mensajedefaultedit , $cuenta);
                 $this->response($dbresponse);
 
           }else{        
@@ -103,11 +136,14 @@ class Zonasrest extends REST_Controller
               $zona_name = $this->input->post("zona_name");
               $descripcion_zona  = $this->input->post("descripcion_zona");
               $tipo_zona = $this->input->post("tipo_zona");
-
-              $this->load->model("zonasmodel");
-
+              $mensajedefault  = $this->input->post("mensajedefault");
               $cuenta = $this->session->userdata('cuenta');            
-              $dbresponse = $this->zonasmodel->registrazona( $zona_name , $descripcion_zona , $tipo_zona , $cuenta);
+              $this->load->model("zonasmodel");
+              $base_url= $this->input->post("base_url");
+
+              
+              $dbresponse = $this->zonasmodel->registrazona( $zona_name , $descripcion_zona , $tipo_zona , $mensajedefault , $cuenta , $base_url);
+
               $this->response($dbresponse);
 
 

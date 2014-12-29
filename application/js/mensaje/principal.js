@@ -1,5 +1,8 @@
 $(document).on("ready", function(){
 
+
+
+
 	var estadopresente = 0;
 	var estadopresentefechahora=0;
 	var estadopresenteregistro =1;
@@ -16,11 +19,8 @@ $(document).on("ready", function(){
 			$("#registro-mensajes").hide();	
 			estadopresenteregistro =0;
 
-		}
-		
-
+		}	
 	});
-
 
 	$('#camposfechas').hide();
 	$("#exampleCheckboxSwitch").click(function(){
@@ -30,9 +30,14 @@ $(document).on("ready", function(){
 
 			estadopresente  = 1;
 			$('#asignarhora').hide();
+			$("#registrointemporalbtn").show();
+			$("#registrotemporal").show();
+			
 		}else{
 			estadopresente  = 0;
 			$('#asignarhora').show();
+			$("#registrointemporalbtn").hide();
+			$("#registrotemporal").hide();
 		}				
 	});
 
@@ -44,10 +49,16 @@ $(document).on("ready", function(){
 			estadopresentefechahora  = 1;
 			$('#presentesiempre').hide();
 			$('#camposfechas').show();
+			$("#registrotemporal").show();
+			$("#registrointemporalbtn").hide();
+
 		}else{
+
 			estadopresentefechahora  = 0;
 			$('#presentesiempre').show();
 			$('#camposfechas').hide();
+			$("#registrointemporalbtn").hide();
+			$("#registrotemporal").hide();
 		}	
 
 	});
@@ -82,19 +93,25 @@ $(document).on("ready", function(){
 			a++;
 		}
 		
-		//llenaelemento( "#id_minuto_inicio" ,e );
-		//llenaelemento("#id_minuto_termino", e);
-
 	});
+
+
+	
+
 
 
 
 });
 
+
+
+
+
 function llenaelemento(idcomponente , datos){
 
 	$(idcomponente).append(datos);
 }
+
 function showpanel(e){
 
 		panel = e.value; 
@@ -113,7 +130,79 @@ function showpanel(e){
 		    	break;
 	        
 		} 
+}
 
 
+
+function navmenucampania(e){
+	
+	
+	switch(e){
+
+		case "mensajes_facebook":
+			
+			$("#secction_facebook").show();
+			$("#secction_twitter").hide();			
+			$("#primeros_pasosseccion").hide();			
+			$("#datos_campañaseccion").hide();
+
+
+			$("#mensajes_facebook").attr("class","active secction_facebook");
+			$(".mensaje_twitter").attr("class","mensaje_twitter");			
+			$(".primeros_pasos").attr("class","primeros_pasos");
+			$(".datos_campaña").attr("class","datos_campaña");
+
+
+			break;
+
+		case "mensaje_twitter":
+
+			$("#secction_twitter").show();
+			$("#secction_facebook").hide();			
+			$("#primeros_pasosseccion").hide();			
+			$("#datos_campañaseccion").hide();
+
+			$(".mensaje_twitter").attr("class","active mensaje_twitter");
+			$("#mensajes_facebook").attr("class","secction_facebook");
+			$(".primeros_pasos").attr("class","primeros_pasos");
+			$(".datos_campaña").attr("class","datos_campaña");
+
+			break;
+
+		case "primeros_pasos":	
+
+			$("#primeros_pasosseccion").show();			
+			$("#secction_twitter").hide();
+			$("#secction_facebook").hide();						
+			$("#datos_campañaseccion").hide();
+
+			$(".primeros_pasos").attr("class","active primeros_pasos");
+			$(".mensaje_twitter").attr("class","mensaje_twitter");
+			$("#mensajes_facebook").attr("class","secction_facebook");
+			$(".datos_campaña").attr("class","datos_campaña");
+
+			$(document).foundation('joyride', 'start');
+
+			break;
+
+		case "datos_campaña":	
+
+			$("#datos_campañaseccion").show();	
+			$("#primeros_pasosseccion").hide();			
+			$("#secction_twitter").hide();
+			$("#secction_facebook").hide();	
+
+			$(".datos_campaña").attr("class","active datos_campaña");
+			$(".primeros_pasos").attr("class","primeros_pasos");
+			$(".mensaje_twitter").attr("class","mensaje_twitter");
+			$("#mensajes_facebook").attr("class","secction_facebook");
+						
+
+			break;
+		default:
+			alert("default");
+			break;	
+
+	}
 
 }

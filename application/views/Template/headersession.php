@@ -24,12 +24,10 @@
 
 	
 	<link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/jquery.slick/1.3.7/slick.css"/>
-	<!--JS-->
-	
+	<!--JS-->	
 	<script type="text/javascript" src="<?=base_url('application/js/jquery-2.1.1.min.js')?>"></script>
-	<script type="text/javascript" src="//cdn.jsdelivr.net/jquery.slick/1.3.7/slick.min.js"/></script>
-	<script type="text/javascript" src="<?=base_url('application/js/foundation.min.js')?>"></script>
 	
+	<script type="text/javascript" src="<?=base_url('application/js/foundation.min.js')?>"></script>	
 	<script type="text/javascript" src="<?=base_url('application/js/general.js')?>"></script>	
 	<script src="<?=base_url('application/js/vendor/jquery.js')?>"></script>
 	<script src="<?=base_url('application/js/foundation/foundation.js')?>"></script>
@@ -38,56 +36,109 @@
 	<script src="<?=base_url('application/js/foundation/foundation.js')?>"></script>
 	
 	<script>
-    $(document).foundation();
-  </script>
+    	$(document).foundation();
+  	</script>
+  	<style type="text/css">
+  	.title_general{
+  		font-size: 1.3em;
+
+  	}
+  	#titlemain{
+  		background: rgba(13, 72, 99, 1);
+  		color:  white;
+  		font-size: 1.5em;
+  	}
+  	#mensaje_camp{
+  		display: none;
+  	}
+  	#redessociales{
+	background: none repeat scroll 0% 0% #2DAEBF;	
+	text-align: center;
+	padding: 10px;
+
+}
+#title_redes{
+	color: white;
+	font-size: 2em;
+}
+#title_redes_sub{
+	font-size: 1.3em;	
+}
+#title_descr{
+	font-size: 1.3em;	
+	color: white;
+}
+footer{
+	background: black;
+	padding: 10px;
+	color: white;
+}
+#home{
+	color: rgba(13, 76, 96, 1);
+}
+</style>
 
 </head>
 <body>
 	<header>
 		
-		<a href="<?=base_url('index.php/principal/logout')?>" data-reveal-id="firstModal" class="radius button">Logout&hellip;</a>
+		<div class='row'>
+			<div class='large-4 columns'>
+				<a href="<?=base_url('index.php/principal/logout')?>"
+				 data-reveal-id="firstModal" class="radius button">
+					Logout						
+				</a>						
+				<?=$username?>
+			</div>
+
+
+		</div>
+							
 		<div class="row">			
 			<div class='row'> 
 				<div class='row'>
 	
-	<dl class="sub-nav"> 		
-		<dd class="" id='panelcontrol_menu'>
-			<a href="<?=base_url('index.php/panelcontrol/control')?>">Panel de control</a>
-		</dd> 
-		<dd id="home_menu">
-			<a href="<?=base_url()?>">Home</a>
-		</dd> 
-		<dd id='zonasqr_menu'>
-			<a href="<?=base_url('index.php/zonasqr/principal')?>">Zonas QR</a>
-		</dd> 
-		<dd id='campanias_menu'>
-			<a href="<?=base_url('index.php/cuentas/accessacount')?>">Campañas</a>
-		</dd> 
+	
+	<dl class="sub-nav"> 	
+			
+			<dd class="" id='panelcontrol_menu'>
+				<a href="<?=base_url('index.php/panelcontrol/control')?>">Panel de control <?=img("application/img/png/glyphicons-137-cogwheel.png")?> </a>
+			</dd> 
+			<dd id="home_menu">
+				<a href="<?=base_url()?>">Home <?=img("application/img/png/glyphicons-21-home.png")?> </a>
+			</dd> 
+			<dd id='zonasqr_menu'>
+				<a href="<?=base_url('index.php/zonasqr/principal')?>">Zonas QR  <?=img("application/img/png/glyphicons-317-tree-conifer.png")?></a>
+			</dd> 
+			<dd id='campanias_menu'>
+				<a href="<?=base_url('index.php/cuentas/accessacount')?>">Campañas <?=img("application/img/png/glyphicons-188-more.png")?></a>
+			</dd>
+
+			<dd id='mensaje_camp'>
+				<a href="<?=base_url('index.php/cuentas/accessacount')?>">Mensajes</a>
+			</dd>
+
+
+				
 	</dl>
+	
+
+
 </div>
 
 </div>
-				<h1 class='home large-8 columns' id='home'><a href="<?=$homesess;?>">QR social</a></h1>
+				<h1 class='home large-8 columns' id='home'>
+					<a id="home" href="<?=$homesess;?>"> <?=img("/application/img/png/glyphicons-21-home.png")?> QR social </a>
+				</h1>
 					
 
 
 
 				<div class='large-4 columns' >
-					<h2 ><?=$titulo?></h2>
+					<p id="titlemain" ><?=$titulo?></p>
 					<div class="progress [radius round]"> 
 		<span class="meter" style="width:70%;"></span> 
- </div> 
-					<div class='row'>
-						<div class='large-6 columns'>
-
-						</div>
-						<div class='large-6 columns'>
-							<h5 class="subheader"><?=$username?></h5>
-
-						</div>
-
-
-					</div>
+ </div> 					
 					
 				</div>
 			</div>										

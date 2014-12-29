@@ -19,6 +19,10 @@ class Zonasqr extends CI_Controller {
 			$username = $this->session->userdata('username');	
 			$data["username"]=$username;
 			$data["homesess"]=base_url('/index.php/principal/homeuser');
+			$nombrecuentaact  = $this->session->userdata('nombrecuentaact');
+			$nombrecuentaact  = $this->session->userdata('nombrecuentaact');
+			$data["nombrecuentaact"] = $nombrecuentaact;
+		
 			
 			$this->load->view("Template/headersession", $data);
 			$this->load->view("zonas/principalzqr");

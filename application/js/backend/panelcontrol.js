@@ -6,16 +6,12 @@ $(document).on("ready", function(){
 	$("#contra_config").hide();
 	$("#usuarios_config").hide();
 	$("#ayuda_config").hide();
-
-
-
-
-
 	$("#btn_freshcount").click(actualizadatoscuenta);
-
 	$("body").ready(loaddata);
-
 	$("#btn_changepw").click(changepw);
+
+	$("#panelcontrol_menu").attr("class","active panelcontrol_menu");
+	usersaccount();
 
 });
 
@@ -80,13 +76,10 @@ function despliegamenu(evt){
 
 function loaddata(){
 
-	
-
 	url = $(".now").val()+"index.php/api/panelcontrolrest/listdataaccoun/format/json";
 	
 	$.post( url ).done(function(data){
-		
-		
+
 		nombre = data[0].nombre; 
 		compañianombre  = data[0].compañianombre;
 		mailcompañia   =  data[0].mailcompañia;
@@ -112,14 +105,12 @@ function loaddata(){
 function actualizadatoscuenta(){
 
 
-	//alert($("#form_compani").serialize());	
-
-	url = $(".now").val()+"index.php/api/panelcontrolrest/updatedataaccount/format/json";
-	
+	url = $(".now").val()+"index.php/api/panelcontrolrest/updatedataaccount/format/json";	
 	$.post( url  , $("#form_compani").serialize() ).done(function(data){
 		
 		if (data == 1) {
-			$("#repoupdate").html("Datos registrados");
+
+			$("#repoupdate").html("Datos registrados, reinicie sesión para ver los cambios");
 			loaddata();
 		}else{
 			$("#repoupdate").html("Falla en el registro");
@@ -132,6 +123,40 @@ function actualizadatoscuenta(){
 
 
 }
+
+
+function usersaccount(){
+
+	url = $(".now").val()+"index.php/api/panelcontrolrest/usersaccount/format/json";	
+	$.get(url).done(function(data){
+
+		l ="<table><div id='title_sec' >"+
+				"<tr>"+					
+					"<td><label class='title_lab' >#</label></td>"+
+					"<td><label class='title_lab'>Nombre</label></td>"+
+					"<td><label class='title_lab'>Correo electrónico <img src='"+ $(".now").val()+'application/img/png/glyphicons-122-message-empty.png'        +"' >   </label></td>"+
+					"<td><label class='title_lab'>Fecha de Registro    <img src='"+ $(".now").val()+'application/img/png/glyphicons-46-calendar.png'        +"' >    </label></td>"+
+					"<td><label class='title_lab'>Perfil</label></td>"+										
+					"<td><label class='title_lab'>Descripción del perfil   <img src='"+ $(".now").val()+'application/img/png/glyphicons-30-notes-2.png'        +"' >  </label></td>"+
+				"</tr></div>";
+			
+
+			for (var i = 0; i < data.length; i++) {
+				
+				l+="<tr><td>"+data[i].idusuario+"</td> <td>"+data[i].username +"</td> <td>"+data[i].correoelectronico+"</td>";
+				l+="<td>"+data[i].fecharegistro+"</td> <td>"+data[i].nombre+"</td><td>"+data[i].descripcion+"</td></tr>";	
+			}
+			l+="</table>";
+
+		$("#table_users").html(l);	
+		
+
+	}).fail(function(){
+		alert("Error db reportar al administrador");
+	});
+
+}
+
 
 function changepw(){
 

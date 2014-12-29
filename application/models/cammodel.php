@@ -70,6 +70,7 @@
     function getndescriptionbyid($id, $idusuario){
         
         $this->db->select('descripcion');
+        $this->db->select('nombre');
         $this->db->where('idcampaña', $id );
         $this->db->where('idusuario', $idusuario);  
         $query = $this->db->get('campaña');
