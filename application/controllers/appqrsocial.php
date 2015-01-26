@@ -33,6 +33,13 @@ class Appqrsocial extends CI_Controller
   {        
      parent::__construct();        
      $this->load->model('appmodel');
+
+    $fb_config = array(
+        'appId' => _appId,
+        'secret' =>_secret
+    );            
+    
+    $this->load->library('facebook', $fb_config);
   
   }
     
@@ -132,135 +139,291 @@ function twittermensaje(){
 
 }
 
-public function fbmensajeuserapp(){
-
-        $fb_config = array(
-            'appId' => _appId,
-            'secret' =>_secret
-        );
-        $this->load->library('facebook', $fb_config);
-
-        $fb_id= $this->facebook->getUser();
 
 
-        if ($fb_id == 0) {
-            $login=base_url()."index.php/appqrsocial/fbmensaje";
-            header("location:".$login);
-        }else{
+function trypostfb(){
 
-                $campaña =$this->input->get("camp");
-                $zona  = $this->input->get("zona");
-                $mensaje  = $this->input->get("mensaje");
-                    
-                $data["titulo"]="Bienvenido a QR SOCIAL ";
-                $data["campaña"]=$campaña;
-                $data["zona"] = $zona;
-                $data["mensaje"] = $mensaje;
-                $result = $this->appmodel->getmensajebycampzonamensaje($campaña , $zona , $mensaje);                                    
-                $resultdata =  $result[0]; 
-                $data["result"] = $resultdata;
-                $data["idmensaje"] = $resultdata["idmensaje"];
-                $data["descripcion"] =  $resultdata["descripcion"];
-                $data["status"] =  $resultdata["status"];
-                $data["horainicio"] = $resultdata["horainicio"];
-                $data["horatermino"] =  $resultdata["horatermino"];
-                $data["fechainicio"] =  $resultdata["fechainicio"];
-                $data["fechatermino"] = $resultdata["fechatermino"];
-                $data["idzona"] =  $resultdata["idzona"];
+    $this->facebook->destroySession();
+    $mensaje = $this->input->get("mensaje");
+    $fb_id = $this->facebook->getUser();
 
+            if($fb_id == 0){                            
 
+                $login = base_url()."index.php/appqrsocial/fbmensaje?mensaje=".$mensaje;
+                header("location:".$login);
 
+            }else{
+
+                $dinamicurl=base_url()."index.php/appqrsocial/postFBnextloggin/?mensaje=".$mensaje;   
+                header("location:".$dinamicurl);                                                    
                 
+    }     
+    
+    
+
+}
 
 
-                /*Datos del usuario*/
-                $usuario =  $this->facebook->api("/me");
+public function zonaatt(){
 
+    date_default_timezone_set('America/New_York');
+    $this->facebook->destroySession();
+    $diahoynum = date("N");
+    $diaL = $this->getdayfunction($diahoynum);
+    $horaactual =  date("H");    
+    $idzona = $this->input->get("idzona");
+    $listmensajes = $this->appmodel->getmensajesbyidzonascuentaid($idzona , $diaL);
+    
+    $fb_id = $this->facebook->getUser();
+    $flag=1;
+
+
+    for ($a= 0; $a < count($listmensajes); $a++){ 
+        $banderadisponible = $this->verificahorario( $listmensajes[$a]["horainicio"] , $listmensajes[$a]["horatermino"] , $horaactual );            
+        if ($banderadisponible == 1){
+
+            $flag=0;
+            if ($listmensajes[$a]["social"]  ==  "F") {
                 
+                            $mensaje = $listmensajes[$a]["descripcion"];
+                            $name= $listmensajes[$a]["name"];
+                            $descriptioncaption= $listmensajes[$a]["descriptioncaption"];
+                            $caption =  $listmensajes[$a]["caption"];
+                            $source =  $listmensajes[$a]["source"];
+                            $picture= $listmensajes[$a]["picture"];
+                            $link =  $listmensajes[$a]["link"];
+
+                           if($fb_id == 0){                            
+
+                                $login = base_url()."index.php/appqrsocial/fbmensaje?mensaje=".$mensaje."&name=".$name
+                                ."&descriptioncaption=".$descriptioncaption."&caption=".$caption."&source=".$source."&picture=".$picture."&link=".$link;
+                                header("location:".$login);
+
+                                }else{
+                                $dinamicurl=base_url()."index.php/appqrsocial/postFBnextloggin/?mensaje=".$mensaje."&name=".$name
+                                ."&descriptioncaption=".$descriptioncaption."&caption=".$caption."&source=".$source."&picture=".$picture."&link=".$link;   
+                                header("location:".$dinamicurl);                                                    
+                
+                            }     
+            }
+        }
+                
+    }
 
 
-                $nombredelusuariofb = $usuario["name"];                
-                $urlusuariofb= $usuario["link"]; 
-                $data["nombredelusuariofb"]= $nombredelusuariofb;
-                $data["urlusuariofb"]= $urlusuariofb;
 
 
-                /*Publicar en Facebook*/
+    if ($flag == 1) {
+        
+        $mensaje = $this->publicamensaje_fbdefault($idzona);
+        $next = base_url('index.php/appqrsocial/socialuser/?mensaje='.$mensaje); 
+        header("location:$next");
+           
+    }
+
+
+}
+
+
+function socialuser(){
+
+        $mensaje = $this->input->get("mensaje");
+        $data["titulo"] = "Qrsocial la plataforma de Marketing digital"; 
+        $data["mensaje"]= $mensaje;
+        
+        $this->load->view("Template/header", $data);
+        $this->load->view("social/userchoicesocial");        
+        $this->load->view("Template/footer", $data);                        
+
+
+
+}
+
+function postFBnextloggin(){
+
+
+        $mensaje = $this->input->get("mensaje");
+        $name = $this->input->get("name");
+        $descriptioncaption = $this->input->get("descriptioncaption");
+        $caption = $this->input->get("caption");
+        $source = $this->input->get("source");
+        $picture  =  $this->input->get("picture");        
+        $link  = $this->input->get("link");
+
+
+        /*Aquí la información del usuario de Facebook*/
+        $usuario =  $this->facebook->api("/me");
+
+
+        $nombredelusuariofb = $usuario["name"];                
+        $urlusuariofb= $usuario["link"]; 
+        $bio = $usuario["bio"]; 
+        $first_name = $usuario["first_name"];
+        $last_name = $usuario["last_name"];
+
+
+        $inferror= "";
 
                 try{
                         $post = $this->facebook->api( "me/feed", "POST",
-                         array(
-                            'message' =>$resultdata["descripcion"],
-                            'name' => 'arithgrey test aplicación qrsocial',
-                            'description' => 'Test de la aplicación',
-                            'caption' => 'arithgrey Test Caption',
-                            'source' =>  'https://github.com/arithgrey/qrsocial',
-                            'picture' => '',
-                            'link' => 'https://github.com/arithgrey'
+                         array(                            
+                            'message' =>$mensaje,
+                            'name' => $name,
+                            'description' => $descriptioncaption,
+                            'caption' => $caption,
+                            'source' =>  $source,
+                            'picture' => $picture,
+                            'link' => $link
 
 
                           )
                          );
 
-                        echo "string";
-                        print_r($post);
+                        
+                        
 
                 }catch(FacebookApiException $e){
-                    echo $e;
+                    $inferror = $e;                    
                 }
+
+
+
                 
-                
-
-
-
-
-                /*Terminar sessión el facebook*/
-                $urlbase= base_url();
+                $urlbase= base_url()."index.php/appqrsocial/mensajeFacebookinfo/?nombredelusuariofb=$nombredelusuariofb&urlusuariofb=$urlusuariofb&inferror=$inferror";
                 $paramsout = array( 'next' => $urlbase );
-                $urlout =$this->facebook->getLogoutUrl($paramsout); 
-                $data["urlout"]= $urlout;
+                $urlout =$this->facebook->getLogoutUrl($paramsout);                 
+                $this->facebook->destroySession();
+                
+                
+                
+                header("location:$urlout");
 
+                
+}
 
-                $this->load->view("Template/header", $data);
-                $this->load->view("facebook/publicarmensaje", $data);   
-                $this->load->view("Template/footer", $data);        
+function mensajeFacebookinfo(){
+    
+    $urlusuariofb = $this->input->get("urlusuariofb");
+    $nombredelusuariofb = $this->input->get("nombredelusuariofb");
+    $inferror =  $this->input->get("inferror");
 
+    $data["nombredelusuariofb"] =$nombredelusuariofb; 
+    $data["urlusuariofb"]=$urlusuariofb;
+    $data["inferror"]= $inferror;    
+    $data["titulo"] = "Qrsocial la plataforma de Marketing digital"; 
 
-
-
-        }
+    $this->load->view("Template/header", $data);
+    $this->load->view("facebook/publicarmensaje", $data);   
+    $this->load->view("Template/footer", $data);                        
 
 }
 
 
-public function fbmensaje(){
+function fbmensaje(){                    
 
-    $campaña =$this->input->get("camp");
-    $zona  = $this->input->get("zona");
-    $mensaje  = $this->input->get("mensaje");
-        
 
-    $fb_config = array(
-        'appId' => _appId,
-        'secret' =>_secret
-    );
-        
-        $this->load->library('facebook', $fb_config);
-        $dinamicurl=base_url()."index.php/appqrsocial/fbmensajeuserapp/?camp=".$campaña."&zona=".$zona."&mensaje=".$mensaje."&format=json";
-        
-        $urLogin =  $this->facebook->getLoginUrl(
-            array(
-                    "scope" => "read_stream, friends_likes, publish_actions",
-                    "redirect_uri" =>  $dinamicurl 
-                )  
-            ); 
-        header("location:$urLogin");
+        $mensaje = $this->input->get("mensaje");
+        $name = $this->input->get("name");
+        $descriptioncaption = $this->input->get("descriptioncaption");
+        $caption = $this->input->get("caption");
+        $source = $this->input->get("source");
+        $picture  =  $this->input->get("picture");
+        $link  = $this->input->get("link");
 
-        
+
+                $this->load->library('facebook', $fb_config);
+                $dinamicurl=base_url()."index.php/appqrsocial/postFBnextloggin/?mensaje=".$mensaje."&name=".$name
+                                ."&descriptioncaption=".$descriptioncaption."&caption=".$caption."&source=".$source."&picture=".$picture."&link=".$link;
+                $urLogin = $this->facebook->getLoginUrl(
+
+                            array(
+                                "scope" => "public_profile, read_stream, friends_likes, publish_actions, user_likes",
+                                "redirect_uri" => $dinamicurl
+                            )
+            );
+            header("location:$urLogin");
+}
+
+
+
+
+
+
+
+function publicamensaje_fbdefault($idzona){
+
+    $this->load->model("zonasmodel");
+    $zona = $this->zonasmodel->getmensajedefault($idzona);    
+    $mensaje =  $zona[0]["mensajedefault"];
+    return $mensaje;
 
 }
 
 
+
+
+
+function verificahorario($inicio , $termino , $horaactual){
+    $banderadisponible = 0;
+
+        if ( $inicio <=  $termino ){
+
+            for ($a= $inicio; $a <= $termino; $a++) {                 
+                if ($horaactual == $a) {
+                    $banderadisponible =1;    
+                }
+            }
+            
+        }else{
+
+
+            for ($i=0; $i <= $termino; $i++) { 
+                
+                if ($horaactual == $i) {                    
+                    $banderadisponible =1;       
+                }
+            }
+
+
+    }
+    return $banderadisponible;
+}
+
+function getdayfunction($diahoynum){
+    switch ($diahoynum) {
+                case 1:
+                    return "L";            
+                    break;
+                case 2:
+                    
+                    return "M";    
+                    break;    
+
+                case 3:
+                    return "MI";        
+                    break;    
+
+                case 4:
+                    return "J";        
+                    break;    
+                case 5:
+                    return "V";        
+                    break;    
+
+                case 6:
+                    return "S";        
+                    break;        
+
+                case 7:
+                    return "D";        
+                    break;        
+                
+                default:
+                    
+                    break;
+            } 
+
+}
 
 }
 

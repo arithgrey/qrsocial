@@ -13,6 +13,7 @@ class Principal extends CI_Controller {
 	}
 	function __bienvenida(){
 
+		
 		$data["titulo"]="Home";
 		$this->load->view("Template/header", $data);
 		$this->load->view("principal/presentacion", $data);

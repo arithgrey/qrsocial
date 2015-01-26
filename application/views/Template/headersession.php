@@ -46,7 +46,8 @@
   	#titlemain{
   		background: rgba(13, 72, 99, 1);
   		color:  white;
-  		font-size: 1.5em;
+  		font-size: 1.2em;
+  		text-align: right;
   	}
   	#mensaje_camp{
   		display: none;
@@ -75,80 +76,74 @@ footer{
 }
 #home{
 	color: rgba(13, 76, 96, 1);
+	font-size: 1.4em;	
 }
+
+header{
+	padding: 10px;	
+}
+
 </style>
 
 </head>
 <body>
 	<header>
-		
-		<div class='row'>
-			<div class='large-4 columns'>
-				<a href="<?=base_url('index.php/principal/logout')?>"
-				 data-reveal-id="firstModal" class="radius button">
-					Logout						
-				</a>						
-				<?=$username?>
-			</div>
 
+		<div class="row">	
 
-		</div>
-							
-		<div class="row">			
-			<div class='row'> 
-				<div class='row'>
-	
-	
-	<dl class="sub-nav"> 	
-			
-			<dd class="" id='panelcontrol_menu'>
-				<a href="<?=base_url('index.php/panelcontrol/control')?>">Panel de control <?=img("application/img/png/glyphicons-137-cogwheel.png")?> </a>
-			</dd> 
-			<dd id="home_menu">
-				<a href="<?=base_url()?>">Home <?=img("application/img/png/glyphicons-21-home.png")?> </a>
-			</dd> 
-			<dd id='zonasqr_menu'>
-				<a href="<?=base_url('index.php/zonasqr/principal')?>">Zonas QR  <?=img("application/img/png/glyphicons-317-tree-conifer.png")?></a>
-			</dd> 
-			<dd id='campanias_menu'>
-				<a href="<?=base_url('index.php/cuentas/accessacount')?>">Campañas <?=img("application/img/png/glyphicons-188-more.png")?></a>
-			</dd>
+					<div class='large-3 columns'>
+						<h1 class='home large-12 columns' id='home'>
+							<a id="home" href="<?=$homesess;?>"> <?=img("/application/img/png/glyphicons-21-home.png")?> QR social </a>
+						</h1>					
+					</div>
 
-			<dd id='mensaje_camp'>
-				<a href="<?=base_url('index.php/cuentas/accessacount')?>">Mensajes</a>
-			</dd>
+					<div class='large-9 columns'>
+						<dl class="sub-nav"> 				
+								<dd id="home_menu">
+									<a href="<?=base_url()?>">Home <?=img("application/img/png/glyphicons-21-home.png")?> </a>
+								</dd> 
+								<dd id='zonasqr_menu'>
+									<a href="<?=base_url('index.php/zonasqr/principal')?>">Zonas QR  <?=img("application/img/png/glyphicons-317-tree-conifer.png")?></a>
+								</dd> 
+								<dd id='campanias_menu'>
+									<a href="<?=base_url('index.php/cuentas/accessacount')?>">Campañas <?=img("application/img/png/glyphicons-188-more.png")?></a>
+								</dd>
 
+								<dd id='mensaje_camp'>
+									<a href="<?=base_url('index.php/cuentas/accessacount')?>">Mensajes</a>
+								</dd>
+								<dd class="" id='panelcontrol_menu'>
+									<a href="<?=base_url('index.php/panelcontrol/control')?>">Panel de control <?=img("application/img/png/glyphicons-137-cogwheel.png")?> </a>
+								</dd> 	
+								<dd>
+									<a href="<?=base_url('index.php/principal/logout')?>">Salir <?=img('application/img/png/glyphicons-388-log-out.png')?></a>																	
+								</dd>
+						</dl>
+					</div>
 
 				
-	</dl>
-	
 
-
-</div>
-
-</div>
-				<h1 class='home large-8 columns' id='home'>
-					<a id="home" href="<?=$homesess;?>"> <?=img("/application/img/png/glyphicons-21-home.png")?> QR social </a>
-				</h1>
-					
-
-
-
+		</div>										
+		<div class='row'>
+				<div class='large-4 columns' >
+				</div>	
+				<div class='large-4 columns' >
+				</div>	
 				<div class='large-4 columns' >
 					<p id="titlemain" ><?=$titulo?></p>
-					<div class="progress [radius round]"> 
-		<span class="meter" style="width:70%;"></span> 
- </div> 					
 					
 				</div>
-			</div>										
-		</div> 		
-		<nav>
-		</nav>
+
+		</div>
+		
+		
 	</header>
+
+
+
 	<div id='wrapper' class='wrapper'>
 		<div class='content' id='content'>
-			<input type="hidden" name="now" class="now" id="now" value="<?=base_url()?>">
+			<input type="hidden" name="now" class="now" id="now" value="<?=base_url();?>">
 
 
 

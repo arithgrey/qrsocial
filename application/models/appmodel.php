@@ -19,6 +19,8 @@
 
     }
 
+
+
     public function datos_usuario(){
 
         $appId = '1590033354545663';
@@ -43,6 +45,36 @@
             return $resultado;
         }
     }
+
+    function getmensajesbyidzonascuentaid($zona , $dia ){
+
+        
+        $query_getcamp =   "SELECT idcampaña FROM   campaña_zona WHERE  idzona=".$zona; 
+        $query = $this->db->query($query_getcamp);
+        $data =[];
+        $camparr = $query->result_array();
+        
+        for ($a=0; $a < count($camparr); $a++) { 
+          
+
+          $query_mensajesinf =   "SELECT m.idmensaje , m.descripcion , m.status, m.social 
+          , m.name , m.horainicio , m.horatermino,  m.descriptioncaption ,
+          m.caption , m.source , m.picture, m.link , m.L  , m.M , m.MI , m.J , m.V , m.S , m.D ,
+          c.idcampaña , c.nombre FROM mensaje AS m , campaña AS c WHERE m.idcampaña = c.idcampaña AND m.idcampaña =".$camparr[$a]["idcampaña"] ." AND m.$dia ='1' "; 
+          $query = $this->db->query($query_mensajesinf);
+
+          $d= $query->result_array();
+
+          for ($b=0; $b <count($d) ; $b++) { 
+              $data[$b] = $d[$b];
+          }
+        }
+        return $data;
+
+    } 
+
+
+
 
 
 /*Termina el modelo*/

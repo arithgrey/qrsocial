@@ -1,0 +1,158 @@
+  #titlehora{
+    color: rgba(25, 155, 237, 1);
+    font-size: 1.1em;
+  }  
+  #confhorafb{
+    display: none;
+  }  
+  #url_f{
+    font-size: 1em;
+  }  
+  #horaconfimensaje{
+    display: none;
+  }  
+  #title_form{
+    background: rgb(55, 200, 236);
+    color: white;
+    font-size: 1.3em;
+  }  
+  #h2_dias, #h5_dias{
+    color: white;       
+  }  
+  #calend_section{
+    background: rgb(55, 200, 236);
+    color: white;
+  }  
+  #title_t{
+    background: none repeat scroll 0% 0% rgba(29, 51, 54, 1);    
+    border-radius: 10px;
+  }  
+  #msj_text{
+    font-size: 1.6em;
+  }
+  #title_t td{
+    color: white;
+  }
+  #name_title{
+    font-size: 1.9em;
+  }  
+  .steps{
+    color: white;
+  }  
+  #mensajes_h1{
+    color: white;
+  }
+  #p_repotemporal{
+    color: black;    
+  }
+  #registrointemporalbtn , #registrofechanbtn{
+      
+    background: white;
+    color: black;
+    border-radius: 5px;
+  }
+  .menu_section{
+    color: white;
+  }
+  #p_bienvenida{
+    font-size: 1.7em;
+  }
+  #p_opcionesdisponibles{
+    font-size: 1.3em;
+  }
+  #title_registro_menu{
+    color: white;
+  }
+  .cal_dia_seleccionado{
+    font-size: 1.5em;
+  }
+
+    .conf-hora-fecha{
+      background: #23A3EE;
+      color: white;  
+      border-radius: 2px;
+      padding: 5px;
+    }
+
+     #extras , #nombre{
+      color: white;
+    }
+    .calendario-inicio h4{
+      display: none;
+      border: 0px;
+    }  
+    .calendario-inicio p{
+      display: none;
+      border: 0px;
+      border: 0px;
+    }
+    .calendario-termino h4{
+      display: none;
+    }  
+    .calendario-termino p{
+      display: none;
+    }
+    .msj_description{
+      color: black;
+    }
+    #title_table_msj{
+      background: #00BFFF;
+      color: white;      
+    }
+    #title_t_p{
+      font-size: 1.6em;
+    }
+    #secction_twitter , #primeros_pasosseccion, #datos_campañaseccion{
+      display: none;
+    }
+    #secction_twitter_c , #secction_facebook_f{
+      background: white;
+      color: black;
+    }
+    #registrointemporalbtn{
+
+      background: none repeat scroll 0% 0% rgba(45, 90, 141, 1);
+      color: white;
+    }#registrotwitter {
+      background: #BFE0EC !important;
+      color: white;
+    }
+    #extras_tw{
+          
+      color: #BFE0EC !important;
+
+    }
+    #extras_f{
+      color: #0C968C;
+    }
+    #title_table_msj_tw{
+      background: #BFE0EC !important;
+    }
+    #p_tw , #p_fb{
+      font-size: 2em;
+    }label{
+      font-size: 1.3em;
+    }
+    #c{
+      font-size: 1.1em;
+
+    }
+
+    .day{
+      font-size: .8em;      
+      display: -moz-box;
+      display: -webkit-inline-box;
+      padding: 10px;
+
+    }
+    .d{
+      display: -moz-box;
+      display: -webkit-inline-box;
+      font-size: 1.2em;      
+      padding: 10px;
+      color: white;
+    }
+    #diassection{
+      background: rgba(25, 48, 53, 1);
+
+    }

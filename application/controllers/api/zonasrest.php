@@ -7,17 +7,11 @@ class Zonasrest extends REST_Controller
 
         $logged_in = $this->is_logged_in();
 
-        if ($logged_in == 1){
-
-            
+        if ($logged_in == 1){          
               $this->load->model("zonasmodel");
               $idzona = $this->input->get("idzona");
               $cuenta = $this->session->userdata('cuenta');            
               $responsedb =$this->zonasmodel->getelementbycuentazona( $cuenta , $idzona);              
-
-              
-
-
               $this->response($responsedb);
 
 
@@ -35,7 +29,30 @@ class Zonasrest extends REST_Controller
     }
 
 
+    function loadzonascamp_GET(){
 
+
+        $logged_in = $this->is_logged_in();
+
+        if ($logged_in == 1){
+
+              $idcampania = $this->input->get("idcampania");
+              $this->load->model("zonasmodel");             
+                                 
+              $responsedb = $this->zonasmodel->getzonacamp($idcampania);              
+              
+              $this->response($responsedb);
+
+
+        }else{        
+              
+              $this->logout();    
+
+        }
+
+
+
+    }
 
     function getzonasbytipo_GET(){      
         $logged_in = $this->is_logged_in();
@@ -135,7 +152,7 @@ class Zonasrest extends REST_Controller
 
               $zona_name = $this->input->post("zona_name");
               $descripcion_zona  = $this->input->post("descripcion_zona");
-              $tipo_zona = $this->input->post("tipo_zona");
+              $tipo_zona = $this->input->post("tipoz");
               $mensajedefault  = $this->input->post("mensajedefault");
               $cuenta = $this->session->userdata('cuenta');            
               $this->load->model("zonasmodel");

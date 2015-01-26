@@ -30,6 +30,11 @@
 
     }
 
+    function getzonacamp($idcampania){
+        $query ="select  idzona  from campaña_zona where idcampaña='".$idcampania."'";
+        $result = $this->db->query($query);
+        return $result ->result_array();        
+    }
 
     function getelementbycuentazona( $cuenta , $idzona){
 
@@ -132,6 +137,15 @@
         return $query->result_array();
     }
 
+
+    function getmensajedefault($idzona){
+        
+        $this->db->where('idzona', $idzona);        
+        $query = $this->db->get('zona');              
+        return $query->result_array();
+
+
+    }
 
 
 /*Termina el modelo*/

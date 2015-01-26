@@ -29,23 +29,16 @@ class Camp extends CI_Controller {
 			$añoactual = date("Y");
 			$numerodemes =  date("n");
 			$numerodiasmes = days_in_month( $numerodemes , $añoactual);
-
-			$a=1; 
-			while ($a <= $numerodiasmes) {
-				
-				
-				$descripciondia[$a] = $a ;			
-				$a++;
-			}	
-			
-			//$e= $this->name();
 			$this->load->library('calendar');
-			$calendario = $this->calendar->generate($añoactual, $numerodemes , $descripciondia);
+			
 
-			$data["calendario"] = $calendario;
+			
 			$data["añoactual"] = $añoactual;
-			$data["numerodemes"] = $numerodemes;
+			$data["numerodemes"] = $numerodemes;			
+
 			$data["campid"] =  $camp;
+
+
 
 			$username = $this->session->userdata('username');	
 			$data["username"]=$username;

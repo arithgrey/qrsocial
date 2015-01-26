@@ -87,12 +87,13 @@ footer{
 	<header>
 
 		<nav>
-			<h1><?=$titulo?></h1>
+			
+			<a href="<?=base_url()?>"><h1><?=$titulo?> <?=img("/application/img/png/glyphicons-21-home.png")?> </h1></a>
 		</nav>
 	</header>
 	<div id='wrapper' class='wrapper'>
 		<div class='content' id='content'>
-			<input type="hidden" name="now" class="now" id="now" value="<?=base_url()?>">
+			<input type="hidden" name="now" class="now" id="now" value="<?=base_url();?>">
 
 
 

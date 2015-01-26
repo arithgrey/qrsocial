@@ -4,6 +4,7 @@
 <script type="text/javascript" src="<?=base_url('application/js/sha1.js')?>"></script>
 <script type="text/javascript" src="<?=base_url('application/js/usuario/accessuser.js')?>"></script>
 
+
 <style type="text/css">
 
 #repoacces{
@@ -65,41 +66,42 @@ footer{
 <div data-alert class="alert-box">
 
 
-
 <div class="row">
-	<a href="<?=base_url()?>">Home</a>      
+	<a href="<?=base_url();?>">Home</a>      
   <div class="small-12 large-6 columns">
-
 
   	<button  id="regacountn">Registrarse <?=img("application/img/png/glyphicons-417-disk-saved.png")?></button>
   	<p><strong>La plataforma del ahora</strong> with a full-stack hosting for Git, Mercurial & Subversion repositories </p>
-
   	<h1 class='home_q' id='home_q'><a href="<?=base_url()?>" class='home_q' id='home_q' >QR social</a></h1>		 
 
 
    </div>
     <div class="small-12 large-6 columns">
+
     	<div class="panel"> 
     	<h2 class="subheader">Acceso</h2>	
       <div class="row">
 
         <div class="small-12 columns">          
             <div class="row">
+
+           <form id='user_acces_form' method='POST'> 
               <div class="small-12 medium-6 columns">
                 <label>Mail</label>
-                  <input type="email" class='emailaccess' id='emailaccess' name='emailaccess' placeholder="arithgrey@gmail.com"/>
+                  <input type="email" class='emailaccess' id='emailaccess' name='emailaccess' placeholder="arithgrey@gmail.com" required/>
                   <div class='repomail' id='repomail'></div>
               </div>
 
               <div class="small-12 medium-6 columns">
                 <label>Password</label>
 
-                  <input type="password" class='passwordaccess' id ='passwordaccess' name='passwordaccess' placeholder=""/>
+                  <input type="password" class='passwordaccess' id ='passwordaccess' name='passwordaccess' placeholder="" required/>
                   <div  id='repopass'></div>
                   <span class="label">Olvidé contraseña</span>
               </div>
             </div>
             <button class='accessuser' id='accessuser'>Acceder</button>
+            </form> 	
           <div  class='repoacces' id='repoacces'></div>
         </div>
       </div>
@@ -157,6 +159,7 @@ footer{
 		</div>
 	  <!-- Formulario -->
 	  <div class="large-6 columns">    
+
 			<div class='row'>
 				<span class="label large-5 columns">Nombre de la cuenta</span>
 				<input type="text" name="username" id="username" class="username large-7 columns" placeholder="Factor Evolución" required>
@@ -174,6 +177,7 @@ footer{
 				<div id='reporte_registro' class='reporte_registro'></div>
   				<a  class="button" id="registrousuario">Registrar <?=img("application/img/png/glyphicons-207-ok-2.png")?></a>  				
   			</div>
+  			
   	</div>    
 </div>
 </div>

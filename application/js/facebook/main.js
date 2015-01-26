@@ -2,6 +2,7 @@ $(document).on("ready", function(){
 
 	$(".logout").click(terminarsessionfb);
 	$(".urlusuariofb").click(getmuro);
+	
 });
 
 

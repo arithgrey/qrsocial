@@ -39,9 +39,10 @@
         $insertquery =  $this->db->insert('cuenta', $data);  
         $querylast = "SELECT MAX(idcuenta) AS id FROM cuenta";
         $result = $this->db->query($querylast);
-        
+        $laste= $result->result_array()[0]["id"];  
+        return $laste;
+      
 
-        return $result->result_array(); 
     }
 
     /*Listar cuentas */
@@ -62,11 +63,13 @@
       return $query->result_array();
     }
 
+    
+    
     function updatecuentafremiunmbyid($id, $nombre, $descripcion, $estado){
 
         $query_validator="select idTipo_cuenta from cuenta where idcuenta=".$id;     
         $result = $this->db->query($query_validator);
-        $idTipo_cuenta = $result->result_array()[0]["idTipo_cuenta"];
+        $idTipo_cuenta = $result->result_array()["idTipo_cuenta"];
 
         if ($idTipo_cuenta == 2) {
           $query_update="UPDATE cuenta SET 
@@ -75,12 +78,11 @@
           
           $result = $this->db->query($query_update);
           return $result;
-        }
-
+        }    
       
         
     }
-
+  
 
 
 }

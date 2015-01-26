@@ -10,34 +10,12 @@ class Usuario extends CI_Controller {
 	function usuarioregistro(){
 
 		
-
-
-
-
 		if ($this->is_logged_in()==1){
 
-
-
-			
 			redirect(base_url('/index.php/principal/homeuser'));
+			
 		}else{
-
-			/*
-			session_start();
-			$_SESSION['oauth_token'] = $this->input->get("oauth_token"); 		
-			$_SESSION['oauth_token_secret'] = $this->input->get("oauth_token_secret");
-
-			$connection = new TwitterOAuth("n4DQTKKv4mPhbe9nlVi0x0bPw", 
-				"ejSTUsVNtyIzDyOP2gqfzNDWuE10AuVbPIsRA6YzddlZRaGFBA", $_SESSION['oauth_token'] , $_SESSION['oauth_token_secret'] );
 			
-			
-
-			$token_credentials = $connection->getAccessToken($_REQUEST['$oauth_verifier']);
-			$connection = new TwitterOAuth("n4DQTKKv4mPhbe9nlVi0x0bPw", "ejSTUsVNtyIzDyOP2gqfzNDWuE10AuVbPIsRA6YzddlZRaGFBA", $token_credentials['oauth_token'],
-			$token_credentials['oauth_token_secret']);
-			*/
-			
-
 			$data["titulo"]="Home";
 			$this->load->view("Template/header", $data);
 			$this->load->view("usuario/registrousuario");

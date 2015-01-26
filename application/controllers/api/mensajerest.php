@@ -15,6 +15,7 @@ class Mensajerest extends REST_Controller
             
             $this->load->model("mensajemodel");    
             $result =  $this->mensajemodel->loaddatamensajebyid($idmensaje , $campid );
+
             $this->response( $result );
 
         }else{        
@@ -53,21 +54,36 @@ class Mensajerest extends REST_Controller
           $logged_in = $this->is_logged_in();
           if ($logged_in == 1) {
 
-            $descripcionedit  = $this->input->post("descripcionedit");
-            $statusmsjedit = $this->input->post("statusmsjedit");
-            $id_hora_inicio = $this->input->post("id_hora_inicio");
-            $year  = $this->input->post("year");
-            $month  = $this->input->post("month");
-            $dias = $this->input->post("dias");
-            $idmensaje = $this->input->post("idmensajeedit");
-            $id_hora_termino  = $this->input->post("id_hora_termino");
+            $this->load->model("mensajemodel"); 
 
-            $iduser= $this->session->userdata('idusuario');
-      
-            $this->load->model("mensajemodel");    
-            $result =  
+
+            $idmensaje = $this->input->post("idmensajeedit");
+            $descripcionedit  = $this->input->post("descripcionedit");                        
+            
+            $iduser= $this->session->userdata('idusuario');            
+            $name  = $this->input->post("namec");
+            $descriptioncaption  =  $this->input->post("descriptioncaptionc");
+            $caption  = $this->input->post("captionc");
+            $source  =  $this->input->post("sourcec");
+            $picture  = $this->input->post("picturec");
+            $link  = $this->input->post("linkc");
+
+
+            $lc = $this->input->post("lc");
+            $mc = $this->input->post("mc");
+            $mic = $this->input->post("mic");
+            $jc = $this->input->post("jc");
+            $vc = $this->input->post("vc");
+            $sc = $this->input->post("sc");
+            $dc = $this->input->post("dc");
+            
+            $hora_inicioconfig  =  $this->input->post("hora_inicioconfig");
+            $hora_terminoconfig = $this->input->post("hora_terminoconfig");
+
+               
+            
             $result= $this->mensajemodel->updatemensajebyidandaccount( $idmensaje , $descripcionedit ,  
-              $statusmsjedit , $id_hora_inicio , $id_hora_termino ,  $year  , $month , $dias );
+              $name , $descriptioncaption , $caption , $source , $picture , $link , $lc , $mc , $mic , $jc , $vc , $sc , $dc , $hora_inicioconfig ,  $hora_terminoconfig );
 
             $this->response($result);
 
@@ -91,6 +107,7 @@ class Mensajerest extends REST_Controller
             $this->load->model("mensajemodel");    
             $result =  $this->mensajemodel->listmensajebycuenta($campid);
             $this->response($result );
+            
 
 
               
@@ -120,12 +137,12 @@ class Mensajerest extends REST_Controller
 
             $descripcion = $this->input->post("descripcion_twitter");
             $campid = $this->input->post("campid");
-            $zona = $this->input->post("zona");            
-            $statussiempreactivo = 2;            
+            
+            
             
             $this->load->model("mensajemodel");  
             $url = base_url();
-            $result  = $this->mensajemodel->registramensajetw($iduser , $descripcion  ,$campid , $zona , $statussiempreactivo , $url);
+            $result  = $this->mensajemodel->registramensajetw($iduser , $descripcion  ,$campid  , $url);
 
             if ($result == true) {
               $this->response("1");  
@@ -152,21 +169,40 @@ class Mensajerest extends REST_Controller
 
         if ($logged_in == 1) {
 
+            $this->load->model("mensajemodel");  
+
             $iduser= $this->session->userdata('idusuario');
             $descripcion = $this->input->post("descripcion");
             $campid = $this->input->post("campid");
-            $zona = $this->input->post("zona");            
-            $statussiempreactivo = 1;            
-            
-            $this->load->model("mensajemodel");  
+
+            $name  = $this->input->post("name");
+            $descriptioncaption  =  $this->input->post("descriptioncaption");
+            $caption  = $this->input->post("caption");
+            $source  =  $this->input->post("source");
+            $picture  = $this->input->post("picture");
+            $link  = $this->input->post("link");
+
+            $hinicio  = $this->input->post("hinicio");
+            $htermino = $this->input->post("htermino");
+            $lunes =  $this->input->post("lunes");
+            $martes =  $this->input->post("martes");
+            $miercoles =  $this->input->post("miercoles");
+            $jueves = $this->input->post("jueves");
+            $viernes = $this->input->post("viernes");
+            $sabado =  $this->input->post("sabado");
+            $domingo =  $this->input->post("domingo");
+ 
             $url = base_url();
-            $result  = $this->mensajemodel->registramensajefb($iduser , $descripcion  ,$campid , $zona , $statussiempreactivo , $url);
+
+            $result  = $this->mensajemodel->registramensajefb($iduser , $descripcion  ,$campid   , $name , $descriptioncaption , $caption  , $source , $picture , $link , $hinicio , $htermino , 
+              $lunes , $martes , $miercoles , $jueves , $viernes , $sabado , $domingo);
 
             if ($result == true) {
               $this->response("1");  
             }else{
               $this->response("0");
             }
+            
             
 
 

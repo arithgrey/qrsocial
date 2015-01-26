@@ -52,7 +52,7 @@ $autoload['packages'] = array(APPPATH.'third_party');
 |	$autoload['libraries'] = array('database', 'session', 'xmlrpc');
 */
 
-$autoload['libraries'] = array('encrypt', 'session', 'calendar');
+$autoload['libraries'] = array('encrypt', 'session', 'calendar', 'unit_test');
 
 
 /*

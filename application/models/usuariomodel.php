@@ -24,6 +24,7 @@
       return $existencia;
     }
 
+
     function registrofreemium($username , $usermail, $pw , $cuentanum ){
 
           $data = array(
@@ -37,16 +38,8 @@
          
           );
           $result = $this->db->insert('usuario', $data); 
+          return $result;
           
-          if ($result == 1) {
-          
-            return  "1";
-            
-          }else{
-
-            return "0";
-          }
-
     }
 
     

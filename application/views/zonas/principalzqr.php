@@ -1,9 +1,29 @@
+<!--Simple icon-->
 <script type="text/javascript" src="<?=base_url('application/js/zonas/home.js')?>"></script>
 <script type="text/javascript" src="<?=base_url('/application/js/foundation/foundation.reveal.js')?>"></script>
 <style type="text/css">
 
+#section_establecido{
+  background: none repeat scroll 0% 0% #00BFFF;
+}
+.lb_title{
+  font-size: 1.2em;
+  color:  rgba(245, 245, 245, 1);
+  
+}
+#lista_msj_t{
+  background: rgba(25, 48, 53, 1);
+}
+.main_title{
+  font-size: 2em;  
+  color:  rgba(245, 245, 245, 1);
+  background:  rgba(25, 48, 53, 1);
 
-
+}
+#lb_title{
+  font-size: 1.7em;
+  color: rgb(17, 120, 146);
+}
 #p_bienvenida{
   font-size: 1.7em;
 }
@@ -12,6 +32,10 @@
 }
 #title_registro_menu{
   color: white;
+}
+#lb_text{
+  color: grey;
+
 }
 #nuevo_img{
 
@@ -28,7 +52,10 @@
   background: #8ED7F2;
 }
 .title_table{
-  background: #012634;
+ background: none repeat scroll 0% 0% #00BFFF;
+}
+.lb_title{
+  font-size: 1.2em;
 }
 .tutle_help{
   background: black;
@@ -37,37 +64,12 @@
 .alert-box , #menu_section{
   cursor: pointer;
 }
-#registrarzonan{
-  background: white;
-  color: black;
-}
 #preguntas_p{
   color: white;
   font-size: 1.5em;
 }
+
 </style>
-
-<div class="alert-box"> 
-<div class="row">
-  
-  <!--Sección principal-->  
-  <div id='seccion_principal'>
-    <div class="small-12 large-8 large-push-4 columns">
-      <img src="http://placehold.it/600x300&text=[img]">
-    </div>
-
-  </div>
-
-
-
-
-
-
-  <!--Nuevo menú -->  
-  <div id='seccion_nuevo'>      
-
-        <div class='row'>        
-        <div class="large-12 columns">            
         <div class="row">              
               <dl class="sub-nav">    
               <dd class="active panelcontrol_menu" id='panelcontrol_menu'>
@@ -80,16 +82,13 @@
         </div>  
 
 
-        <div data-alert class="alert-box">                   
-
-
-            <!-- Sección de ayuda -->
+<div class="row">      
+  <div id='seccion_nuevo'>      
+               
           <div id="seccion_ayuda" class="large-12 columns">    
-
                   <p id="preguntas_p">
                     Preguntas frecuentes del sistema QR social
                   </p>
-
                 <div class='large-10 columns'>              
                   <div class="row">
                     <p class='tutle_help'>¿Qué es el sistema QR social?</p>
@@ -106,7 +105,6 @@
                         nsertándole humor y cosas por el estilo). 
                         </p>
                     </div>
-
                     <p class='tutle_help' >¿Cómo puedo adquirir más servicios?</p>
                     <div class="panel callout radius">
                       <p>
@@ -126,67 +124,70 @@
                       <a>Administración de usuarios</a>         
                     </div>  
                 </div>                          
-
           </div>
 
 
+
+
           <!--Sección para el registro de las zonas-->
-          <div id="section_establecido">            
-            <div id="contenido_list_zonas" class='row'></div>     
-            <h2 id="title_registro_menu">Registro</h2>          
-            <form name="frm_registrozonas" id="frm_registrozonas">
+          <div class='row'>
+            <div id="contenido_list_zonas"></div>     
+          </div>
+          
 
-              <div class="large-6 columns">
-                    <span id="zonaname_label" data-tooltip aria-haspopup="true" class="has-tip" title="Nombre de la zona qr">
-                      Zona qr 
-                    </span>
-                    <input type="text" name="zona_name" id="zona_name" placeholder="El nombre del la zona">            
-                    <select class='tipo_zona' name='tipo_zona' id="tipo_zona">
-                    </select>
-                       <span id="zonaname_label" data-tooltip aria-haspopup="true" class="has-tip" title="Mensaje que se encontrará disponible en el caso de que la zona qr ">
-                      Mensaje por default para la zona
-                    </span>  
-                    <input type="text" name="mensajedefault" placeholder='#mensaje por #default para mi #zonaqr' >
-                    <input type="hidden" name="base_url" value="<?=base_url()?>"> 
 
-              </div>
-              <div class="large-6 columns">
-                <span id="zonaname_label" data-tooltip aria-haspopup="true" class="has-tip" title="Describe tu zona qr social">
-                      Descripción
-                    </span>  
-                    <textarea  name='descripcion_zona' id="descripcion_zona" rows="4" cols="50">
-                      Descripción de la zona qr a crear
-                    </textarea>
+<div class='row'>
+      <form name="frm_registrozonas" id="frm_registrozonas">      
+            
+            <p class="title_registro">Registro</p>                      
+                  <div class='row'>
 
-              </div>
-              
-                    </form>
-                    <button id="registrarzonan" class="registrarzonan">Registrar Zona <?=img("application/img/png/glyphicons-207-ok-2.png")?></button>
-                  <p class="reporegistro" id="reporegistro"></p>
+                      <label class='title_registro large-12 columns'>
+                        Nombre de la zona qr 
+                      </label>         
+                      
+                      <div class='large-12 columns'>
+                        <input type="text" name="zona_name" id="zona_name" placeholder="El nombre del la zona" required>            
+                      </div>
 
-         </div>         
+                      <label class='title_registro large-12 columns'>
+                        Mensaje por default para la zona
+                      </label>   
+                      <div class='large-12 columns'>
+                        <input type="text" name="mensajedefault" id="mensajedefault" placeholder='Hola buen día.!' required>
+                      </div>
+
+                  </div>
+
+                  <div class='row'>
+                                
+                      <label class='title_registro large-12 columns'>
+                        Referencia o descripción
+                      </label>                      
+                      <div class='large-12 columns'>
+                        <textarea  name='descripcion_zona' id="descripcion_zona"  rows="4" cols="50">
+                        Descripción de la zona qr a crear
+                      </textarea>
+                      </div>
+                      
+                      <label class='title_registro large-12 columns'>
+                        Tipo de zona
+                      </label>            
+                      <div class='large-12 columns' id='tipo_zona'>
+                      </div>
+
+                  </div>
+                  <input type="hidden" name="base_url" value="<?=base_url()?>"> 
+                  <input type="hidden" name="tipoz" id='tipoz' value=""> 
+                  <button id="registrarzonan" class="registrarzonan">Registrar Zona <?=img("application/img/png/glyphicons-207-ok-2.png")?></button>
+                                    
+         <p class="reporegistro" id="reporegistro"></p>      
+       </form>    
         </div>
-        </div>
-      </div>
-  </div>
 
 </div>
 
-<!--
-
-    <div class="large-2 columns">
-        <div class="large-12 columns" onclick="section('e_nuevo' )"; >                    
-              <p class='menu_section'>Zonas QR Social</p>                      
-        </div>      
-        <div class="large-12 columns" onclick="section('e_destacadas')";>                  
-            <p class='menu_section'>Destacadas</p>              
-        </div>
-        <div class="large-12 columns " onclick="section('e_informes' )";>           
-              <p class='menu_section' id="menu_section">Datos estadísticos</p>           
-        </div>
-
-    </div>
--->
+</div>
 
 
 
@@ -206,53 +207,62 @@
 
 
 
-<div class="reveal-modal" id="dlg_del_zoaedit" data-reveal>
-   
-   <div  class='large-12 columns'>              
-          <form name="form_edit_zona" METHOD ="POST" id="form_edit_zona">                        
-            <h2>Configuración </h2>
+
+
+
+
+
+
+<div class="reveal-modal" id="dlg_del_zoaedit" data-reveal>   
+            <form name="form_edit_zona" METHOD ="POST" id="form_edit_zona">                        
+            <p class='main_title'>Configuración </p>            
+
+  
+<div class='row'>
             <div class='large-6 columns'>
-              <h4 class="subheader large-6 columns">Zona</h4>        
-              <input type="hidden" name='edit_zona' id="edit_zona" >   
-              <input type="text" name="edit_zonaname" id="edit_zonaname" class="large-6 columns">
-              <h4 class="subheader large-6 columns">Tipo de zona </h4>
-              <select id="edit_tipozona" name='edit_tipozona'></select>        
-            </div>            
-            <div class='large-6 columns'>                
-              <h4 class="subheader ">Descripción</h4>
-              <textarea name="edit_descripcion" id="edit_descripcion"  rows="4" cols="50"></textarea>
-              <p id="edit_fecharegistro"></p> 
-            </div>
-          <div class='large-12 columns'>
-            <h4 class="subheader">Mensaje por default</h4>
-            <input type="text"  id="mensajedefaultedit" name="mensajedefaultedit" placeholder="#mensaje predeterminado #qr #social"> 
-          </div>     
-          </form>        
-          <button id="edit_btn">Efectuar cambios <?=img("application/img/png/glyphicons-445-floppy-saved.png")?></button>          
-          <p id="edit_repo"></p>  
-    </div>    
-    <div class="row">
-        <h2>Mensajes asociados</h2>
-        <div id="mensaje_asociados" class="mensaje_asociados"></div>
-   </div>        
+                    <label class='large-12 columns' id='lb_title'>Zona</label>        
+                    <input type="hidden" name='edit_zona' id="edit_zona" class='large-12 columns'>   
+                    <input type="text" name="edit_zonaname" id="edit_zonaname" >
 
+                    <label class='large-12 columns' id='lb_title'>Tipo de zona </label>
+                    <select id="edit_tipozona" name='edit_tipozona' class='large-12 columns'></select>                  
+            </div>
+
+            <div class='large-6 columns'>
+                    <label class='large-12 columns' id='lb_title'>Descripción</label>
+                    <textarea name="edit_descripcion" id="edit_descripcion" class='large-12 columns'  rows="4" cols="50"></textarea>                        
+            </div>
+</div>
+
+            
+<div class='row'>
+              <div class='large-8 columns'>
+                <label class='large-12 columns' id='lb_title'>Mensaje por default</label>
+                <input class='large-12 columns' type="text"  id="mensajedefaultedit" name="mensajedefaultedit" placeholder="#mensaje predeterminado #qr #social">     
+              </div>
+              <div class='large-4 columns'>
+                <button  class='large-12 columns' id="edit_btn">Efectuar cambios <?=img("application/img/png/glyphicons-445-floppy-saved.png")?></button>       
+                 <button  class='large-12 columns' id='ver_mensajes'>Mensajes<?=img("application/img/png/glyphicons-445-floppy-saved.png")?></button>             
+              </div>    
+              </form>                  
+</div>            
 
   <a class="close-reveal-modal">&#215;</a>
 </div>  
 </div> 
-<div class="reveal-modal" id="dlg_del_zoadel" data-reveal>
-  <h3>Eliminar Campaña</h3>
-  <p>¿Realmente decea eliminar la zona qr?</p>
-  <button id="done_del">ELIMINAR</button>
-  <button id="fail_del">CANCELAR</button>
-  <a class="close-reveal-modal">&#215;</a>
-</div>  
 
+
+<div class="reveal-modal" id="dlg_mensajeszona" data-reveal>
+  <div class="row">        
+        <div id="mensaje_asociados" class="mensaje_asociados"></div>
+    </div>        
+</div>
 
 
 <div class="reveal-modal" id="dlg_detallezona" data-reveal>
   <p id="detalle_zona"> </p>
     <a class="close-reveal-modal">&#215;</a>
 </div>  
+
 
 

@@ -1,9 +1,9 @@
 $(document).on("ready", function(){
 
 	
-	/*Load data campaña*/	
+	
 	loadndatacampania();
-	/*Load all campanias*/
+	
 	loadallcampanias();
 
 

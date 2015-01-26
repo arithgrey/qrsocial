@@ -15,8 +15,7 @@
 		$this->db->where('status', '1'); 
 
 		$query = $this->db->get('usuario');
-		
-		
+				
         $exist = $query->num_rows();
         if ($exist == 1) {
             return $query->result_array();

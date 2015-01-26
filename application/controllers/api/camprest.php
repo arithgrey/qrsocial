@@ -4,7 +4,6 @@ class Camprest extends REST_Controller
 {
 
 
-
     function loadcampbycount_GET(){
 
         $logged_in = $this->is_logged_in();
@@ -18,6 +17,7 @@ class Camprest extends REST_Controller
                 $this->load->model('cammodel');    
                 $responsedb = $this->cammodel->loadcampania($idusuario , $cuenta); 
                 $this->response($responsedb);
+                
 
 
         }else{        
@@ -50,6 +50,26 @@ class Camprest extends REST_Controller
 
     }
 
+
+    function getstatusnamecampbyid_GET(){
+
+        $logged_in = $this->is_logged_in();
+
+        if ($logged_in == 1) {
+
+            $id= $this->input->get("idcamp");        
+            $this->load->model('cammodel');    
+            $idusuario= $this->session->userdata('idusuario');
+            $namecamo = $this->cammodel->getstatusnamecampbyid($id, $idusuario);            
+            $this->response($namecamo);
+
+        }else{        
+              
+              $this->logout();    
+
+        }
+
+    }
 
     /*Describe campaña*/
 
@@ -88,9 +108,10 @@ class Camprest extends REST_Controller
         $idcamp =   $this->input->post('campedit'); 
         $nameedicion = $this->input->post('nameedicion');
         $descripcionedit= $this->input->post('descripcioneditcamp');        
+        $estadocamp =  $this->input->post('estadocamp');        
     
         $this->load->model("cammodel");        
-        $responsedb= $this->cammodel->editcamp($idcamp , $nameedicion, $descripcionedit);
+        $responsedb= $this->cammodel->editcamp($idcamp , $nameedicion, $descripcionedit , $estadocamp);
 
         $reporte="";
         if ($responsedb == true) {
@@ -114,7 +135,6 @@ class Camprest extends REST_Controller
         $logged_in = $this->is_logged_in();
 
         if ($logged_in == 1) {
-
 
             $this->load->model('cammodel');    
             $idusuario= $this->session->userdata('idusuario');
@@ -142,7 +162,7 @@ class Camprest extends REST_Controller
             $evento = $this->input->post('evento');
             $descripcion = $this->input->post('descripcion');
             
-                $idusuario= $this->session->userdata('idusuario');
+                $idusuario = $this->session->userdata('idusuario');
                 $cuenta= $this->session->userdata('cuenta');
 
                 $dbresponse ="";
@@ -150,16 +170,22 @@ class Camprest extends REST_Controller
                 $this->load->model("cammodel");            
                 $dbresponse = $this->cammodel->registrocamp($name , $descripcion, $evento , $idusuario , $cuenta);
 
-                $reporte ="";
-                if ($dbresponse == 1) {
+                
+                
 
-                    $reporte= "Éxito en el registro";                    
-                }elseif ($dbresponse == 2){
-                    $reporte= "Falla en el registro";                    
+                if ($dbresponse == "ok"){
+                    
+                    $this->response($this->cammodel->loadlastcampania($idusuario , $cuenta));        
+
+                }else if ($dbresponse ==  3) {
+
+                    $this->response("En el sistema ya existe una campaña con ese nombre, intente con otro");
+
                 }else{
-                    $reporte= $dbresponse;
+                    $this->response("Falla en el registro de la campaña");
+                     
                 }
-                $this->response($reporte);    
+                
              
             
 
@@ -206,6 +232,102 @@ class Camprest extends REST_Controller
 
      }   
 
+     function setregistrozonacam_POST(){
+
+        $logged_in = $this->is_logged_in();        
+
+        if ($logged_in == 1) {
+
+            $this->load->model("cammodel");
+
+            $idzona = $this->input->post("idzona");
+            $idcamp = $this->input->post("campedit");
+    
+            $is = $this->cammodel->ischeckcampzona($idzona , $idcamp );            
+
+            //$this->response("is: ". $is . "idzona " .   $idzona . "idcamp". $idcamp );
+            
+            if ($is > 0) {
+
+                $update = $this->cammodel->removecampzona( $idzona , $idcamp );                
+                if ($update == true){
+                        $this->response("Zona desactivada");        
+                }else{
+                        $this->response("Error al desactivar la zona");        
+                }    
+                
+            }else{
+                
+                    $update = $this->cammodel->registrocampzona($idzona , $idcamp );
+
+                    if ($update  ==  true) {
+
+                        $this->response("Zona activada");          
+                    }else{
+                        $this->response("Error al activar la zona");        
+                    }
+                    
+            }
+
+            
+
+        }else{
+              $this->logout();    
+        }
+
+ 
+
+
+
+     }
+
+
+     function registrozonacamp_GET(){
+
+
+        $logged_in = $this->is_logged_in();        
+
+        if ($logged_in == 1) {
+
+            $this->load->model("cammodel");
+
+            $idzona = $this->input->get("zona");
+            $idcamp = $this->input->get("camp");
+    
+            $databaseresponse = $this->cammodel->registrocampzona($idzona , $idcamp );            
+            $this->response($databaseresponse);
+            
+
+        }else{
+              $this->logout();    
+        }
+
+ 
+     }
+
+    function loadlascampania_GET(){
+        
+        $logged_in = $this->is_logged_in();        
+        $idcuentaactual= $this->session->userdata('cuenta');
+
+        if ($logged_in == 1) {
+
+            $this->load->model("cammodel");
+            $idusuario= $this->session->userdata('idusuario');
+
+            $databaseresponse = $this->cammodel->loadlastcampania($idusuario , $idcuentaactual);
+            $this->response( $databaseresponse);
+
+        }else{
+              $this->logout();    
+        }
+
+
+
+    }
+
+     
+
     function loadcampania_GET(){
         
         $logged_in = $this->is_logged_in();        
@@ -216,6 +338,7 @@ class Camprest extends REST_Controller
             $this->load->model("cammodel");
             $idusuario= $this->session->userdata('idusuario');
 
+            
             $databaseresponse = $this->cammodel->loadcampania($idusuario , $idcuentaactual);
             $this->response( $databaseresponse);
 

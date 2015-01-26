@@ -17,14 +17,15 @@ $(document).on("ready", function(){
 							
 							if (data == 0) {
 								/*Usuario correcto*/
-								response= "<div data-alert class='alert-box info radius'>Usuario correcto</div>";		
-								$("#reporte_registro").html(response);
+								response= "<div data-alert class='alert-box info radius'>Usuario correcto</div>";										
+								llenaelementoHTML("#reporte_registro" , response);
 								
 
 							}else{
 
 								response = "<span class='[success alert secondary] [round radius] label'> ✖Intente con un usuario distinto</span>";
-								$("#reporte_registro").html(response);
+
+								llenaelementoHTML( "#reporte_registro" , response);
 								
 								
 							}
@@ -37,7 +38,8 @@ $(document).on("ready", function(){
 		    }else{			    	
 
 				    	
-				    	$('#reporte_registro').html(repo);
+				    	
+				    	llenaelementoHTML( '#reporte_registro' , repo);
 		    }
 	});
 
@@ -52,7 +54,8 @@ $(document).on("ready", function(){
 		    if ( !expr.test(usermail) ){
 
 		    	repo ="<span class='[success alert secondary] [round radius] label'>✖ Mail no valido</span>";
-		    	$('#reporte_registro').html(repo);
+		    	
+		    	llenaelementoHTML('#reporte_registro' , repo);
 
 		    }else{
 		    		
@@ -62,12 +65,12 @@ $(document).on("ready", function(){
 			    		
 				    	if (data == "1"){
 
-						$('#reporte_registro').html("<div data-alert class='alert-box info radius'>Correo electrónico correcto</div>");
 						
+							llenaelementoHTML('#reporte_registro', "<div data-alert class='alert-box info radius'>Correo electrónico correcto</div>");
 
 						}else{
-
-							$('#reporte_registro').html(data);								
+							
+							llenaelementoHTML('#reporte_registro' , data);
 						
 						}
 				
@@ -87,7 +90,7 @@ $(document).on("ready", function(){
 		usermail  = $('.usermail').val();				
 		
 		pw = ""+CryptoJS.SHA1(pwregistro);			
-		postdata = now +"index.php/api/usuariorest/validadata/format/json";
+		postdata = $('.now').val() +"index.php/api/usuariorest/validadata/format/json";
 
 		if (pwregistro == pwconfirm ) {
 
@@ -95,24 +98,23 @@ $(document).on("ready", function(){
 			$.post(postdata , { "username" : username , "usermail" : usermail , "pw" : pw })
 			.done(function(data){
 
-				if (data == 1) {
+				if (data == true) {
+						responsesession(usermail, pwconfirm );	 	
+				}else{					
+					llenaelementoHTML("#reporte_registro" , data);
 
-						responsesession(usermail, pwconfirm );	 
-						
-				}else{
-
-					$('#reporte_registro').html(data);								
 				}
 				
 
 			}).fail(function(){
 
-				
+				alert("Error en el registro");
 			});
 
 						
 		}else{
-			$('#reporte_registro').html("<span class='[success alert secondary] [round radius] label'>✖ Error en las contraseñas</span>");									
+			
+			llenaelementoHTML('#reporte_registro' , "<span class='[success alert secondary] [round radius] label'>✖ Error en las contraseñas</span>");
 		}
 		
 		
@@ -139,9 +141,8 @@ function responsesession(mail , pw ){
 	
 
 
-				posturl = now + "index.php/api/accesssystem/usercheck/format/json";
+				posturl = $('.now').val() + "index.php/api/accesssystem/usercheck/format/json";
 				pwpost = ""+CryptoJS.SHA1(pw);
-
 				params = {"mail": mail, "pw" : pwpost }
 				
 						var jqxhr = $.ajax({
@@ -152,12 +153,11 @@ function responsesession(mail , pw ){
 							dataType: "json"	
 
 						}).done(function(data){				
-
 						
-							$('.repoacces').html(data);
+							llenaelementoHTML('.repoacces' , data);
 						
 						}).fail(function(){
-							alert( "error" );
+							alert( "Error sessión" );
 						});
 
 

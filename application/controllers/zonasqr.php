@@ -12,9 +12,8 @@ class Zonasqr extends CI_Controller {
 	function principal(){
 
 		$logged_in=$this->is_logged_in();
-
 		if ($logged_in == 1) {
-						
+
 			$data['titulo']="Zonas QR Social";
 			$username = $this->session->userdata('username');	
 			$data["username"]=$username;
@@ -23,7 +22,6 @@ class Zonasqr extends CI_Controller {
 			$nombrecuentaact  = $this->session->userdata('nombrecuentaact');
 			$data["nombrecuentaact"] = $nombrecuentaact;
 		
-			
 			$this->load->view("Template/headersession", $data);
 			$this->load->view("zonas/principalzqr");
 			$this->load->view("Template/footer", $data);
@@ -31,10 +29,33 @@ class Zonasqr extends CI_Controller {
 		}else{
 			
 			redirect(base_url());			
-
 		}
 
+	}
 
+	function zonaedit(){
+
+		$logged_in=$this->is_logged_in();
+		if ($logged_in == 1) {
+
+			$idzona = $this->input->get("zona");
+			
+			$data['titulo']="Zonas QR Social, detalles";
+			$username = $this->session->userdata('username');	
+			$data["username"]=$username;
+			$data["homesess"]=base_url('/index.php/principal/homeuser');
+			$nombrecuentaact  = $this->session->userdata('nombrecuentaact');			
+			$data["nombrecuentaact"] = $nombrecuentaact;
+			$data["zonaqredit"]= $idzona;
+		
+			$this->load->view("Template/headersession", $data);
+			$this->load->view("zonas/editazonaqr");
+			$this->load->view("Template/footer", $data);
+
+		}else{
+			
+			redirect(base_url());			
+		}
 
 	}
 

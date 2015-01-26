@@ -1,6 +1,6 @@
 $(document).on("ready", function(){
-
     flag = 0; 
+
 	//$("#seccion_nuevo").hide();		
     $("#Editarmiszonas").hide();
     $("#seccion_ayuda").hide();
@@ -27,9 +27,7 @@ $(document).on("ready", function(){
 
     $("#zonasqr_menu").attr("class","active zonasqr_menu");
 
-
 });
-
 
 function getday(ev){
 
@@ -47,7 +45,6 @@ function loadnumdias(){
 }
 function generatecalendar(){
 
-
     url =$(".now").val()+"index.php/api/calendario/generate/format/json";
     $.get(url , $("#form_dias").serialize() ).done(function(data){
 
@@ -61,10 +58,7 @@ function generatecalendar(){
 
 }
 
-
-<!---->
-
-/*Función para el menu */
+/*  Función para el menu   */
 function section(elemento){
 
 	switch (elemento){
@@ -73,8 +67,6 @@ function section(elemento){
         //$("#calendario_general").hide();
         $("#seccion_principal").show();
         $("#seccion_nuevo").hide();
-        
-
 
         break;
     case "e_nuevo":
@@ -83,10 +75,8 @@ function section(elemento){
        	        
         break;
     case "e_informes":
-		alert("trabajando .... .");        
-    	//$("#seccion_nuevomenu").hide(); //$("#seccion_principal").hide();	  	//$("#calendario_general").hide();
+		alert("trabajando .... .");            	
         break;
-    
     
     case "e_definirnuevo":    	
     	alert("Trabajando......");
@@ -128,9 +118,6 @@ function section(elemento){
 
         break; 
 
-
-
-
 	}
 
 }
@@ -139,20 +126,17 @@ function section(elemento){
 
 function loadtiposzonas(){
 
-    url= $(".now").val() +  "index.php/api/zonasrest/loadtiposzonas/format/json";
+    url= $(".now").val() + "index.php/api/zonasrest/loadtiposzonas/format/json";
+
 
     $.get(url).done(function(data){
-
         reporte="";
-
-        for (a = 0; a < data.length; a++) {
-            
-            reporte+="<option value='"+ data[a].idTipo_zona+ "'>"+ data[a].nombre+"</option>";
-
+        for (a = 0; a < data.length; a++) {                        
+            reporte+="<label class='large-2 columns' id='lb_text'> "+data[a].nombre+" <input type='radio' name='tipozona' id='tipozona' value='"+ data[a].idTipo_zona+"'  class='tipozona' onclick='etipozona(this);'></label>";
         }
 
-        $("#tipo_zona").html(reporte);        
-        $("#edit_tipozona").html(reporte);
+        llenaelementoHTML("#tipo_zona" , reporte);
+        llenaelementoHTML("#edit_tipozona", reporte);        
         $("#registrarzonan").click(registrazona);    
 
     }).fail(function(){
@@ -163,219 +147,154 @@ function loadtiposzonas(){
 }
 
 
+function etipozona(e){
+    tipoz = e.value;
+    $("#tipoz").val(tipoz);
+}
 
 function loadzonas(){
 
     url = $(".now").val()+"index.php/api/zonasrest/loadzonas/format/json";
 
-    $.get(url).done(function(data){
+    $.get(url).done(function(data){        
         
-        e="<table class='row' ><tr id='title_table' class='title_table' ><td><span id='zonaname_label' data-tooltip  class='has-tip' title='QR default'>QR default</span>";
-        e+="<td><span id='zonaname_label' data-tooltip aria-haspopup='true' class='has-tip' title='Nombre de la Zona qr'>Zona qr </span></td>";
-        e+="<td><span id='zonaname_label' data-tooltip aria-haspopup='true' class='has-tip' title='Descripción de la Zona qr'>Descripción</span></td>";
-        e+="<td><span id='zonaname_label' data-tooltip aria-haspopup='true' class='has-tip' title='Fecha en que se registró la zona'>Registro</span></td>";
-        e+="<td><span id='zonaname_label' data-tooltip aria-haspopup='true' class='has-tip' title='Tipo de zona qr'>Tipo de zona</span></td>";
-        e+="<td><span id='zonaname_label' data-tooltip aria-haspopup='true' class='has-tip' title='Mensaje por defaulr de la zona'>Mensaje default</span></td>";
-        e+="<td><span id='zonaname_label' data-tooltip aria-haspopup='true' class='has-tip' title='Configura tu zona qr'>Configuración</span></td></tr>";    
 
-
-
+        e="<table class='row' class='large-12 columns' ><tr id='title_table' class='title_table'><td> <label class='titulo_mensaje'>qr  <label></td>";
+        //e+="<td> <label class='titulo_mensaje'> url</label> </td>";
+        e+="<td> <label class='titulo_mensaje'>Nombre de la  zona qr</label></td>";
+        //e+="<td><span id='zonaname_label' data-tooltip aria-haspopup='true' class='has-tip' title='Descripción de la Zona qr'>Descripción</span></td>";        
+        e+="<td><label class='titulo_mensaje'>Tipo de zona</label></td>";
+        e+="<td><label class='titulo_mensaje'>Mensaje default</label></td>";        
+        e+="<td><label class='titulo_mensaje'>Configuración</label></td></tr>";    
+        
         for (var a = 0; a < data.length; a++) {            
 
             descripcion = data[a].descripcion;
             id = data[a].idzona; 
-
             imgurl = "https://api.qrserver.com/v1/create-qr-code/?size=150x150&data="+ data[a].urlmensajedef;                        
+            urlmensajedef = data[a].urlmensajedef;
+
 
             e+="<tr>";
-            e+="<td><img src= '"+imgurl+"' ></td>";
-
-            e+="<td>"+ data[a].zonanombre + "</td>";            
-            e+="<td>"+ descripcion.slice(0, 200) +"<br>......<a class='seguir_leyendo' id='"+data[a].idzona+"'> Seguir leyendo</a>"  +  "</td>";
-            e+="<td>"+ data[a].fecharegistro +"</td>";
-            e+="<td>"+ data[a].nombre+"</td>";
-            e+="<td>"+ data[a].mensajedefault +"</td>";
-
-            e+="<td><a class='idzona' id='"+data[a].idzona+"' >Más detalles <img src='"+ $(".now").val()+'application/img/png/glyphicons-151-edit.png'  + "'> </a></td>";
-            e+="</tr>";
+                e+="<td><img src= '"+imgurl+"' id='imgqrsocial' ></td>";
+          //      e+="<td>"+urlmensajedef+"</td>";
+                e+="<td>"+ data[a].zonanombre + "</td>";            
+              //  e+="<td>"+ descripcion.slice(0, 100) +"<br>......<a class='seguir_leyendo' id='"+data[a].idzona+"'> Seguir leyendo</a>"  +  "</td>";    
+                e+="<td>"+ data[a].nombre+"</td>";
+                e+="<td>"+ data[a].mensajedefault.slice(0, 100) +"</td>";            
+                e+="<td><a><img  class='idzona' id='"+data[a].idzona+"' src='"+ $(".now").val()+'application/img/png/glyphicons-151-edit.png'  + "'> </a></td>";
+                e+="</tr>";
         
         }
         e+="</table>";
-        $("#contenido_list_zonas").html(e);
+          
+        llenaelementoHTML("#contenido_list_zonas" , e);
         $(".idzona").click(idzonanow);
 
-        $(".seguir_leyendo").click(muestradetalle);
-
+        //$(".seguir_leyendo").click(muestradetalle);
 
     }).fail(function(){
         alert("Error");
     });
-
 }
 
 function registrazona(){
+
     
+    if ($("#mensajedefault").val()  == "") {        
 
-    url = $(".now").val()+"index.php/api/zonasrest/registrazona/format/json";
- 
-    $.post(url ,  $("#frm_registrozonas").serialize() ).done(function(data){
+        $("#reporegistro").html("Complete los campos");
 
-        if (data == 1){
+    }else{                     
+            if ($("#zona_name").val()  != "" ) {
 
-            $("#reporegistro").html("Registro éxitoso!!");
-            $("#zona_name").val("");
-            $("#descripcion_zona").val("");
-            $("#mensajedefault").val("");
-            
+                    istipozona = $("#tipoz").val();
+                    
+                    if (istipozona.length>0) {
 
-        }else{
-            $("#reporegistro").html("Falla en el registro");
-        }
+                            url = $(".now").val()+"index.php/api/zonasrest/registrazona/format/json";                           
+                            $.post(url ,  $("#frm_registrozonas").serialize() ).done(function(data){
 
+                                if (data == 1){
 
-        loadzonas();        
-    }).fail(function(){
-        alert("Error");
+                                    $("#reporegistro").html("Registro éxitoso!!");
+                                    $("#zona_name").val("");
+                                    $("#descripcion_zona").val("");
+                                    $("#mensajedefault").val("");
+                                    
 
-    });
+                                }else{
+                                    $("#reporegistro").html("Falla en el registro");
+                                }
 
+                                loadzonas();        
+                            }).fail(function(){
+                                alert("Error");
+
+                            });
+                    }else{
+                            $("#reporegistro").html("Complete los campos");
+                    }
+            }else{
+                $("#reporegistro").html("Complete los campos");
+            }
+
+    }
+    return false;
         
 }
+
+
 function idzonanow(evt){
 
-    idzona=evt.target.id;     
-    $('#dlg_del_zoaedit').foundation('reveal', 'open');
-    url = $(".now").val()+ "index.php/api/zonasrest/getzonabyid/format/json";
-
-    $.get(url, {"idzona" : idzona}).done(function(data){
-
-        idzona = data[0].idzona;
-        zonanombre = data[0].zonanombre;
-        descripcion = data[0].descripcion;
-        fecharegistro = data[0].fecharegistro;
-        nombre = data[0].nombre;
-        mensajedefault = data[0].mensajedefault;        
-        idTipo_zona = data[0].idTipo_zona;
-
-
-        $("#edit_zona").val(idzona);
-        $("#edit_zonaname").val(zonanombre);
-        $("#edit_descripcion").val(descripcion);    
-        $("#edit_fecharegistro").html("Fecha de registro: "+fecharegistro);
-        $('#edit_tipozona > option[value="'+idTipo_zona+'"]').attr('selected', 'selected');        
-        
-        $("#mensajedefaultedit").val( mensajedefault);
+    idzona=evt.target.id;         
+    urlnext =  $(".now").val()+"index.php/zonasqr/zonaedit/?zona="+idzona;  
+    redirect(urlnext);
 
 
 
+    
 
-            urllist =  $(".now").val()+ "index.php/api/mensajerest/listmensajesbyzona/format/json";
-            $.get(urllist , {"idzona" : idzona}).done(function(data){
-                
-                l ="<table><tr><td>Mensaje</td><td>Estado</td> <td>URL</td></tr>"; 
-
-                for (var i = 0; i < data.length; i++) {
-                 
-                    descripcion  =  data[i].descripcion;  
-                    status  =  data[i].status;  
-                    urlformada  =  data[i].urlformada;  
-
-                    if (status == "1" ) {
-                        status ="Disponible FB ";
-                    }else{
-                          status ="Disponible TW";
-                    }
-                    imgurl = "https://api.qrserver.com/v1/create-qr-code/?size=150x150&data="+ data[i].urlformada;                        
-                    l+= "<tr><td>"+descripcion+"</td> <td>"+status+"</td> <td>"+urlformada+"</td> <td><img src='"+imgurl+"'></td>  </tr>";
-                    
-                }
-                l +="</table>"; 
-
-                $(".mensaje_asociados").html(l);
-
-
-
-            }).fail(function(){
-                alert("Error al cargar lista");
-            });
-
-
-
-
-
-
-
-
-    }).fail(function(){
-
-        alert("Error");
-    });
-
-
-/**
-    $("#mensajes_asociados_btn").click(function(){
-
-        $('#dlg_mensajes_zona').foundation('reveal', 'open');   
-
-            urllist =  $(".now").val()+ "index.php/api/mensajerest/listmensajesbyzona/format/json";
-            $.get(urllist , {"idzona" : idzona}).done(function(data){
-                
-                l ="<table><tr><td>Mensaje</td><td>Estado</td> <td>URL</td></tr>"; 
-
-                for (var i = 0; i < data.length; i++) {
-                 
-                    descripcion  =  data[i].descripcion;  
-                    status  =  data[i].status;  
-                    urlformada  =  data[i].urlformada;  
-
-                    if (status == "1" ) {
-                        status ="Disponible";
-                    }else{
-
-                    }
-                    imgurl = "https://api.qrserver.com/v1/create-qr-code/?size=150x150&data="+ data[i].urlformada;                        
-                    l+= "<tr><td>"+descripcion+"</td> <td>"+status+"</td> <td>"+urlformada+"</td> <td><img src='"+imgurl+"'></td>  </tr>";
-                    
-                }
-                l +="</table>"; 
-
-                $("#mensaje_asociados").html(l);
-
-
-
-            }).fail(function(){
-                alert("Error al cargar lista");
-            });
-
-
-
-
-    });
-**/
 }
 
+
+
+function showmensajesbyzona(){
+
+    $("#dlg_mensajeszona").foundation("reveal" , "open");
+    return false;
+}
 /**/
 function updatezonadata(){
 
-    url = $(".now").val()+"index.php/api/zonasrest/updatezona/format/json";    
-    
-    $.post(url , $("#form_edit_zona").serialize() ).done(function(data){
+    if ($('#edit_zonaname').val() == "") {
+    }else{
 
-        if (data == true) {
-            loadzonas();
-            $("#edit_repo").html("Zona modificada");            
-            $('#dlg_del_zoaedit').foundation('reveal', 'close');
+        if ($("#mensajedefaultedit").val() == ""  ) {
 
         }else{
-            $("#edit_repo").html("Falla al modificar");
+                url = $(".now").val()+"index.php/api/zonasrest/updatezona/format/json";        
+                $.post(url , $("#form_edit_zona").serialize() ).done(function(data){
+
+                    if (data == true) {
+
+                        loadzonas();
+                        llenaelementoHTML("#edit_repo" , "Zona modificada");
+                        $('#dlg_del_zoaedit').foundation('reveal', 'close');
+
+                    }else{
+                        
+                        llenaelementoHTML("#edit_repo" , "Falla al modificar");
+                    }                
+                }).fail(function(){
+                    alert("Error");
+                });
+
+
         }
-        
-
-    }).fail(function(){
-
-        alert("Error");
-
-    });
+   
+    }    
+    return false;
 
 }
 
@@ -387,14 +306,13 @@ function muestradetalle(e){
 
     $('#dlg_detallezona').foundation('reveal', 'open');
 
-    
-
     url = $(".now").val()+ "index.php/api/zonasrest/getzonabyid/format/json";
 
     $.get(url, {"idzona" : id}).done(function(data){
 
         descripcion = data[0].descripcion;
-        $("#detalle_zona").html(descripcion);    
+        
+        llenaelementoHTML("#detalle_zona" , descripcion);
 
     }).fail(function(){
 

@@ -19,3 +19,12 @@ h1, h2, h3, h4, h5{
 	
 	border-radius: 10px;	
 }
+.titulo_mensaje{
+
+    color: white;
+    font-size: 1.5em;
+}
+.title_registro{
+	font-size: 1.4em;
+	color: rgba(32, 68, 71, 1);
+}

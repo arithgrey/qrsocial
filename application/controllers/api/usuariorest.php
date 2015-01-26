@@ -53,10 +53,13 @@ class Usuariorest extends REST_Controller
 
     function validadata_POST(){
         
+        $this->load->model("usuariomodel");                            
+        $this->load->model("cuentamodel");
+
         $username = $this->input->post("username");
         $usermail = $this->input->post("usermail");
         $pw = $this->input->post("pw");
-        $this->load->model("usuariomodel");                        
+        
         $reporte="";
         if (valid_email($usermail)){
                if (strlen($username)>4 ) {                                        
@@ -72,19 +75,12 @@ class Usuariorest extends REST_Controller
 
                             }else{
                         
-                                $this->load->model("cuentamodel");
+                                
+                                
                                 $responsecuenta = $this->cuentamodel->registrocuenta($username , "" , 2 );
-                                $cuentanum = $responsecuenta[0]["id"];                                
-                                $dbresponse= $this->usuariomodel->registrofreemium($username , $usermail, $pw , $cuentanum );
-                                $this->response($dbresponse[0]);
-                          
-                                if ($dbresponse == 1 ) {
+                                $dbresponse= $this->usuariomodel->registrofreemium($username , $usermail, $pw , $responsecuenta );
+                                $this->response($dbresponse);                        
 
-                                    /*Registrado*/
-
-                                }else{
-                                    $reporte="Falla en el registro";
-                                }                                
                             }
                      }                                    
 

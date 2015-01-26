@@ -13,8 +13,9 @@ class Accesssystem extends REST_Controller{
     	$this->load->model("modelaccess");
     	$dataresponse = $this->modelaccess->validationuser($mail , $pw);
 
+
         $reporte="";
-        if ($dataresponse[0] == "0") {
+        if ($dataresponse == "0") {
                 
             $reporte ="Datos erroneos";  
 
@@ -33,7 +34,6 @@ class Accesssystem extends REST_Controller{
             $this->load->model("cuentamodel");
             $accountdata = $this->cuentamodel->getElementsbyId($cuenta);
             $nombrecuentaact =  $accountdata[0]["nombre"];
-
 
             $newdata = array(
                    'username'  => $username,
