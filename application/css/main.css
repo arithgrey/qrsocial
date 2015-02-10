@@ -1,0 +1,44 @@
+header{
+	width: 80%;
+	margin: 0 auto;	
+}
+#icono_twitter , #icono_fb, #icono_tel {
+	width: 70px;
+	border-radius: 5px;
+}
+h1, h2, h3, h4, h5{
+
+	color: #2B75B9;
+}
+
+#sliderOutput3{
+	background: rgb(226, 41, 41);
+	color: white;
+	padding: 10px;
+}#img_grey{
+	
+	border-radius: 10px;	
+}
+.titulo_mensaje{
+
+    color: white;
+    font-size: 1.5em;
+}
+.title_registro{
+	font-size: 1.4em;
+	color: rgba(32, 68, 71, 1);
+}
+.title_table{
+ background: none repeat scroll 0% 0% #00BFFF;
+}
+.detalle_zona , .detalle_campaña{
+	color: white;
+	font-size: 1.7em;
+}#lb_description{
+	color: #0F6971;
+	font-size: 1.1em;	
+}
+.lb_description{
+	color: #0F6971;
+	font-size: 1.1em;	
+}
