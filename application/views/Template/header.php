@@ -96,4 +96,3 @@ footer{
 			<input type="hidden" name="now" class="now" id="now" value="<?=base_url();?>">
 
 
-

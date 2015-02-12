@@ -15,7 +15,7 @@
 </style>
 
 <div class='row'>
-	<p class='username'>Qué tal <?=$nombreusuario?> te agradecemos tu participación y te invitamos a realizar alguna de las siguientes acciones</p>	
+	<p class='username'>Qué tal te agradecemos tu participación y te invitamos a realizar alguna de las siguientes acciones</p>	
 
 	<div class='row'>
 		<!--Acciones para la red social -->
@@ -82,8 +82,6 @@
 <script type="text/javascript">
 	$(document).foundation();
 </script>
-<?=print_r($user_data_twitter);?>
-
 
     	
     	

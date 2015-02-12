@@ -1,4 +1,5 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+session_start();
 require_once('application/libraries/api_twitter/twitteroauth.php');  
 require_once('actwitter.php');
 /*
@@ -39,103 +40,90 @@ class Appqrsocial extends CI_Controller
     $this->load->library('facebook', $fb_config);
   
   }
+
+
+function twittertestapp(){
+
+
+    if (!$_SESSION["twitter_status"]) {
+        /*Cuando no hay session */
+
+        $twitter  = new TwitterOAuth(_CONSUMER_KEY, _CONSUMER_SECRET);     
+        $twitter_temporal = $twitter->getRequestToken(OAUTH_CALLBACK);
+        $_SESSION["temporal_token"] =$twitter_temporal['oauth_token'];
+        $_SESSION["temporal_token_secret"] =$twitter_temporal['oauth_token_secret'];
+        $twitter_url = $twitter->getAuthorizeURL($twitter_temporal['oauth_token']);
+        redirect($twitter_url, 'location');
+        
+    }else{
+        /*Cuando hay session*/
+
+        $twitter  = new TwitterOAuth(_CONSUMER_KEY, _CONSUMER_SECRET , $_SESSION["twitter_token"] ,$_SESSION["twitter_token_secret"] );     
+        $credenciales  = $twitter->get('account/verify_credentials');
+        var_dump($credenciales );
+
+
+    }
+
+
+}
+
+
+function twittercallback(){
+
+    $twitter  = new TwitterOAuth(_CONSUMER_KEY, _CONSUMER_SECRET , $_SESSION["temporal_token"] , $_SESSION["temporal_token_secret"]);     
+    $twitter_token =  $twitter->getAccessToken($_REQUEST['oauth_verifier']);
+    
+    $mydescriptionmsj = $this->input->get('twittermsj');
+
+    if ($twitter->http_code == 200 ) {
+
+        /**Acceso correcto*/
+        $_SESSION["twitter_token"] = $twitter_token["oauth_token"]; 
+        $_SESSION["twitter_token_secret"] = $twitter_token["oauth_token_secret"]; 
+        $_SESSION["twitter_status"]=true;
+        $dinamicurl = base_url() ."index.php/appqrsocial/twittermensaje?twittermsj=".$mydescriptionmsj;
+        redirect($dinamicurl, 'location');
+        
+    }else{
+        echo "problemas al firmarse";
+    }
+
+}
     
 function twittermensaje(){
 
     $data["titulo"]="";    
-    $mydescriptionmsj = $this->input->get("twittermsj");
-    $estatuspublicacion ="";
-    $twitteruser =  "@arithgrey";
-    $notweets = 3;
-    $connection = new TwitterOAuth(_CONSUMER_KEY, _CONSUMER_SECRET, _OAUTH_TOKEN , _OAUTH_TOKEN_SECRET );     
-    $content = $connection->get('account/verify_credentials');
 
+    $mydescriptionmsj = $this->input->get('twittermsj');
 
-/*
-    $campaña =$this->input->get("camp");
-    $zona  = $this->input->get("zona");
-    $mensaje  = $this->input->get("mensaje");        
-    $data["campaña"]=$campaña;
-    $data["zona"] = $zona;
-    $data["mensaje"] = $mensaje;
-    $result = $this->appmodel->getmensajebycampzonamensaje($campaña , $zona , $mensaje);                                    
-    $resultdata =  $result[0]; 
-    $data["result"] = $resultdata;
-    $data["idmensaje"] = $resultdata["idmensaje"];
-    $data["descripcion"] =  $resultdata["descripcion"];
-    $data["status"] =  $resultdata["status"];
-    $data["horainicio"] = $resultdata["horainicio"];
-    $data["horatermino"] =  $resultdata["horatermino"];
-    $data["fechainicio"] =  $resultdata["fechainicio"];
-    $data["fechatermino"] = $resultdata["fechatermino"];
-    $data["idzona"] =  $resultdata["idzona"];
-    */
-    /*
-    $temporary_credentials = $connection->getRequestToken(base_url());
-    $redirect_url = $connection->getAuthorizeURL($temporary_credentials);
-    $data["redirect_url"]=$redirect_url;
-    */
+    if (!$_SESSION["twitter_status"]) {
+        /*Cuando no hay session */
 
-    $tweets = $connection->get("https://api.twitter.com/1.1/statuses/user_timeline.json?screen_name=".$twitteruser."&count=".$notweets);    
-    $id = $tweets[0]->id;    
-    $datosusuario = $tweets[0]->user;
-    $userid=  $datosusuario->id;
-    $username =  $datosusuario->name;
-    $userscreen_name =  $datosusuario->screen_name;
-    $userdescription = $datosusuario->description;
-    $userurl = $datosusuario->url;
-    $userprofile_image_url =  $datosusuario->profile_image_url;
-    $userprofile_image_url_https =  $datosusuario->profile_image_url_https;
-    $userfollowers = $datosusuario->followers_count;
-    $usersiguiendo = $datosusuario->friends_count;
-    $usertweets =   $datosusuario->statuses_count;
-    
-    $user_data_twitter  = array(
-        'id' => $id, 
-        'datosusuario' => $datosusuario, 
-        'userid' => $userid, 
-        'username' => $username, 
-        'userscreen_name' => $userscreen_name, 
-        'userdescription' => $userdescription,
-        'userurl' => $userurl , 
-        'userprofile_image_url' => $userprofile_image_url, 
-        'userprofile_image_url_https' => $userprofile_image_url_https, 
-        'userfollowers' => $userfollowers , 
-        'usersiguiendo' => $usersiguiendo, 
-        'usertweets ' => $usertweets 
-        );
+        $twitter  = new TwitterOAuth(_CONSUMER_KEY, _CONSUMER_SECRET);     
 
-    $data["nombreusuario"] =  $userscreen_name;
-    $data["userurl"]= $userurl;
-    $twitter= $connection->post('statuses/update', array('status' => $mydescriptionmsj) );     
-    $flag=0;
-    foreach ($twitter as $key => $value){ 
+        $dinamicurl = base_url() ."index.php/appqrsocial/twittercallback?twittermsj=".$mydescriptionmsj;
         
-        if ("$key" != "errors") {
-               $flag=1;
-        }
-    }
-
-
-
-    if ( $flag == 1 ){
-        $estatuspublicacion ="Tweet publicado correctamente el: ". $twitter->created_at;
+        $twitter_temporal = $twitter->getRequestToken($dinamicurl );
+        $_SESSION["temporal_token"] =$twitter_temporal['oauth_token'];
+        $_SESSION["temporal_token_secret"] =$twitter_temporal['oauth_token_secret'];
+        $twitter_url = $twitter->getAuthorizeURL($twitter_temporal['oauth_token']);        
+        redirect($twitter_url, 'location');
+        
     }else{
-        
-        $estatuspublicacion= $twitter->errors['0']->message;
-        if ($estatuspublicacion == "Status is a duplicate.") {
-            $estatuspublicacion = "Su publicación ha sido efectuada con anterioridad, Gracias por utilizar QR SOCIAL"; 
-        }        
-    }
-        
-    /*
-    $tweets = $connection->get("https://api.twitter.com/1.1/statuses/user_timeline.json?screen_name=
-        ".$twitteruser."&count=".$notweets);
-     echo json_encode($tweets);
-    */        
+        /*Cuando hay session*/
 
-    $data["estatuspublicacion"]= $estatuspublicacion;
-    $data["user_data_twitter"] = $user_data_twitter;
+        $twitter  = new TwitterOAuth(_CONSUMER_KEY, _CONSUMER_SECRET , $_SESSION["twitter_token"] ,$_SESSION["twitter_token_secret"] );     
+        $credenciales  = $twitter->get('account/verify_credentials');                
+        $twitterstatus = $twitter->post('statuses/update', array('status' => $mydescriptionmsj) );     
+        
+        
+    }
+
+
+
+    
+    
     $this->load->view("Template/header", $data);
     $this->load->view("twitter/publicarmensaje");
     $this->load->view("Template/footer", $data);
@@ -303,8 +291,6 @@ function postFBnextloggin(){
                 $paramsout = array( 'next' => $urlbase );
                 $urlout =$this->facebook->getLogoutUrl($paramsout);                 
                 $this->facebook->destroySession();
-                
-                
                 
                 header("location:$urlout");
 

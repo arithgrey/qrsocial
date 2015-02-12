@@ -164,5 +164,3 @@ header{
 		<div class='content' id='content'>
 			<input type="hidden" name="now" class="now" id="now" value="<?=base_url();?>">
 
-
-
