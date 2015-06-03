@@ -5,10 +5,10 @@ $active_record = TRUE;
 
 
 
-$db['default']['hostname'] = 'bd.factor.com.mx';
-$db['default']['username'] = 'qrsocial';
-$db['default']['password'] = '01s0c12l.';
-$db['default']['database'] = 'qrsocial_20141105';
+$db['default']['hostname'] = '';
+$db['default']['username'] = '';
+$db['default']['password'] = '';
+$db['default']['database'] = '';
 $db['default']['dbdriver'] = 'mysql';
 $db['default']['dbprefix'] = '';
 $db['default']['pconnect'] = TRUE;
